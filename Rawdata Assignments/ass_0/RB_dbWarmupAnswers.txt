@@ -1,0 +1,15 @@
+1) SELECT * FROM movie.movie where  movie.movie.production_year = 1888
+2) SELECT title, production_year FROM movie.movie where  movie.movie.production_year > 2019
+3) SELECT title, production_year FROM movie.movie where  movie.movie.production_year > 1930 and movie.movie.production_year < 1940
+4) SELECT name FROM movie.person where gender = 'f'
+5) SELECT title, production_year FROM movie.movie where title like '007%'
+6) SELECT count(*) FROM movie.movie
+7) SELECT count(*) FROM movie.movie where movie.production_year = 2004
+8) SELECT name, gender FROM person where name like 'Mikkelsen%'
+9) SELECT name FROM person where pid = 7767
+10) SELECT mid FROM movie natural join casting where pid = 7767
+11) joins movie and casting on 'mid' (natural), and then selects the results where an actor with pid 7767 starred
+12) select * from movie natural join casting natural join person where name like 'Mikkelsen%';
+13) select distinct name from movie natural join casting natural join person where production_year = 1888;
+14) select title from movie natural join casting natural join person where name = 'Mikkelsen, Mads';
+
