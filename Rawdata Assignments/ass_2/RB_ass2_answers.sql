@@ -19,7 +19,7 @@ return mov_count;
 end;//
 delimiter ; 
 
-select movie_count('Bacon, Kevin');
+SELECT MOVIE_COUNT('Bacon, Kevin');
 
 -- b)
 drop procedure if exists movies;
@@ -56,15 +56,27 @@ delimiter //
 create function roles()
 returns varchar(255)
 
+
+
 begin
 declare role_str varchar(255);
-SELECT DISTINCT role
-FROM imdb2016.cast_info
- JOIN imdb2016.name
- ON cast_info.person_id = name.id
- JOIN imdb2016.role_type
- ON cast_info.role_id = role_type.id
+declare cur1 cursor for SELECT DISTINCT role
+	FROM imdb2016.cast_info
+	JOIN imdb2016.name
+	ON cast_info.person_id = name.id
+	JOIN imdb2016.role_type
+	ON cast_info.role_id = role_type.id
 WHERE name like 'Bacon, Kevin';
+open cur1;
+
+read_loop: loop
+	fetch cur1 into roles;
+    if done then
+		leave read_loop;
+	end if;
+    role_str = role_str +
+end loop;
+
 end;//
 delimiter ;
 
