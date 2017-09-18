@@ -14,7 +14,7 @@ WHERE c.person_id = n.id AND c.role_id = r.id
         AND c.movie_id = t.id
         AND t.kind_id = 1
         AND r.role = 'actor'
-        AND n.name LIKE actor_name;-- Should be actor_name, but that variable makes the query hang
+        AND n.name LIKE actor_name;
 return mov_count;
 end;//
 delimiter ; 
@@ -38,16 +38,16 @@ call movies('Mikkelsen, Mads');
 -- ---------------------------------------- c)
 drop procedure if exists recent_movs;
 delimiter //
-create procedure recent_movs()
+create procedure recent_movs(titleText char(50))
 begin
 	select title from imdb2016.title 
-    where title like "100%" 
+    where title like titleText
     order by production_year desc 
     limit 10;
 end;//
 delimiter ;
 
-call recent_movs();
+call recent_movs('The%');
 
 -- ---------------------------------------- d)
 drop function if exists roles;
