@@ -1,6 +1,6 @@
 use raw1;
 
--- a)
+-- ---------------------------------------- a)
 drop function if exists movie_count;
 delimiter //
 create function movie_count (actor_name char(50)) 
@@ -21,7 +21,7 @@ delimiter ;
 
 SELECT MOVIE_COUNT('Bacon, Kevin');
 
--- b)
+-- ---------------------------------------- b)
 drop procedure if exists movies;
 delimiter //
 create procedure movies (cast_name char(50))
@@ -35,7 +35,7 @@ delimiter ;
 
 call movies('Mikkelsen, Mads');
 
--- c)
+-- ---------------------------------------- c)
 drop procedure if exists recent_movs;
 delimiter //
 create procedure recent_movs()
@@ -49,17 +49,17 @@ delimiter ;
 
 call recent_movs();
 
--- d)
-drop procedure if exists roles;
+-- ---------------------------------------- d)
+drop function if exists roles;
 
 delimiter //
 create function roles()
 returns varchar(255)
 
-
-
 begin
+declare done int default false;
 declare role_str varchar(255);
+declare role char(40);
 declare cur1 cursor for SELECT DISTINCT role
 	FROM imdb2016.cast_info
 	JOIN imdb2016.name
@@ -67,17 +67,20 @@ declare cur1 cursor for SELECT DISTINCT role
 	JOIN imdb2016.role_type
 	ON cast_info.role_id = role_type.id
 WHERE name like 'Bacon, Kevin';
-open cur1;
+declare continue handler for not found set done = true;
 
+open cur1;
+set role_str = '';
 read_loop: loop
-	fetch cur1 into roles;
+	fetch cur1 into role;
     if done then
 		leave read_loop;
 	end if;
-    role_str = role_str +
+    set role_str = concat(role_str, ", ", role);
 end loop;
-
+return role_str;
+close cur1;
 end;//
 delimiter ;
 
-call roles();
+select roles();
