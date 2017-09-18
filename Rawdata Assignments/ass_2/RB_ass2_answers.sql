@@ -53,42 +53,38 @@ call recent_movs();
 drop function if exists roles;
 
 delimiter //
-create function roles()
-returns varchar(255)
+create function roles(person_name varchar(32))
+returns varchar(1000)
 
 begin
 declare done int default false;
-declare role_concat varchar(255);
-declare role_str varchar(255);
+declare role_concat varchar(1000);
+declare role_str varchar(32);
 declare role_cursor cursor for SELECT DISTINCT role
 	FROM imdb2016.cast_info
 	JOIN imdb2016.name
 	ON cast_info.person_id = name.id
 	JOIN imdb2016.role_type
 	ON cast_info.role_id = role_type.id
-WHERE name like 'Bacon, Kevin';
+WHERE name like person_name;
 declare continue handler for not found set done = true;
 
 open role_cursor;
-#set role_str = 'aasdf';
+set role_concat = '';
 read_loop: loop
 	fetch role_cursor into role_str;
     if done then
 		leave read_loop;
 	end if;
-	set role_concat = concat(role_concat, ", ", role_str);
+	set role_concat = concat(role_concat, role_str, ", ");
 end loop;
 return role_concat;
 close role_cursor;
 end;//
 delimiter ;
 
-select roles();
+select roles('Bacon, Kevin');
 
-SELECT DISTINCT role
-	FROM imdb2016.cast_info
-	JOIN imdb2016.name
-	ON cast_info.person_id = name.id
-	JOIN imdb2016.role_type
-	ON cast_info.role_id = role_type.id
-WHERE name like 'Bacon, Kevin';
+SELECT name,roles(name)
+FROM imdb2016.name where name like 'De Niro, R%';
+
