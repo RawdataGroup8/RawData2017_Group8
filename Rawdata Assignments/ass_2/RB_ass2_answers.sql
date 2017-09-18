@@ -58,9 +58,9 @@ returns varchar(255)
 
 begin
 declare done int default false;
+declare role_concat varchar(255);
 declare role_str varchar(255);
-declare role char(40);
-declare cur1 cursor for SELECT DISTINCT role
+declare role_cursor cursor for SELECT DISTINCT role
 	FROM imdb2016.cast_info
 	JOIN imdb2016.name
 	ON cast_info.person_id = name.id
@@ -69,18 +69,26 @@ declare cur1 cursor for SELECT DISTINCT role
 WHERE name like 'Bacon, Kevin';
 declare continue handler for not found set done = true;
 
-open cur1;
-set role_str = '';
+open role_cursor;
+#set role_str = 'aasdf';
 read_loop: loop
-	fetch cur1 into role;
+	fetch role_cursor into role_str;
     if done then
 		leave read_loop;
 	end if;
-    set role_str = concat(role_str, ", ", role);
+	set role_concat = concat(role_concat, ", ", role_str);
 end loop;
-return role_str;
-close cur1;
+return role_concat;
+close role_cursor;
 end;//
 delimiter ;
 
 select roles();
+
+SELECT DISTINCT role
+	FROM imdb2016.cast_info
+	JOIN imdb2016.name
+	ON cast_info.person_id = name.id
+	JOIN imdb2016.role_type
+	ON cast_info.role_id = role_type.id
+WHERE name like 'Bacon, Kevin';
