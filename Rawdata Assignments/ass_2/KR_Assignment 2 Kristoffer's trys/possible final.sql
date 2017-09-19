@@ -1,3 +1,4 @@
+#assignment 2 by group 8: Eugenio Capuani, Rune Barrett and Kristoffer Schou
 use raw2;
 #a
 
