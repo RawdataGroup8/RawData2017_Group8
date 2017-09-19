@@ -1,15 +1,7 @@
-create procedure split_string (in input varchar(20))
-begin
-declare actor_firstname varchar(20);
-declare actor_lastname varchar(20);
-
-
- 
-
-
-
+#ANSWER TO A
 drop function if exists movie_count;
 delimiter //
+
 create function movie_count(actor_name varchar(20))
 returns integer
 begin
@@ -21,31 +13,26 @@ WHERE c.person_id = n.id
  AND c.movie_id = t.id
  AND t.kind_id=1
  AND r.role = 'actor'
- AND n.name like 'Bacon, Kevin';
-#AND n.name = strcmp( concat('%',@a_ln,'%',@a_fn,'%'), n.name);
+ AND n.name like actor_name;
 return m_count;
 end;//
 delimiter ;
 select movie_count('Bacon, Kevin');
 
-
-
-
 #ANSWER TO B
 drop procedure if exists movies;
 delimiter //
-create procedure movies(in actor_name varchar(20))
+create procedure movies(actor_name2 varchar(50))
 begin
 SELECT imdb2016.title.title
-FROM imdb2016.cast_info, imdb2016.name, imdb2016.role_type, imdb2016.title
+FROM imdb2016.cast_info, imdb2016.name, imdb2016.title
 WHERE imdb2016.cast_info.person_id = imdb2016.name.id
-AND imdb2016.cast_info.movie_id = imdb2016.title.id;
-#AND imdb2016.name.name ="Bacon, Kevin";
+AND imdb2016.cast_info.movie_id = imdb2016.title.id
+AND imdb2016.name.name = actor_name2;
 end; //
 delimiter ;
 
-call movies('Kevi n, Bacon');
- 
+call movies('Bacon, Kevin'); 
  
  
  #ANSWER TO C
@@ -55,7 +42,7 @@ create procedure top_ten(in movie_title varchar(20))
 begin
 SELECT distinct imdb2016.title.title, imdb2016.title.production_year 
 from imdb2016.title join imdb2016.kind_type
-where imdb2016.title.production_year < 2017 AND  imdb2016.kind_type.id=1 AND imdb2016.title.title like '%Forrest%Gump%'
+where imdb2016.title.production_year < 2017 AND  imdb2016.kind_type.id=1 AND imdb2016.title.title like movie_title
 order by imdb2016.title.production_year desc
 limit 10;
 end; //
@@ -99,3 +86,6 @@ end; //
 delimiter ;
 
 select actor_roles('Bacon, Kevin');
+
+SELECT imdb2016.name.name,actor_roles(name) 
+FROM imdb2016.name where imdb2016.name.name like 'De Niro, R%';
