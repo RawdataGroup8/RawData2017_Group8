@@ -24,6 +24,7 @@ delimiter ;
 SELECT MOVIE_COUNT('Bacon, Kevin');
 
 drop function if exists movie_count;
+/*
 Execute:
 > SELECT MOVIE_COUNT('Bacon, Kevin')
 
@@ -33,6 +34,7 @@ Execute:
 | 90                               |
 + -------------------------------- +
 1 rows
+*/
 
 #b
 use raw2;
@@ -55,6 +57,7 @@ delimiter ;
 call movie_count_proc('Mikkelsen, Mads');
 
 drop procedure if exists movie_count_proc;
+/*
 Execute:
 > call movie_count_proc('Mikkelsen, Mads')
 
@@ -104,19 +107,21 @@ Execute:
 | Wilbur Wants to Kill Himself |
 + ---------- +
 41 rows
-
+*/
 
 #c
+use raw2;
 
 drop procedure if exists movie_match_title;
 
 delimiter //
 create procedure movie_match_title(title varchar(20))
 begin
-	select * -- we could use title here since the discription isn't specific
+	select *
     from imdb2016.title t, imdb2016.kind_type k
     where t.title like title
-		and k.kind = 'movie'
+		and t.kind_id = k.id
+        and k.kind = 'movie'
 		and t.production_year <= year(curdate())
     order by t.production_year desc
     limit 10;
@@ -127,7 +132,7 @@ delimiter ;
 call movie_match_title('%the%');
 
 drop procedure if exists movie_match_title;
-
+/*
 Execute:
 > call movie_match_title('%the%')
 
@@ -146,8 +151,7 @@ Execute:
 | 3330564 | The Bally Girl |                 | 1            | 2017                 |              | B4264              |                    |                |                 |                   | 2b471a32b348f2fc74fe4084792e48a0 | 1       | movie     |
 + ------- + ---------- + --------------- + ------------ + -------------------- + ------------ + ------------------ + ------------------ + -------------- + --------------- + ----------------- + ----------- + ------- + --------- +
 10 rows
-
-
+*/
 
 #d
 
@@ -194,7 +198,7 @@ SELECT name,roles(name)
 FROM imdb2016.name where name like 'De Niro, R%';
 
 drop function if exists roles;
-
+/*
 Execute:
 > #SELECT ROLES('Bacon, Kevin');
 
@@ -210,4 +214,4 @@ FROM imdb2016.name where name like 'De Niro, R%'
 | de Niro, Ryan | cinematographer  |
 + --------- + ---------------- +
 4 rows
-
+*/
