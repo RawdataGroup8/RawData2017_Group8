@@ -58,7 +58,7 @@ returns varchar(255)
 
 begin
 declare done int default false;
-declare role_concat varchar(255);
+declare role_concat varchar(255) default "" ;
 declare role_str varchar(32);
 declare role_cursor cursor for SELECT DISTINCT role
 	FROM imdb2016.cast_info
@@ -70,12 +70,16 @@ WHERE name like person_name;
 declare continue handler for not found set done = true;
 
 open role_cursor;
+#set role_concat = "";
 read_loop: loop
 	fetch role_cursor into role_str;
     if done then
 		leave read_loop;
 	end if;
-	set role_concat = concat(role_concat, role_str, ", ");
+    if char_length(role_concat) > 0 then
+	set role_concat = concat(role_concat,  ", ", role_str);
+    else set role_concat = concat(role_concat, role_str);
+    end if;
 end loop;
 return role_concat;
 close role_cursor;
@@ -87,3 +91,8 @@ select roles('Bacon, Kevin');
 SELECT name,roles(name)
 FROM imdb2016.name where name like 'De Niro, R%';
 
+drop function if exists movie_count;
+drop procedure if exists movies;
+drop procedure if exists recent_movs;
+drop function if exists roles;
+ 
