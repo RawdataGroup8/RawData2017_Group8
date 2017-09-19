@@ -235,7 +235,7 @@ Execute:
 + -------------------------- +
 | roles('Bacon, Kevin')      |
 + -------------------------- +
-| actor, director, producer, writer, cinematographer, editor,  |
+| actor, director, producer, writer, cinematographer, editor |
 + -------------------------- +
 1 rows
 
@@ -246,10 +246,10 @@ FROM imdb2016.name where name like 'De Niro, R%'
 + --------- + ---------------- +
 | name      | roles(name)      |
 + --------- + ---------------- +
-| De Niro, Raphael | actor, producer,  |
-| De Niro, Robert | actor, director, producer,  |
-| De Niro, Rocco | actor,           |
-| de Niro, Ryan | cinematographer,  |
+| De Niro, Raphael | actor, producer  |
+| De Niro, Robert | actor, director, producer |
+| De Niro, Rocco | actor            |
+| de Niro, Ryan | cinematographer  |
 + --------- + ---------------- +
 4 rows
 
