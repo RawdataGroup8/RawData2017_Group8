@@ -54,11 +54,11 @@ drop function if exists roles;
 
 delimiter //
 create function roles(person_name varchar(32))
-returns varchar(1000)
+returns varchar(255)
 
 begin
 declare done int default false;
-declare role_concat varchar(1000);
+declare role_concat varchar(255);
 declare role_str varchar(32);
 declare role_cursor cursor for SELECT DISTINCT role
 	FROM imdb2016.cast_info
@@ -70,7 +70,6 @@ WHERE name like person_name;
 declare continue handler for not found set done = true;
 
 open role_cursor;
-set role_concat = '';
 read_loop: loop
 	fetch role_cursor into role_str;
     if done then
