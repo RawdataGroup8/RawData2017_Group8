@@ -26,9 +26,11 @@ drop procedure if exists movies;
 delimiter //
 create procedure movies (cast_name char(50))
 begin
-	select distinct title from imdb2016.title t, imdb2016.cast_info c, imdb2016.name n
+	select distinct title from imdb2016.title t, imdb2016.cast_info c, imdb2016.name n, kind_type
 	where c.person_id = n.id
 	and c.movie_id = t.id
+    and t.kind_id = kind_type
+    and kind_type = 'movie'
 	and name = cast_name;
 end;//
 delimiter ;
