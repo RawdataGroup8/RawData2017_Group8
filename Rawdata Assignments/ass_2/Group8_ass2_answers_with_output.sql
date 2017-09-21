@@ -1,3 +1,4 @@
+#Group 8 - Kristoffer Schou, Eugenio Capuani and Rune Barrett
 use raw1;
 
 -- ---------------------------------------- a)
@@ -12,7 +13,7 @@ SELECT
 INTO mov_count FROM imdb2016.cast_info c, imdb2016.name n, imdb2016.role_type r, imdb2016.title t
 WHERE c.person_id = n.id AND c.role_id = r.id
         AND c.movie_id = t.id
-        AND t.kind_id = 1
+        AND t.kind_id = 11234
         AND r.role = 'actor'
         AND n.name LIKE actor_name;
 return mov_count;
