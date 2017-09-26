@@ -1,0 +1,11 @@
+users(OWNERUSERID, owneruserdisplayname, ownerusercreationdate, owneruserlocation, owneruserage)
+
+posts(ID, title, body, posttypeid, parentid, creationdate, closeddate, score, acceptedanswerid)
+linked_posts(LINK_POST_ID, POST_ID)
+
+post_tags(POST_ID, tag_id)
+tags(TAG_ID, tag)  <split tags on '::'>
+
+comment(COMMENT_ID, post_id, commenttext, commentscore, commentcreatedate)
+
+
