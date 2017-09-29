@@ -18,14 +18,18 @@ user (userid, userdisplayname, usercreationdate, userlocation, userage)
 post(post_id, type_id, creationdate, score, body, title, owneruserid)
 
 question(acceptedanswerid, closeddate, tags, _post_id) /* splitting up good idea? */ /*_post_id both foreign and primary*/
-answer(_parentid, _post_id)
+answer(ANSWER_ID, parentid, _post_id)
 
 comment(commentid, post_id, commentscore, commenttext, commentcreatedate, userid)
 
 post_tags(question_id, tag_id)
 tags(TAG_ID, tag)  <split tags on '::'>
 
-//post_type(type_id, type); /* redundant? a post with a parentid is an answer, other posts are questions */
+post_type(type_id, type); /* redundant? a post with a parentid is an answer, other posts are questions */
+
+history(POST_ID, USER_ID, DATETIME_ADDED, action);
+
+marking(USER_ID, POST_ID, timestamp); --folder
 
 //owneruserid -> owneruserdisplayname, ownerusercreationdate, owneruserlocation, owneruserage
 
