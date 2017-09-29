@@ -13,24 +13,27 @@ comment(COMMENT_ID, post_id, commenttext, commentscore, commentcreatedate)
 
 
 
-user (userid, userdisplayname, usercreationdate, userlocation, userage)
+user (user_id(PK), user_name, user_creation_date, user_location, user_age) 
 
-post(post_id, type_id, creationdate, score, body, title, owneruserid)
+post(post_id(PK), creation_date, score, body, title, owner_user_id(FK), type_id(FK))
 
-question(acceptedanswerid, closeddate, tags, _post_id) /* splitting up good idea? */ /*_post_id both foreign and primary*/
-answer(ANSWER_ID, parentid, _post_id)
+question(accepted_answer_id(FK), closed_date, tags, _post_id(PK,FK))
+answer(parent_id, post_id(PK,FK))
 
-comment(commentid, post_id, commentscore, commenttext, commentcreatedate, userid)
+comment(comment_id(PK), comment_score, comment_text, comment_create_date, user_id(FK), post_id(FK))
 
-post_tags(question_id, tag_id)
-tags(TAG_ID, tag)  <split tags on '::'>
+post_tags((post_id(FK), tag)(PK))//tag_id
+//tags(TAG_ID, tag)  <split tags on '::'>
 
-post_type(type_id, type); /* redundant? a post with a parentid is an answer, other posts are questions */
+post_type(type_id, type); /* redundant? a post with a parentid is an answer, other posts are questions */ /* could remove and store type directly in the post table*/
 
-history(POST_ID, USER_ID, DATETIME_ADDED, action);
+history((USER_ID, DATE_TIME_ADDED)(PK), post_id(FK)); /*Index by users for search*/
 
-marking(USER_ID, POST_ID, timestamp); --folder
+marking(USER_ID, POST_ID, date_time_added, folder_tag); 
 
+
+
+------------------------
 //owneruserid -> owneruserdisplayname, ownerusercreationdate, owneruserlocation, owneruserage
 
 //In posts(), index questions aside from answers
