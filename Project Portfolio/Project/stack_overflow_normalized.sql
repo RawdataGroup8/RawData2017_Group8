@@ -24,14 +24,14 @@ CREATE TABLE post (
     post_id INT UNSIGNED PRIMARY KEY,
     creation_date DATETIME,
     score BIGINT,
-    body MEDIUMTEXT,
-    title VARCHAR(90),
+    body TEXT,
+    title VARCHAR(300),
     owner_user_id INT UNSIGNED NOT NULL REFERENCES user (user_id),
     type_id INT UNSIGNED
 );
 
-insert ignore into post (post_id, creation_date, score, body, title, owner_user_id, type_id)
-select id, creationdate, score, body, title, owneruserid, posttypeid
+insert into post (post_id, creation_date, score, body, title, owner_user_id, type_id)
+select distinct id, creationdate, score, body, title, owneruserid, posttypeid
 from stackoverflow_sample_universal.posts;
 
 -- question(post_id(PK,FK), accepted_answer_id(FK), closed_date, tags) /* no need for tags here right? */ 
@@ -41,8 +41,8 @@ CREATE TABLE question (
     closed_date DATETIME
 );
 
-insert ignore into question (post_id, accepted_answer_id, closed_date) 
-select id, acceptedanswerid, closeddate
+insert into question (post_id, accepted_answer_id, closed_date) 
+select distinct id, acceptedanswerid, closeddate
 from stackoverflow_sample_universal.posts as p where p.posttypeid = 1;
 
 
@@ -52,8 +52,8 @@ CREATE TABLE answer (
     parent_id INT
 );
 
-insert ignore into answer (post_id, parent_id) 
-select id, parentid
+insert into answer (post_id, parent_id) 
+select distinct id, parentid
 from stackoverflow_sample_universal.posts as p where p.posttypeid = 2;
 
 -- comment(comment_id(PK), comment_score, comment_text, comment_create_date, user_id(FK), post_id(FK))
@@ -70,7 +70,7 @@ select commentid, commentscore, commenttext, commentcreatedate, userid, postid
 from stackoverflow_sample_universal.comments;
 
 -- post_tags((post_id(FK), tag)(PK))//tag_id
-drop table if exists post_tags;
+-- drop table if exists post_tags;
 CREATE TABLE post_tags (
     post_id INT REFERENCES post (post_id),
     tag_name VARCHAR(50),
@@ -85,7 +85,7 @@ CREATE TABLE tags (
 );*/
 
 -- returns the value at n'th position eg. string_at_delimited_pos("a::b::c::d", "::", 3) returns "c" 
- drop function if exists string_at_delimited_pos;
+-- drop function if exists string_at_delimited_pos;
  CREATE FUNCTION string_at_delimited_pos(str VARCHAR(255), delim VARCHAR(12), pos INT)
  RETURNS VARCHAR(255)
  RETURN REPLACE(SUBSTRING(SUBSTRING_INDEX(str, delim, pos),
@@ -93,7 +93,7 @@ CREATE TABLE tags (
         delim, '');
 -- select string_at_delimited_pos("qwer::rtyu::khhj","::",2);
 
-drop procedure if exists split_insert_into_tags;
+-- drop procedure if exists split_insert_into_tags;
 delimiter //
 create procedure split_insert_into_tags()
 begin
