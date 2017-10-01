@@ -6,18 +6,21 @@ USE stack_overflow_normalized;
 CREATE TABLE user (
     user_id INT UNSIGNED PRIMARY KEY,
     user_name VARCHAR(30) NOT NULL,
-    user_creation_date DATE,
-    user_location VARCHAR(50),
+    user_creation_date DATETIME,
+    user_location VARCHAR(200),
     user_age INT UNSIGNED
 );
 
-insert ignore into user (user_id, user_name, user_creation_date, user_location, user_age)
-select owneruserid, owneruserdisplayname, ownerusercreationdate, owneruserlocation, owneruserage
-from stackoverflow_sample_universal.posts;
-
-insert ignore into user (user_id, user_name, user_creation_date, user_location, user_age)
-select userid, userdisplayname, usercreationdate, userlocation, userage
+insert into user (user_id, user_name, user_creation_date, user_location, user_age)
+select distinct owneruserid, owneruserdisplayname, ownerusercreationdate, owneruserlocation, owneruserage
+from stackoverflow_sample_universal.posts
+union
+select distinct userid, userdisplayname, usercreationdate, userlocation, userage
 from stackoverflow_sample_universal.comments;
+
+-- insert ignore into user (user_id, user_name, user_creation_date, user_location, user_age)
+-- select userid, userdisplayname, usercreationdate, userlocation, userage
+-- from stackoverflow_sample_universal.comments;
 
 -- post(post_id(PK), creation_date, score, body, title, owner_user_id(FK), type_id) /* type id somewhat redundant */
 CREATE TABLE post (
