@@ -1,18 +1,3 @@
-/*
-users(OWNERUSERID, owneruserdisplayname, ownerusercreationdate, owneruserlocation, owneruserage)
-
-posts(ID, title, body, posttypeid, parentid, creationdate, closeddate, score, acceptedanswerid)
-linked_posts(LINK_POST_ID, POST_ID)
-
-post_tags(POST_ID, tag_id)
-tags(TAG_ID, tag)  <split tags on '::'>
-
-comment(COMMENT_ID, post_id, commenttext, commentscore, commentcreatedate)
-*/
----------------------------------------
-
-
-
 user (user_id(PK), user_name, user_creation_date, user_location, user_age) 
 
 post(post_id(PK), creation_date, score, body, title, owner_user_id(FK), type_id) /* type id somewhat redundant */
@@ -33,10 +18,7 @@ marking(USER_ID, POST_ID, date_time_added, folder_tag);
 
 linked_posts(LINK_POST_ID, POST_ID)
 
-
-
 ------------------------
-//owneruserid -> owneruserdisplayname, ownerusercreationdate, owneruserlocation, owneruserage
 
 //In posts(), index questions aside from answers
 
