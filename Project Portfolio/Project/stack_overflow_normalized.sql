@@ -2,7 +2,8 @@ DROP DATABASE if exists stack_overflow_normalized;
 CREATE DATABASE stack_overflow_normalized;
 USE stack_overflow_normalized;
 
--- DATABASE CREATION AND DATA INSERTION
+-- ---------------- DATABASE CREATION AND DATA INSERTION -------------------
+
 -- user (user_id(PK), user_name, user_creation_date, user_location, user_age) 
 CREATE TABLE user (
     user_id INT UNSIGNED PRIMARY KEY,
@@ -101,7 +102,7 @@ CREATE TABLE tags (
  iterates over that splitting up each tag inside the original 'tags' string, and inserts them
  into the post_tag table 
  */
-drop procedure if exists split_insert_into_tags;
+-- drop procedure if exists split_insert_into_tags;
 delimiter //
 create procedure split_insert_into_tags()
 begin
@@ -158,9 +159,26 @@ CREATE TABLE marking (
     user_id INT REFERENCES user(user_id),
     post_id INT REFERENCES post(post_id),
     datetime_added DATETIME,
+    folder_tag varchar(200),
     PRIMARY KEY (user_id, datetime_added)
 );
 -- //post_type(type_id, type); /* somewhat redundant. a post with a parentid is an answer, posts without are questions */ /* could also remove and store type directly in the post table*/
 
+-- ---------------- FUNCTIONALITY / API -------------------
 
+-- search_by_tag(tag, lim) /* Basic tag search query. Returns relevant data about questions that contains the <tag>, ordered by score, limited to <lim> */
+drop procedure if exists search_by_tag;
+DELIMITER //
+CREATE PROCEDURE search_by_tag (IN tag varchar(200), lim int)
+BEGIN
+	select title, body, score, creation_date, closed_date from post, question, post_tags
+    where post.post_id = question.post_id and post.post_id = post_tags.post_id and post_tags.tag_name = tag
+    order by post.score desc limit lim;
+END //
+DELIMITER ;
+call search_by_tag("c#", 30);
 
+-- 
+-- Search by %word% in title 9033
+-- Search by tag in body
+-- 
