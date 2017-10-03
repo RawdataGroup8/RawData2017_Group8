@@ -1,0 +1,3 @@
+ask about super-tables and sub-tables
+
+specilation - find it in the extendet part of the ER modeling chapter of the book
