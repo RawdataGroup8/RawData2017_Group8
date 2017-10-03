@@ -32,7 +32,8 @@ CREATE TABLE post (
     body TEXT,
     title VARCHAR(300),
     owner_user_id INT UNSIGNED NOT NULL REFERENCES user (user_id),
-    type_id INT UNSIGNED
+    type_id INT UNSIGNED,
+    FULLTEXT (title,body)
 );
 
 insert into post (post_id, creation_date, score, body, title, owner_user_id, type_id)
@@ -89,7 +90,7 @@ CREATE TABLE tags (
     tag_name VARCHAR(50)
 );*/
 
--- returns the value at n'th position eg. string_at_delimited_pos("a::b::c::d", "::", 3) returns "c" 
+-- string_at_delimited_pos(str, delim, pos) /* returns the value at n'th position eg. string_at_delimited_pos("a::b::c::d", "::", 3) returns "c" */ 
 -- drop function if exists string_at_delimited_pos;
  CREATE FUNCTION string_at_delimited_pos(str VARCHAR(255), delim VARCHAR(12), pos INT)
  RETURNS VARCHAR(255)
@@ -98,10 +99,18 @@ CREATE TABLE tags (
         delim, '');
 -- select string_at_delimited_pos("qwer::rtyu::khhj","::",2);
 
+-- num_values_in_delimited_str(str) /* Returns the number of values such that a::b::c returns 3*/
+DELIMITER //
+CREATE FUNCTION num_values_in_delimited_str ( tag varchar(200) )
+RETURNS INT
+BEGIN
+   RETURN ROUND((LENGTH(tag) - LENGTH(REPLACE(tag, '::', ''))) / LENGTH('::')) + 1; -- number of :: in string + 1 (number of tags);
+END; //
+DELIMITER ;
+
 /* This procedure creates a cursor containing id, tag from the original 'posts' table,
  iterates over that splitting up each tag inside the original 'tags' string, and inserts them
- into the post_tag table 
- */
+ into the post_tag table */
 -- drop procedure if exists split_insert_into_tags;
 delimiter //
 create procedure split_insert_into_tags()
@@ -118,7 +127,7 @@ begin
     open tags_cur;	
 		read_loop: loop
 			fetch tags_cur into post_id, tag;
-			set i_max = ROUND((LENGTH(tag) - LENGTH(REPLACE(tag, '::', ''))) / LENGTH('::')) + 1; -- number of :: in string + 1 (number of tags)
+			set i_max = num_values_in_delimited_str(tag);-- ROUND((LENGTH(tag) - LENGTH(REPLACE(tag, '::', ''))) / LENGTH('::')) + 1; -- number of :: in string + 1 (number of tags)
 			set i = 1;
 			if done then
 				leave read_loop;
@@ -166,19 +175,54 @@ CREATE TABLE marking (
 
 -- ---------------- FUNCTIONALITY / API -------------------
 
--- search_by_tag(tag, lim) /* Basic tag search query. Returns relevant data about questions that contains the <tag>, ordered by score, limited to <lim> */
-drop procedure if exists search_by_tag;
+-- search_questions_by_tag(tag, lim) /* Basic tag search query. Returns relevant data about questions that contains the <tag>, ordered by score, limited to <lim> */
+-- drop procedure if exists search_questions_by_tag;
 DELIMITER //
-CREATE PROCEDURE search_by_tag (IN tag varchar(200), lim int)
+CREATE PROCEDURE search_questions_by_tag (IN tag varchar(200), lim int)
 BEGIN
-	select title, body, score, creation_date, closed_date from post, question, post_tags
+	select post.post_id, title, body, score, creation_date, closed_date from post, question, post_tags
     where post.post_id = question.post_id and post.post_id = post_tags.post_id and post_tags.tag_name = tag
     order by post.score desc limit lim;
 END //
 DELIMITER ;
-call search_by_tag("c#", 30);
+-- call search_questions_by_tag("c#", 50);
 
--- 
--- Search by %word% in title 9033
+-- retrieve_answers(question_id) /* Retrieves the answers to a given question */
+-- drop procedure if exists retrieve_answers;
+DELIMITER //
+CREATE PROCEDURE retrieve_answers (IN question_id int, lim int)
+BEGIN
+	select */*post.post_id, title, body, score, creation_date*/ from post, answer
+    where post.post_id = answer.post_id
+    order by post.score desc limit lim;
+END //
+DELIMITER ;
+-- call retrieve_answers(9033, 50);
+
+-- fulltext_search(search_str) /* Procedure makes use of mysql's built in full text search */
+-- drop procedure if exists fulltext_search;
+DELIMITER //
+CREATE PROCEDURE fulltext_search (in search_str varchar(400))
+BEGIN
+	SELECT post_id, title, body, MATCH (title,body) AGAINST
+	(search_str IN NATURAL LANGUAGE MODE)  AS score
+    FROM post WHERE post.type_id = 1 and MATCH (title,body) AGAINST
+    (search_str IN NATURAL LANGUAGE MODE);
+END //
+DELIMITER ;
+-- call fulltext_search('javascript tutorial');
+-- call fulltext_search('machine learning');
+-- call fulltext_search('how to python good');
+-- call fulltext_search('Hi help me be the bestest at searching thank you');
+
+/*
+SELECT * FROM post
+WHERE MATCH (title , body) AGAINST ('javascript ' IN NATURAL LANGUAGE MODE);
+
+SELECT post_id, title, body, MATCH (title,body) 
+AGAINST ('coffee' IN NATURAL LANGUAGE MODE) AS score
+FROM post order by score desc;
+*/
+-- Search by %word% in title
 -- Search by tag in body
 -- 
