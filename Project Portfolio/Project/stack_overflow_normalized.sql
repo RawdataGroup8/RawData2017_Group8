@@ -2,6 +2,7 @@ DROP DATABASE if exists stack_overflow_normalized;
 CREATE DATABASE stack_overflow_normalized;
 USE stack_overflow_normalized;
 
+-- DATABASE CREATION AND DATA INSERTION
 -- user (user_id(PK), user_name, user_creation_date, user_location, user_age) 
 CREATE TABLE user (
     user_id INT UNSIGNED PRIMARY KEY,
@@ -96,7 +97,11 @@ CREATE TABLE tags (
         delim, '');
 -- select string_at_delimited_pos("qwer::rtyu::khhj","::",2);
 
--- drop procedure if exists split_insert_into_tags;
+/* This procedure creates a cursor containing id, tag from the original 'posts' table,
+ iterates over that splitting up each tag inside the original 'tags' string, and inserts them
+ into the post_tag table 
+ */
+drop procedure if exists split_insert_into_tags;
 delimiter //
 create procedure split_insert_into_tags()
 begin
@@ -130,10 +135,32 @@ delimiter ;
 
 call split_insert_into_tags();
 
--- //post_type(type_id, type); /* somewhat redundant. a post with a parentid is an answer, posts without are questions */ /* could also remove and store type directly in the post table*/
+-- linked_posts(LINK_POST_ID, POST_ID)
+CREATE TABLE linked_posts (
+    post_id INT REFERENCES post (post_id),
+    link_post_id INT REFERENCES post (post_id),
+    PRIMARY KEY (link_post_id , post_id)
+);
+
+insert into linked_posts (post_id, link_post_id) 
+select id, linkpostid
+from stackoverflow_sample_universal.posts where linkpostid > "";
 
 -- history((USER_ID, DATE_TIME_ADDED)(PK), post_id(FK)); /*Index by users for search*/
-
+CREATE TABLE history (
+    user_id INT REFERENCES user(user_id),
+    datetime_added DATETIME,
+    link_post_id INT REFERENCES post (post_id),
+    PRIMARY KEY (user_id, datetime_added)
+);
 -- marking(USER_ID, POST_ID, date_time_added, folder_tag); 
+CREATE TABLE marking (
+    user_id INT REFERENCES user(user_id),
+    post_id INT REFERENCES post(post_id),
+    datetime_added DATETIME,
+    PRIMARY KEY (user_id, datetime_added)
+);
+-- //post_type(type_id, type); /* somewhat redundant. a post with a parentid is an answer, posts without are questions */ /* could also remove and store type directly in the post table*/
 
--- linked_posts(LINK_POST_ID, POST_ID)
+
+
