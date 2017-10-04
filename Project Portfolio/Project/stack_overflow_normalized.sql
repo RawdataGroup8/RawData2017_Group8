@@ -127,7 +127,7 @@ begin
     open tags_cur;	
 		read_loop: loop
 			fetch tags_cur into post_id, tag;
-			set i_max = num_values_in_delimited_str(tag);-- ROUND((LENGTH(tag) - LENGTH(REPLACE(tag, '::', ''))) / LENGTH('::')) + 1; -- number of :: in string + 1 (number of tags)
+			set i_max = num_values_in_delimited_str(tag);
 			set i = 1;
 			if done then
 				leave read_loop;
