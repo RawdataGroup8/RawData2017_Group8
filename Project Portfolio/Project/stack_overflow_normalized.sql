@@ -167,9 +167,9 @@ CREATE TABLE history (
 CREATE TABLE marking (
     user_id INT REFERENCES user(user_id),
     post_id INT REFERENCES post(post_id),
-    datetime_added DATETIME,
+    datetime_added DATETIME, 
     folder_tag varchar(200),
-    PRIMARY KEY (user_id, datetime_added)
+    PRIMARY KEY (user_id, post_id) /* added post_id to the PK instead of datetime_added. no need for multiple marks to one post */
 );
 -- //post_type(type_id, type); /* somewhat redundant. a post with a parentid is an answer, posts without are questions */ /* could also remove and store type directly in the post table*/
 
@@ -199,7 +199,7 @@ END //
 DELIMITER ;
 -- call retrieve_answers(9033, 50);
 
--- fulltext_search(search_str) /* Procedure makes use of mysql's built in full text search */
+-- fulltext_search(search_str) /* Procedure that finds questions using mysql's built in full text search (ignoring useless words, using multiword strings), searching in both title and body */
 -- drop procedure if exists fulltext_search;
 DELIMITER //
 CREATE PROCEDURE fulltext_search (in search_str varchar(400))
@@ -210,19 +210,22 @@ BEGIN
     (search_str IN NATURAL LANGUAGE MODE);
 END //
 DELIMITER ;
+-- call fulltext_search('mysql');
 -- call fulltext_search('javascript tutorial');
 -- call fulltext_search('machine learning');
 -- call fulltext_search('how to python good');
--- call fulltext_search('Hi help me be the bestest at searching thank you');
+-- call fulltext_search('Hi database teach me to be the bestest at searching thank you bye bye');
 
-/*
-SELECT * FROM post
-WHERE MATCH (title , body) AGAINST ('javascript ' IN NATURAL LANGUAGE MODE);
+-- add_marking(user_id, post_id, marking_label) /* Inserts a marking to at given post <post_id>, for a given user <user_id>, with a given folder name <marking_label> and a <now()> timestamp*/
+-- drop procedure if exists add_marking;
+DELIMITER //
+CREATE PROCEDURE add_marking (IN user_id int, post_id int, marking_label varchar(200))
+BEGIN
+	insert into marking values (user_id, post_id, now(), marking_label);
+END //
+DELIMITER ;
+-- call add_marking(1185, 9033, 'MyFolder');
+-- select * from marking;
 
-SELECT post_id, title, body, MATCH (title,body) 
-AGAINST ('coffee' IN NATURAL LANGUAGE MODE) AS score
-FROM post order by score desc;
-*/
 -- Search by %word% in title
 -- Search by tag in body
--- 
