@@ -200,21 +200,22 @@ DELIMITER ;
 -- call retrieve_answers(9033, 50);
 
 -- fulltext_search(search_str) /* Procedure that finds questions using mysql's built in full text search (ignoring useless words, using multiword strings), searching in both title and body */
--- drop procedure if exists fulltext_search;
+drop procedure if exists fulltext_search;
 DELIMITER //
-CREATE PROCEDURE fulltext_search (in search_str varchar(400))
+CREATE PROCEDURE fulltext_search (in search_str varchar(400), post_type int)
 BEGIN
-	SELECT post_id, title, body, MATCH (title,body) AGAINST
+	SELECT post_id, title, body, match (title,body) AGAINST
 	(search_str IN NATURAL LANGUAGE MODE)  AS score
-    FROM post WHERE post.type_id = 1 and MATCH (title,body) AGAINST
+    FROM post WHERE post.type_id = post_type and MATCH (title,body) AGAINST
     (search_str IN NATURAL LANGUAGE MODE);
 END //
 DELIMITER ;
--- call fulltext_search('mysql');
--- call fulltext_search('javascript tutorial');
--- call fulltext_search('machine learning');
--- call fulltext_search('how to python good');
--- call fulltext_search('Hi database teach me to be the bestest at searching thank you bye bye');
+-- call fulltext_search('mysql', 1);
+-- call fulltext_search('mysql', 2);
+-- call fulltext_search('javascript tutorial',1);
+-- call fulltext_search('machine learning',1);
+-- call fulltext_search('how to python good',1);
+-- call fulltext_search('Hi database teach me to be the bestest at searching thank you bye bye',1);
 
 -- add_marking(user_id, post_id, marking_label) /* Inserts a marking to at given post <post_id>, for a given user <user_id>, with a given folder name <marking_label> and a <now()> timestamp*/
 -- drop procedure if exists add_marking;
@@ -223,7 +224,7 @@ CREATE PROCEDURE add_marking (IN user_id int, post_id int, marking_label varchar
 BEGIN
 	insert into marking values (user_id, post_id, now(), marking_label);
 END //
-DELIMITER ;
+DELIMITER ; /* how to handle the user inserting multiple identical marks? gives duplicate error now. insert ignore would do it but its probably bad design*/
 -- call add_marking(1185, 9033, 'MyFolder');
 -- select * from marking;
 
