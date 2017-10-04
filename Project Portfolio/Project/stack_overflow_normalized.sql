@@ -104,7 +104,7 @@ DELIMITER //
 CREATE FUNCTION num_values_in_delimited_str ( tag varchar(200) )
 RETURNS INT
 BEGIN
-   RETURN ROUND((LENGTH(tag) - LENGTH(REPLACE(tag, '::', ''))) / LENGTH('::')) + 1; -- number of :: in string + 1 (number of tags);
+   RETURN ROUND((LENGTH(tag) - LENGTH(REPLACE(tag, '::', ''))) / LENGTH('::')) + 1;
 END; //
 DELIMITER ;
 
