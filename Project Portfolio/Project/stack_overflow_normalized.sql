@@ -184,7 +184,8 @@ CREATE TABLE marking (
 DELIMITER //
 CREATE PROCEDURE search_questions_by_tag (IN tag varchar(200), lim int)
 BEGIN
-	select post.post_id, title, body, score, creation_date, closed_date from post, question, post_tags
+	select post.post_id, title, body, score, creation_date, closed_date 
+    from post, question, post_tags
     where post.post_id = question.post_id and post.post_id = post_tags.post_id and post_tags.tag_name = tag
     order by post.score desc limit lim;
 END //
@@ -242,7 +243,7 @@ begin
 	declare cur1 cursor for (
 		select tag_name 
         from post_tags 
-		where match(tag_name) against(inpute IN BOOLEAN MODE)); -- this requires fulltext indexing of post_tags which may be a bit overkill since tags are atomic/only one word right? :) split 'input' and loop instead
+		where match(tag_name) against(inpute IN BOOLEAN MODE)); -- this requires fulltext indexing of post_tags which may be a bit overkill since tags are atomic/only one word right? :) could split 'input' and loop instead
 	declare continue handler for not found set done = true;
     
 	open cur1; /* Right now the value of 'a' never changes when the queries are executed since that happens after this loop. If the full loop runs, 'a' will always be the last value*/
