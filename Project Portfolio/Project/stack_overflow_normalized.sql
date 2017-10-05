@@ -233,6 +233,7 @@ DELIMITER ; /* todo: handle the user inserting multiple identical marks. gives d
 -- call add_marking(1185, 9033, 'MyFolder');
 -- select * from marking;
 
+-- Searching_Questions /* Finds questions that matches the last meaningful word of the input string, where that word must be in the title. */
 drop procedure if exists Searching_Questions;
 delimiter //
 create procedure Searching_Questions( in inpute char (200))
@@ -243,27 +244,26 @@ begin
 	declare cur1 cursor for (
 		select tag_name 
         from post_tags 
-		where match(tag_name) against(inpute IN BOOLEAN MODE)); -- this requires fulltext indexing of post_tags which may be a bit overkill since tags are atomic/only one word right? :) could split 'input' and loop instead
+		where match(tag_name) against(inpute IN BOOLEAN MODE)); 
 	declare continue handler for not found set done = true;
     
-	open cur1; /* Right now the value of 'a' never changes when the queries are executed since that happens after this loop. If the full loop runs, 'a' will always be the last value*/
+	open cur1; 
 		read_loop: loop
 			fetch cur1 into a;
-			leave read_loop; -- This always ends the loop on the first iteration. need to add 'if done then' before to do the full loop
+			leave read_loop;
 		end loop;
 	close cur1;
     
 	select post_id, type_id, title, body, score from 
-    (select * from post_tags where match(tag_name) against(a IN BOOLEAN MODE)) as t -- could just be 'where tag_name = a;' ('tag_name' and 'a' are both atomic so no need for a fulltext search) :)
+    (select * from post_tags where match(tag_name) against(a IN BOOLEAN MODE)) as t 
 	natural join post
-	where match(post.title) against(+a IN BOOLEAN MODE) -- +a means the tag MUST be in the title right? currently removes anything else.
+	where match(post.title) against(+a IN BOOLEAN MODE) 
 	and match(post.body) against(inpute in natural language mode)
 	order by post.score desc;
 	
-    end;//
+end;//
 delimiter ;
 
-call Searching_Questions('.net java python'); -- Finds questions that matches the last word, where the last word must be in the title.
 
 -- Search by %word% in title
 -- Search by tag in body
