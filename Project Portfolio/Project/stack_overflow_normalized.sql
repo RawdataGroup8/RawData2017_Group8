@@ -25,6 +25,7 @@ from stackoverflow_sample_universal.comments;
 -- from stackoverflow_sample_universal.comments;
 
 -- post(post_id(PK), creation_date, score, body, title, owner_user_id(FK), type_id) /* type id somewhat redundant */
+drop table if exists post;
 CREATE TABLE post (
     post_id INT UNSIGNED PRIMARY KEY,
     creation_date DATETIME,
@@ -33,7 +34,9 @@ CREATE TABLE post (
     title VARCHAR(300),
     owner_user_id INT UNSIGNED NOT NULL REFERENCES user (user_id),
     type_id INT UNSIGNED,
-    FULLTEXT (title,body)
+    FULLTEXT (title,body), -- used by: fulltext_search
+    FULLTEXT (body), -- used by: Searching_Questions
+	FULLTEXT (title)-- used by: Searching_Questions
 );
 
 insert into post (post_id, creation_date, score, body, title, owner_user_id, type_id)
@@ -76,11 +79,12 @@ select commentid, commentscore, commenttext, commentcreatedate, userid, postid
 from stackoverflow_sample_universal.comments;
 
 -- post_tags((post_id(FK), tag)(PK))//tag_id
--- drop table if exists post_tags;
+drop table if exists post_tags;
 CREATE TABLE post_tags (
     post_id INT REFERENCES post (post_id),
     tag_name VARCHAR(50),
-    primary key(post_id, tag_name)
+    primary key(post_id, tag_name),
+    fulltext(tag_name) -- used in Searching_Questions
 );
 
 -- tags(TAG_ID, tag)  <split tags on '::'> 
@@ -199,7 +203,7 @@ END //
 DELIMITER ;
 -- call retrieve_answers(9033, 50);
 
--- fulltext_search(search_str) /* Procedure that finds questions using mysql's built in full text search (ignoring useless words, using multiword strings), searching in both title and body */
+-- fulltext_search(search_str) /* Procedure that finds questions using mysql's built in fulltext search (ignoring useless words, using multiword strings), searching in both title and body */
 drop procedure if exists fulltext_search;
 DELIMITER //
 CREATE PROCEDURE fulltext_search (in search_str varchar(400), post_type int)
@@ -224,9 +228,41 @@ CREATE PROCEDURE add_marking (IN user_id int, post_id int, marking_label varchar
 BEGIN
 	insert into marking values (user_id, post_id, now(), marking_label);
 END //
-DELIMITER ; /* how to handle the user inserting multiple identical marks? gives duplicate error now. insert ignore would do it but its probably bad design*/
+DELIMITER ; /* todo: handle the user inserting multiple identical marks. gives duplicate error now. insert ignore would do it but its probably bad design*/
 -- call add_marking(1185, 9033, 'MyFolder');
 -- select * from marking;
+
+drop procedure if exists Searching_Questions;
+delimiter //
+create procedure Searching_Questions( in inpute char (200))
+begin
+	declare done int default false;
+	declare a char(200);
+    
+	declare cur1 cursor for (
+		select tag_name 
+        from post_tags 
+		where match(tag_name) against(inpute IN BOOLEAN MODE)); -- this requires fulltext indexing of post_tags which may be a bit overkill since tags are atomic/only one word right? :) split 'input' and loop instead
+	declare continue handler for not found set done = true;
+    
+	open cur1; /* Right now the value of 'a' never changes when the queries are executed since that happens after this loop. If the full loop runs, 'a' will always be the last value*/
+		read_loop: loop
+			fetch cur1 into a;
+			leave read_loop; -- This always ends the loop on the first iteration. need to add 'if done then' before to do the full loop
+		end loop;
+	close cur1;
+    
+	select post_id, type_id, title, body, score from 
+    (select * from post_tags where match(tag_name) against(a IN BOOLEAN MODE)) as t -- could just be 'where tag_name = a;' ('tag_name' and 'a' are both atomic so no need for a fulltext search) :)
+	natural join post
+	where match(post.title) against(+a IN BOOLEAN MODE) -- +a means the tag MUST be in the title right? currently removes anything else.
+	and match(post.body) against(inpute in natural language mode)
+	order by post.score desc;
+	
+    end;//
+delimiter ;
+
+call Searching_Questions('.net java python'); -- Finds questions that matches the last word, where the last word must be in the title.
 
 -- Search by %word% in title
 -- Search by tag in body
