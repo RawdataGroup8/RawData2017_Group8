@@ -25,7 +25,7 @@ from stackoverflow_sample_universal.comments;
 -- from stackoverflow_sample_universal.comments;
 
 -- post(post_id(PK), creation_date, score, body, title, owner_user_id(FK), type_id) /* type id somewhat redundant */
-drop table if exists post;
+-- drop table if exists post;
 CREATE TABLE post (
     post_id INT UNSIGNED PRIMARY KEY,
     creation_date DATETIME,
@@ -79,7 +79,7 @@ select commentid, commentscore, commenttext, commentcreatedate, userid, postid
 from stackoverflow_sample_universal.comments;
 
 -- post_tags((post_id(FK), tag)(PK))//tag_id
-drop table if exists post_tags;
+-- drop table if exists post_tags;
 CREATE TABLE post_tags (
     post_id INT REFERENCES post (post_id),
     tag_name VARCHAR(50),
