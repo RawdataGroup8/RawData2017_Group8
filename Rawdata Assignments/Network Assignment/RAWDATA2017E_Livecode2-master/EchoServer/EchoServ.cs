@@ -42,35 +42,60 @@ namespace EchoServer
 
             var buffer = new byte[client.ReceiveBufferSize];
             var bytesRead = stream.Read(buffer, 0, buffer.Length);
-            var response = new Response();
-
             var request = Encoding.UTF8.GetString(buffer);
-            //Console.WriteLine("buffer: "+bytesRead+"Req: |"+request.Trim('\0') + "|");
-            //if (request.Trim('\0') == "{}"){ response.Status = "missing method";}
-            //else
-            //{
-            //Console.ReadKey();
-                var requestObj = JsonConvert.DeserializeObject<RequestObj>(request.Trim('\0'));
-                switch (requestObj.Method)
-                {
-                    case "{}":
-                        response.Status = "missing method";
-                        break;
-                    default:
-                        response.Status = "illegal method";
-                        break;
 
-                }
-                Console.WriteLine("The method: "+requestObj.Method);
-            //}
-            //Console.WriteLine(response.Status + " | " + response.Body);
-            //var reqObjFromJson = JsonConvert.DeserializeObject(request);
-            //string response;
+            var requestObj = JsonConvert.DeserializeObject<RequestObj>(request.Trim('\0'));
+            var response = new Response();
+            switch (requestObj.Method)
+            {
+                case "{}":
+                    response.Status = "missing method";
+                    break;
+                case "create":
+                    Create(requestObj, ref response);
+                    break;
+                case "read":
+                    Read(requestObj, ref response);
+                    break;
+                case "update":
+                    Update(requestObj, ref response);
+                    break;
+                case "delete":
+                    Delete(requestObj, ref response);
+                    break;
+                default:
+                    response.Status = "illegal method";
+                    break;
+            }
 
+            WriteRepsonse(client, stream, response);
+        }
 
-            //Console.WriteLine(JsonConvert.SerializeObject(response).Length);
+        private static void Create(RequestObj requestObj, ref Response response)
+        {
+            if (string.IsNullOrEmpty(requestObj.Body)) response.Status = "missing resource";
+            
+        }
 
+        private static void Read(RequestObj requestObj, ref Response response)
+        {
+            if (string.IsNullOrEmpty(requestObj.Body)) response.Status = "missing resource";
+        }
+
+        private static void Update(RequestObj requestObj, ref Response response)
+        {
+            if (string.IsNullOrEmpty(requestObj.Body)) response.Status = "missing resource";
+        }
+
+        private static void Delete(RequestObj requestObj, ref Response response)
+        {
+            if (string.IsNullOrEmpty(requestObj.Body)) response.Status = "missing resource";
+        }
+
+        private static void WriteRepsonse(TcpClient client, NetworkStream stream, Response response)
+        {
             var jsonResponse = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response));
+            //Console.WriteLine("here: "+ JsonConvert.SerializeObject(response));
             //Console.ReadKey();
             stream.Write(jsonResponse, 0, jsonResponse.Length);
 
