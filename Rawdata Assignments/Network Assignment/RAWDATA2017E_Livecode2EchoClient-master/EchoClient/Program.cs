@@ -32,7 +32,7 @@ namespace EchoClient
 
             strm.Close();
             client.Dispose();
-
+            Console.ReadKey();
 
         }
     }
