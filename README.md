@@ -1,7 +1,6 @@
 A collaborative project containing the files relevant to the 2017 course RAWDATA at Roskilde University
 by Kristoffer Schou, Eugenio Capuani, Kidane Mehari and Rune Barrett. 
 
-
 Start guide if in doubt :)
 - clone this repo to wherever you want the project/the working files/the repo
 - add it to sourcetree (if using that) (add existing in sourcetree)
