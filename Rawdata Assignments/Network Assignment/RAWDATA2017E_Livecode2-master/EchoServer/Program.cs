@@ -11,7 +11,7 @@ namespace EchoServer
         
         static void Main(string[] args)
         {
-            Int32 port = 5000;
+            int port = 5000;
             IPAddress localAddr = IPAddress.Parse("127.0.0.1");
 
             var server = new TcpListener(localAddr, port);
@@ -40,14 +40,19 @@ namespace EchoServer
             var strm = client.GetStream();
 
             byte[] buffer = new byte[client.ReceiveBufferSize];
-            strm.Read(buffer, 0, buffer.Length);
+            var bytesRead = strm.Read(buffer, 0, buffer.Length);
 
             var request = Encoding.UTF8.GetString(buffer);
 
-            Console.WriteLine(request);
+            Console.WriteLine(request.Trim('\0'));
 
+            var response = Encoding.UTF8.GetBytes(request.ToUpper());
 
+            strm.Write(response, 0, bytesRead);
 
+            strm.Close();
+
+            client.Dispose();
         }
     }
 }
