@@ -70,6 +70,9 @@ namespace Server1
                     case "delete":
                         Delete(requestObj, ref response);
                         break;
+                    case "echo":
+                        Delete(requestObj, ref response);
+                        break;
                     default:
                         response.Status = "illegal method";
                         break;
@@ -86,25 +89,39 @@ namespace Server1
 
         }
 
+        
         private static void Create(RequestObj requestObj, ref Response response)
         {
-            if (string.IsNullOrEmpty(requestObj.Body)) response.Status += "missing resource, ";
-            
+            CheckMissing(requestObj, response);
         }
+
 
         private static void Read(RequestObj requestObj, ref Response response)
         {
-            if (string.IsNullOrEmpty(requestObj.Body)) response.Status += "missing resource, ";
+            CheckMissing(requestObj, response);
         }
 
         private static void Update(RequestObj requestObj, ref Response response)
         {
-            if (string.IsNullOrEmpty(requestObj.Body)) response.Status += "missing resource, ";
+            CheckMissing(requestObj, response);
         }
 
         private static void Delete(RequestObj requestObj, ref Response response)
         {
-            if (string.IsNullOrEmpty(requestObj.Body)) response.Status += "missing resource, ";
+            CheckMissing(requestObj, response);
+        }
+        private static void Echo(RequestObj requestObj, ref Response response)
+        {
+            CheckMissing(requestObj, response);
+        }
+
+        private static void CheckMissing(RequestObj requestObj, Response response)
+        {
+            //Console.WriteLine(requestObj.Body);
+            if (string.IsNullOrEmpty(requestObj.Path)) response.Status += "missing resource, ";
+            if (string.IsNullOrEmpty(requestObj.Body)) response.Status += "missing body, ";
+            var body = JsonConvert.DeserializeObject<Category>(requestObj.Body);
+            if (body == null) response.Status = "illegal body";
         }
 
         private static void WriteRepsonse(Stream stream, Response response)
@@ -122,19 +139,16 @@ namespace Server1
         public class RequestObj
         {
             public string Method, Path, Date, Body;
+            public RequestObj() { Method = "{}"; }
+        }
 
-            /*public RequestObj(string method, string path, string date, string body)
-            {
-                Method = method;
-                Path = path;
-                Date = date;
-                Body = body;
-            }*/
-
-            public RequestObj()
-            {
-                Method = "{}";
-            }
+        private static RequestObj Read(Stream strm, int size)
+        {
+            var buffer = new byte[size];
+            var bytesRead = strm.Read(buffer, 0, buffer.Length);
+            var request = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+            //Console.WriteLine($"Request: {JsonConvert.SerializeObject(request)}");
+            return JsonConvert.DeserializeObject<RequestObj>(request);
         }
 
         public class Response
@@ -143,13 +157,12 @@ namespace Server1
             public string Body { get; set; }
         }
 
-        private static RequestObj Read(Stream strm, int size)
+        public class Category
         {
-            var buffer = new byte[size];
-            var bytesRead = strm.Read(buffer, 0, buffer.Length);
-            var request = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-            Console.WriteLine($"Request: {JsonConvert.SerializeObject(request)}");
-            return JsonConvert.DeserializeObject<RequestObj>(request);
+            [JsonProperty("cid")]
+            public int Id { get; set; }
+            [JsonProperty("name")]
+            public string Name { get; set; }
         }
     }
 }
