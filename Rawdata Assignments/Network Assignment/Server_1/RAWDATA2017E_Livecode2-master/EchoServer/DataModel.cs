@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -24,30 +25,25 @@ namespace Server1
             PrintModel();
         }
 
-        private void PrintModel()
+        public Category Create(string path, string name)
+        {
+            var c = new Category(Data.Count+1,name);
+            Data.Add(path +"/"+c.Id, c);
+            PrintModel();
+            return c;
+        }
+
+        public Category Retrieve(string path) => path != null && Data.ContainsKey(path) ? Data[path] : null;
+
+        public List<object> ReadAll() => Data.Select(c => c.Value).Cast<object>().ToList();
+
+        public void PrintModel()
         {
             foreach (var c in Data)
             {
                 Console.Write(c.Key + " returns --> ");
                 c.Value.Print();
             }
-        }
-
-        public Category Retrieve(string path)
-        {
-            
-            return path != null && Data.ContainsKey(path) ? Data[path] : null;
-        }
-
-        public Category[] ReadAll() {
-            var entries = new Category[Data.Count];
-            var count = 0;
-            foreach (var c in Data)
-            {
-                entries[count] = c.Value;
-                count++;
-            }
-            return entries;
         }
     }
 

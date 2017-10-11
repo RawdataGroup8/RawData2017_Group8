@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
+
 
 namespace Server1
 {
     static class DataAPI
     {
         private static DataModel _model;
-        private static bool _badRequest;
 
         public static void InitDataModel()
         {
@@ -16,56 +17,78 @@ namespace Server1
 
         public static void Create(Server.RequestObj requestObj, ref Server.Response response)
         {
-            CheckMissingResource(requestObj, response);
-            CheckMissingBody(requestObj, response);
-            if (_model.Retrieve(requestObj.Path) != null) BadRequest(response);
-            
+            var passed = false;
+            passed = CheckPath(requestObj, response);
+            passed = CheckBody(requestObj, response);
+            if (_model.Retrieve(requestObj.Path) != null)
+            {
+                response.Status = "4 Bad Request";
+                passed = false;
+            }
+            if (passed)
+            {
+                var b =_model.Create(requestObj.Path, JsonConvert.DeserializeObject<Category>(requestObj.Body).Name);
+                response.Body = JsonConvert.SerializeObject(b);
+            }
         }
 
 
         public static void Read(Server.RequestObj requestObj, ref Server.Response response)
         {
-            CheckMissingResource(requestObj, response);
+            CheckPath(requestObj, response);
+
         }
 
         public static void Update(Server.RequestObj requestObj, ref Server.Response response)
         {
-            CheckMissingResource(requestObj, response);
-            CheckMissingBody(requestObj, response);
+            CheckPath(requestObj, response);
+            CheckBody(requestObj, response);
         }
 
         public static void Delete(Server.RequestObj requestObj, ref Server.Response response)
         {
-            CheckMissingResource(requestObj, response);
+            CheckPath(requestObj, response);
         }
 
         public static void Echo(Server.RequestObj requestObj, ref Server.Response response)
         {
-            _badRequest = false;
-            //CheckMissingResource(requestObj, response); if (_badRequest) return;
-            CheckMissingBody(requestObj, response); if (_badRequest) return;
+            //_badRequest = false;
+            CheckBody(requestObj, response); //if (_badRequest) return;
             response.Body = requestObj.Body;
         }
 
         ////////// Private methods //////////
-        private static void CheckMissingResource(Server.RequestObj requestObj, Server.Response response)
+        private static bool CheckPath(Server.RequestObj requestObj, Server.Response response)
         {
-            if (string.IsNullOrEmpty(requestObj.Path)) response.Status += "missing resource, ";
-            else if (_model.Retrieve(requestObj.Path) == null) BadRequest(response);
+            if (string.IsNullOrEmpty(requestObj.Path))
+            {
+                response.Status += "missing resource, ";
+                return false;
+            }
+            if (_model.Retrieve(requestObj.Path) == null)
+            {
+                response.Status = "4 Bad Request";
+                return false;
+            }
+            return true;
         }
 
-        private static void CheckMissingBody(Server.RequestObj requestObj, Server.Response response)
+        private static bool CheckBody(Server.RequestObj requestObj, Server.Response response)
         {
-            if (string.IsNullOrEmpty(requestObj.Body)) response.Status += "missing body, ";
-            else if (requestObj.Body[0] != '{') response.Status += "illegal body, ";
+            if (string.IsNullOrEmpty(requestObj.Body))
+            {
+                response.Status += "missing body, ";
+                return false;
+            }
+            if (requestObj.Body[0] != '{')
+            {
+                response.Status += "illegal body, ";
+                return false;
+            }
+            return true;
 
         }
 
-        private static void BadRequest(Server.Response response)
-        {
-            response.Status = "4 Bad Request";
-            _badRequest = true;
-        }
 
     }
 
