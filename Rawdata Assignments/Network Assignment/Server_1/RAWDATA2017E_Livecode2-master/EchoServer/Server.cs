@@ -115,8 +115,8 @@ namespace Server1
 
         private static bool IsUnixTimestamp(string str)
         {
-            //only works for the next many many years
-            return str.Length <= 10 && str.All(c => c >= '0' && c <= '9');
+            //only works for the next many years
+            return str.Length <= 10 && str.All(c => c >= '0' && c <= '9');// && int.Parse(str) > 1490000000;
         }
 
         public class RequestObj
