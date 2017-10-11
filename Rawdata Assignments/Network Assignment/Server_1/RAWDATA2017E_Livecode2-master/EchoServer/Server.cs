@@ -11,8 +11,10 @@ namespace Server1
 {
     internal class Server
     {
+        private static DataModel dataModel;
         private static void Main(string[] args)
         {
+            dataModel = new DataModel();
             const int port = 5000;
             var localAddr = IPAddress.Parse("127.0.0.1");
 
