@@ -1,17 +1,15 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading;
 using Newtonsoft.Json;
 
-namespace EchoServer
+namespace Server1
 {
-    internal class EchoServ
+    internal class Server
     {
         private static void Main(string[] args)
         {
@@ -42,15 +40,14 @@ namespace EchoServer
 
             var stream = client.GetStream();
 
-            var buffer = new byte[client.ReceiveBufferSize];
+            //var buffer = new byte[client.ReceiveBufferSize];
 
             try
             {
-                var bytesRead = stream.Read(buffer, 0, buffer.Length);
+                //var bytesRead = stream.Read(buffer, 0, buffer.Length);
+                var requestObj = Read(stream, client.ReceiveBufferSize);//Encoding.UTF8.GetString(buffer);
 
-                var request = Encoding.UTF8.GetString(buffer);
-
-                var requestObj = JsonConvert.DeserializeObject<RequestObj>(request.Trim('\0'));
+                //var requestObj = JsonConvert.DeserializeObject<RequestObj>(request.Trim('\0'));
                 var response = new Response();
                 Console.WriteLine(requestObj.Date);
                 if (string.IsNullOrEmpty(requestObj.Date)) response.Status += "missing date, ";
@@ -126,13 +123,13 @@ namespace EchoServer
         {
             public string Method, Path, Date, Body;
 
-            public RequestObj(string method, string path, string date, string body)
+            /*public RequestObj(string method, string path, string date, string body)
             {
                 Method = method;
                 Path = path;
                 Date = date;
                 Body = body;
-            }
+            }*/
 
             public RequestObj()
             {
@@ -144,6 +141,15 @@ namespace EchoServer
         {
             public string Status { get; set; }
             public string Body { get; set; }
+        }
+
+        private static RequestObj Read(Stream strm, int size)
+        {
+            var buffer = new byte[size];
+            var bytesRead = strm.Read(buffer, 0, buffer.Length);
+            var request = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+            Console.WriteLine($"Request: {JsonConvert.SerializeObject(request)}");
+            return JsonConvert.DeserializeObject<RequestObj>(request);
         }
     }
 }
