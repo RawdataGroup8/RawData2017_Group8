@@ -11,10 +11,10 @@ namespace Server1
 {
     internal class Server
     {
-        private static DataModel dataModel;
         private static void Main(string[] args)
         {
-            dataModel = new DataModel();
+            DataAPI.InitDataModel();
+
             const int port = 5000;
             var localAddr = IPAddress.Parse("127.0.0.1");
 
@@ -42,18 +42,14 @@ namespace Server1
 
             var stream = client.GetStream();
 
-            //var buffer = new byte[client.ReceiveBufferSize];
-
             try
             {
-                //var bytesRead = stream.Read(buffer, 0, buffer.Length);
                 var requestObj = Read(stream, client.ReceiveBufferSize);//Encoding.UTF8.GetString(buffer);
 
-                //var requestObj = JsonConvert.DeserializeObject<RequestObj>(request.Trim('\0'));
                 var response = new Response();
                 Console.WriteLine(requestObj.Date);
                 if (string.IsNullOrEmpty(requestObj.Date)) response.Status += "missing date, ";
-                else if (!IsUnixTimestamp(requestObj.Date)) response.Status += "illegal date, ";
+                else if (!Helpers.IsUnixTimestamp(requestObj.Date)) response.Status += "illegal date, ";
 
                 switch (requestObj.Method)
                 {
@@ -61,26 +57,26 @@ namespace Server1
                         response.Status += "missing method, ";
                         break;
                     case "create":
-                        Create(requestObj, ref response);
+                        DataAPI.Create(requestObj, ref response);
                         break;
                     case "read":
-                        Read(requestObj, ref response);
+                        DataAPI.Read(requestObj, ref response);
                         break;
                     case "update":
-                        Update(requestObj, ref response);
+                        DataAPI.Update(requestObj, ref response);
                         break;
                     case "delete":
-                        Delete(requestObj, ref response);
+                        DataAPI.Delete(requestObj, ref response);
                         break;
                     case "echo":
-                        Echo(requestObj, ref response);
+                        DataAPI.Echo(requestObj, ref response);
                         break;
                     default:
                         response.Status = "illegal method";
                         break;
                 }
 
-                WriteRepsonse(stream, response);
+                WriteResponse(stream, response);
                 stream.Close();
                 client.Dispose();
             }
@@ -91,64 +87,13 @@ namespace Server1
 
         }
 
-        
-        private static void Create(RequestObj requestObj, ref Response response)
-        {
-            CheckMissingResource(requestObj, response);
-            CheckMissingBody(requestObj, response);
-        }
-
-
-        private static void Read(RequestObj requestObj, ref Response response)
-        {
-            CheckMissingResource(requestObj, response);
-        }
-
-        private static void Update(RequestObj requestObj, ref Response response)
-        {
-            CheckMissingResource(requestObj, response);
-            CheckMissingBody(requestObj, response);
-        }
-
-        private static void Delete(RequestObj requestObj, ref Response response)
-        {
-            CheckMissingResource(requestObj, response);
-        }
-        private static void Echo(RequestObj requestObj, ref Response response)
-        {
-            CheckMissingResource(requestObj, response);
-            CheckMissingBody(requestObj, response);
-            response.Body = requestObj.Body;
-        }
-
-        private static void CheckMissingResource(RequestObj requestObj, Response response)
-        {
-            if (string.IsNullOrEmpty(requestObj.Path)) response.Status += "missing resource, ";
-        }
-        private static void CheckMissingBody(RequestObj requestObj, Response response)
-        {
-            if (string.IsNullOrEmpty(requestObj.Body)) response.Status += "missing body, ";
-            else
-            {
-                var bodyObj = new Category();
-                if (requestObj.Body[0] == '{')
-                    bodyObj = JsonConvert.DeserializeObject<Category>(requestObj.Body);
-                else
-                    response.Status += "illegal body, ";
-            }
-        }
-
-        private static void WriteRepsonse(Stream stream, Response response)
+        private static void WriteResponse(Stream stream, Response response)
         {
             var jsonResponse = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response));
             stream.Write(jsonResponse, 0, jsonResponse.Length);
         }
 
-        private static bool IsUnixTimestamp(string str)
-        {
-            //only works for the next many years
-            return str.Length <= 10 && str.All(c => c >= '0' && c <= '9');// && int.Parse(str) > 1490000000;
-        }
+
 
         public class RequestObj
         {
@@ -169,14 +114,6 @@ namespace Server1
         {
             public string Status { get; set; }
             public string Body { get; set; }
-        }
-
-        public class Category
-        {
-            [JsonProperty("cid")]
-            public int Id { get; set; }
-            [JsonProperty("name")]
-            public string Name { get; set; }
         }
     }
 }

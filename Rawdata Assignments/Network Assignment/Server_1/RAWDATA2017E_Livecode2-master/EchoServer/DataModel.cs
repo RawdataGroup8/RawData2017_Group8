@@ -7,36 +7,41 @@ using Newtonsoft.Json;
 
 namespace Server1
 {
-    class DataModel
+    internal class DataModel
     {
-        public Dictionary<string, Category> DataStructure;
+        public Dictionary<string, Category> Data;
 
-        //Create datamodel with hardcoded data
+        //Create datamodel with very hardcoded data
         public DataModel()
         {
-            DataStructure = new Dictionary<string, Category>();
+            Data = new Dictionary<string, Category>();
             Console.Write("Creating datamodel ... ");
-            DataStructure.Add("/api/categories/1", new Category(1,"Beverages"));
-            DataStructure.Add("/api/categories/2", new Category(2, "Condiments"));
-            DataStructure.Add("/api/categories/3", new Category(3, "Confections"));
+            Data.Add("/api/categories/1", new Category(1,"Beverages"));
+            Data.Add("/api/categories/2", new Category(2, "Condiments"));
+            Data.Add("/api/categories/3", new Category(3, "Confections"));
 
             Console.WriteLine("Done:");
-            foreach (var c in DataStructure)
+            PrintModel();
+        }
+
+        private void PrintModel()
+        {
+            foreach (var c in Data)
             {
                 Console.Write(c.Key + " returns --> ");
                 c.Value.Print();
             }
         }
 
-        public Category Read(string path)
+        public Category Retrieve(string path)
         {
-            return DataStructure[path];
+            return Data.ContainsKey(path) ? Data[path] : null;
         }
 
         public Category[] ReadAll() {
-            var entries = new Category[DataStructure.Count];
+            var entries = new Category[Data.Count];
             var count = 0;
-            foreach (var c in DataStructure)
+            foreach (var c in Data)
             {
                 entries[count] = c.Value;
                 count++;
@@ -52,6 +57,8 @@ namespace Server1
         public int Id { get; set; }
         [JsonProperty("name")]
         public string Name { get; set; }
+
+        public Category(){}
 
         public Category(int id, string name)
         {
