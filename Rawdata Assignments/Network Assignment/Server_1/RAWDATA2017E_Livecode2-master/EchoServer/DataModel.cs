@@ -38,6 +38,13 @@ namespace Server1
             Data.Remove(path);
         }
 
+        public Category UpdateName(string path, string name)
+        {
+            Data[path].Name = name;
+            PrintModel();
+            return Data[path];
+        }
+
         public Category Retrieve(string path) => path != null && Data.ContainsKey(path) ? Data[path] : null;
 
         public List<object> ReadAll() => Data.Select(c => c.Value).Cast<object>().ToList();

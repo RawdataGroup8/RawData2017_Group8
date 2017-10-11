@@ -25,11 +25,10 @@ namespace Server1
                 response.Status = "4 Bad Request";
                 passed = false;
             }
-            if (passed)
-            {
-                var b =_model.Create(requestObj.Path, JsonConvert.DeserializeObject<Category>(requestObj.Body).Name);
-                response.Body = JsonConvert.SerializeObject(b);
-            }
+            if (!passed) return;
+
+            var b =_model.Create(requestObj.Path, JsonConvert.DeserializeObject<Category>(requestObj.Body).Name);
+            response.Body = JsonConvert.SerializeObject(b);
         }
 
 
@@ -41,19 +40,17 @@ namespace Server1
 
         public static void Update(Server.RequestObj requestObj, ref Server.Response response)
         {
-            CheckPath(requestObj, response);
-            CheckBody(requestObj, response);
+            var passed = CheckPath(requestObj, response) || CheckBody(requestObj, response) && CheckExists(requestObj, response);
+
+            if (!passed) return;
+            var b = _model.UpdateName(requestObj.Path, JsonConvert.DeserializeObject<Category>(requestObj.Body).Name);
+            response.Status += "3 updated";
+            response.Body = JsonConvert.SerializeObject(b);
         }
 
         public static void Delete(Server.RequestObj requestObj, ref Server.Response response)
         {
-            bool passed;
-            passed = CheckPath(requestObj, response);
-            if (passed && _model.Retrieve(requestObj.Path) == null)
-            {
-                response.Status += "5 not found, ";
-                passed = false;
-            }
+            var passed = CheckPath(requestObj, response) && CheckExists(requestObj, response);
 
             if (passed)
             {
@@ -62,6 +59,16 @@ namespace Server1
             }
             _model.PrintModel();
             
+        }
+
+        private static bool CheckExists(Server.RequestObj requestObj, Server.Response response)
+        {
+            if (_model.Retrieve(requestObj.Path) == null)
+            {
+                response.Status += "5 not found, ";
+                return false;
+            }
+            return true;
         }
 
         public static void Echo(Server.RequestObj requestObj, ref Server.Response response)
