@@ -71,7 +71,7 @@ namespace Server1
                         Delete(requestObj, ref response);
                         break;
                     case "echo":
-                        Delete(requestObj, ref response);
+                        Echo(requestObj, ref response);
                         break;
                     default:
                         response.Status = "illegal method";
@@ -92,36 +92,47 @@ namespace Server1
         
         private static void Create(RequestObj requestObj, ref Response response)
         {
-            CheckMissing(requestObj, response);
+            CheckMissingResource(requestObj, response);
+            CheckMissingBody(requestObj, response);
         }
 
 
         private static void Read(RequestObj requestObj, ref Response response)
         {
-            CheckMissing(requestObj, response);
+            CheckMissingResource(requestObj, response);
         }
 
         private static void Update(RequestObj requestObj, ref Response response)
         {
-            CheckMissing(requestObj, response);
+            CheckMissingResource(requestObj, response);
+            CheckMissingBody(requestObj, response);
         }
 
         private static void Delete(RequestObj requestObj, ref Response response)
         {
-            CheckMissing(requestObj, response);
+            CheckMissingResource(requestObj, response);
         }
         private static void Echo(RequestObj requestObj, ref Response response)
         {
-            CheckMissing(requestObj, response);
+            CheckMissingResource(requestObj, response);
+            CheckMissingBody(requestObj, response);
         }
 
-        private static void CheckMissing(RequestObj requestObj, Response response)
+        private static void CheckMissingResource(RequestObj requestObj, Response response)
         {
-            //Console.WriteLine(requestObj.Body);
             if (string.IsNullOrEmpty(requestObj.Path)) response.Status += "missing resource, ";
+        }
+        private static void CheckMissingBody(RequestObj requestObj, Response response)
+        {
             if (string.IsNullOrEmpty(requestObj.Body)) response.Status += "missing body, ";
-            var body = JsonConvert.DeserializeObject<Category>(requestObj.Body);
-            if (body == null) response.Status = "illegal body";
+            else
+            {
+                var bodyObj = new Category();
+                if (requestObj.Body[0] == '{')
+                    bodyObj = JsonConvert.DeserializeObject<Category>(requestObj.Body);
+                else
+                    response.Status += "illegal body, ";
+            }
         }
 
         private static void WriteRepsonse(Stream stream, Response response)
