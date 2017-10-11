@@ -47,7 +47,21 @@ namespace Server1
 
         public static void Delete(Server.RequestObj requestObj, ref Server.Response response)
         {
-            CheckPath(requestObj, response);
+            bool passed;
+            passed = CheckPath(requestObj, response);
+            if (passed && _model.Retrieve(requestObj.Path) == null)
+            {
+                response.Status += "5 not found, ";
+                passed = false;
+            }
+
+            if (passed)
+            {
+                _model.Delete(requestObj.Path);
+                response.Status += "1 ok";
+            }
+            _model.PrintModel();
+            
         }
 
         public static void Echo(Server.RequestObj requestObj, ref Server.Response response)

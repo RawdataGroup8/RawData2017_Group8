@@ -33,6 +33,11 @@ namespace Server1
             return c;
         }
 
+        public void Delete(string path)
+        {
+            Data.Remove(path);
+        }
+
         public Category Retrieve(string path) => path != null && Data.ContainsKey(path) ? Data[path] : null;
 
         public List<object> ReadAll() => Data.Select(c => c.Value).Cast<object>().ToList();
