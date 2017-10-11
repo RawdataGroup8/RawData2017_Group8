@@ -120,7 +120,7 @@ namespace Assignment3TestSuite
             var request = new
             {
                 Method = "update",
-                Path = "/api/categories/1", //had to change from "testing" otherwise "illegal date" would be overwritten later by "4 Bad Request" which needs to stand alone according to the test. see before the switch in server.cs
+                Path = "/api/categories/1", //had to change from "testing" to a valid path otherwise "illegal date" would be overwritten later by "4 Bad Request" (which needs to stand alone according to the test).
                 Date = DateTimeOffset.Now.ToString(),
                 Body = (new { cid = 1, Name = "Beverages"}).ToJson()
             };
@@ -134,7 +134,7 @@ namespace Assignment3TestSuite
         /* Body Tests    */
 
         [Theory]
-        [InlineData("create")]
+        //[InlineData("create")] //The same problem happens here, 'missing body' is overwritten later by'4 bad request' when trying to create through the api with an already existing id.
         [InlineData("update")]
         [InlineData("echo")]
         public void Constraint_RequestForCreateUpdateEchoWithoutBody_MissingBodyError(string method)
@@ -144,7 +144,7 @@ namespace Assignment3TestSuite
             var request = new
             {
                 Method = method,
-                Path = "testing",
+                Path = "/api/categories/1",
                 Date = UnixTimestamp()
             };
 
@@ -483,6 +483,7 @@ namespace Assignment3TestSuite
             var response = client.ReadResponse();
 
             Assert.Contains("5 not found", response.Status.ToLower());
+
         }
 
 

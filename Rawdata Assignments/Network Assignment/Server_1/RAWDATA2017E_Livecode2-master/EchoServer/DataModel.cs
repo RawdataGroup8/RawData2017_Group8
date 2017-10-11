@@ -17,7 +17,7 @@ namespace Server1
         {
             Data = new Dictionary<string, Category>();
             Console.Write("Creating datamodel ... ");
-            Data.Add("/api/categories/1", new Category(1,"Beverages"));
+            Data.Add("/api/categories/1", new Category(1, "Beverages"));
             Data.Add("/api/categories/2", new Category(2, "Condiments"));
             Data.Add("/api/categories/3", new Category(3, "Confections"));
 

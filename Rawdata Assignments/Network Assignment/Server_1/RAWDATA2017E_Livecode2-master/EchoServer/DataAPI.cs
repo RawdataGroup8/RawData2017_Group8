@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using Newtonsoft.Json;
 
@@ -17,13 +19,16 @@ namespace Server1
 
         public static void Create(Server.RequestObj requestObj, ref Server.Response response)
         {
-            var passed = false;
-            passed = CheckPath(requestObj, response);
-            passed = CheckBody(requestObj, response);
+            var passed = CheckPath(requestObj, response);
             if (_model.Retrieve(requestObj.Path) != null)
             {
+                //The path already exists
                 response.Status = "4 Bad Request";
                 passed = false;
+            }
+            else
+            {
+               passed = CheckBody(requestObj, response);
             }
             if (!passed) return;
 
@@ -34,15 +39,32 @@ namespace Server1
 
         public static void Read(Server.RequestObj requestObj, ref Server.Response response)
         {
-            CheckPath(requestObj, response);
+            if (requestObj.Path == "/api/categories")
+            {
+                response.Status = "1 Ok";
+                response.Body = JsonConvert.SerializeObject(_model.ReadAll());
+            }
+            else
+            {
+                var passed = CheckPath(requestObj, response) || !CheckPathForId(requestObj, response);
+                if (!CheckExists(requestObj, response)) passed = false;
+                if (!passed) return;
+                response.Status = "1 Ok";
+                response.Body = JsonConvert.SerializeObject(_model.Retrieve(requestObj.Path));
+            }
+
+
 
         }
 
         public static void Update(Server.RequestObj requestObj, ref Server.Response response)
         {
-            var passed = CheckPath(requestObj, response) || CheckBody(requestObj, response) && CheckExists(requestObj, response);
-
+            var passed = CheckPath(requestObj, response);
+            if (!CheckExists(requestObj, response)) passed = false;
+            if (!CheckBody(requestObj, response)) passed = false;
+            if (!CheckPathForId(requestObj, response)) passed = false;
             if (!passed) return;
+
             var b = _model.UpdateName(requestObj.Path, JsonConvert.DeserializeObject<Category>(requestObj.Body).Name);
             response.Status += "3 updated";
             response.Body = JsonConvert.SerializeObject(b);
@@ -50,7 +72,11 @@ namespace Server1
 
         public static void Delete(Server.RequestObj requestObj, ref Server.Response response)
         {
-            var passed = CheckPath(requestObj, response) && CheckExists(requestObj, response);
+            Console.WriteLine("here: "+ int.TryParse("", out var reult));
+
+            var passed = CheckPath(requestObj, response);
+            if (!CheckExists(requestObj, response)) passed = false;
+            if (!CheckPathForId(requestObj, response)) return;
 
             if (passed)
             {
@@ -61,14 +87,23 @@ namespace Server1
             
         }
 
-        private static bool CheckExists(Server.RequestObj requestObj, Server.Response response)
+        private static bool CheckPathForId(Server.RequestObj requestObj, Server.Response response)
         {
-            if (_model.Retrieve(requestObj.Path) == null)
+            if (response.Status != null && response.Status.ToLower().Contains("5 not found") 
+                && requestObj.Path != null && !requestObj.Path.Any(char.IsDigit))
             {
-                response.Status += "5 not found, ";
+                response.Status = "4 Bad Request";
                 return false;
             }
             return true;
+        }
+
+        private static bool CheckExists(Server.RequestObj requestObj, Server.Response response)
+        {
+            if (_model.Retrieve(requestObj.Path) != null) return true;
+            if(!response.Status.Contains("Bad Request"))
+                response.Status += "5 not found, ";
+            return false;
         }
 
         public static void Echo(Server.RequestObj requestObj, ref Server.Response response)
@@ -88,7 +123,7 @@ namespace Server1
             }
             if (_model.Retrieve(requestObj.Path) == null)
             {
-                response.Status = "4 Bad Request";
+                response.Status = requestObj.Path.Contains("/api/categories") ? "5 Not Found" : "4 Bad Request";
                 return false;
             }
             return true;

@@ -14,7 +14,6 @@ namespace Server1
         private static void Main(string[] args)
         {
             DataAPI.InitDataModel();
-
             const int port = 5000;
             var localAddr = IPAddress.Parse("127.0.0.1");
 
@@ -26,6 +25,8 @@ namespace Server1
 
             while(true)
             {
+
+
                 var client = server.AcceptTcpClient();
 
                 Console.WriteLine("Client connected");
@@ -47,7 +48,7 @@ namespace Server1
                 var requestObj = Read(stream, client.ReceiveBufferSize);//Encoding.UTF8.GetString(buffer);
 
                 var response = new Response();
-                Console.WriteLine(requestObj.Date);
+                Console.WriteLine(requestObj.Method);
                 if (string.IsNullOrEmpty(requestObj.Date)) response.Status += "missing date, ";
                 else if (!Helpers.IsUnixTimestamp(requestObj.Date)){ response.Status += "illegal date, ";}
 
