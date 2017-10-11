@@ -1,0 +1,11 @@
+C:\Users\senay\Desktop\Assigment3\RawData2017\Rawdata Assignments\Network Assignment\RAWDATA2017E_Livecode2-master\EchoServer\bin\Debug\netcoreapp2.0\EchoServer.deps.json
+C:\Users\senay\Desktop\Assigment3\RawData2017\Rawdata Assignments\Network Assignment\RAWDATA2017E_Livecode2-master\EchoServer\bin\Debug\netcoreapp2.0\EchoServer.runtimeconfig.json
+C:\Users\senay\Desktop\Assigment3\RawData2017\Rawdata Assignments\Network Assignment\RAWDATA2017E_Livecode2-master\EchoServer\bin\Debug\netcoreapp2.0\EchoServer.runtimeconfig.dev.json
+C:\Users\senay\Desktop\Assigment3\RawData2017\Rawdata Assignments\Network Assignment\RAWDATA2017E_Livecode2-master\EchoServer\bin\Debug\netcoreapp2.0\EchoServer.dll
+C:\Users\senay\Desktop\Assigment3\RawData2017\Rawdata Assignments\Network Assignment\RAWDATA2017E_Livecode2-master\EchoServer\bin\Debug\netcoreapp2.0\EchoServer.pdb
+C:\Users\senay\Desktop\Assigment3\RawData2017\Rawdata Assignments\Network Assignment\RAWDATA2017E_Livecode2-master\EchoServer\obj\Debug\netcoreapp2.0\EchoServer.csprojResolveAssemblyReference.cache
+C:\Users\senay\Desktop\Assigment3\RawData2017\Rawdata Assignments\Network Assignment\RAWDATA2017E_Livecode2-master\EchoServer\obj\Debug\netcoreapp2.0\EchoServer.csproj.CoreCompileInputs.cache
+C:\Users\senay\Desktop\Assigment3\RawData2017\Rawdata Assignments\Network Assignment\RAWDATA2017E_Livecode2-master\EchoServer\obj\Debug\netcoreapp2.0\EchoServer.AssemblyInfoInputs.cache
+C:\Users\senay\Desktop\Assigment3\RawData2017\Rawdata Assignments\Network Assignment\RAWDATA2017E_Livecode2-master\EchoServer\obj\Debug\netcoreapp2.0\EchoServer.AssemblyInfo.cs
+C:\Users\senay\Desktop\Assigment3\RawData2017\Rawdata Assignments\Network Assignment\RAWDATA2017E_Livecode2-master\EchoServer\obj\Debug\netcoreapp2.0\EchoServer.dll
+C:\Users\senay\Desktop\Assigment3\RawData2017\Rawdata Assignments\Network Assignment\RAWDATA2017E_Livecode2-master\EchoServer\obj\Debug\netcoreapp2.0\EchoServer.pdb
