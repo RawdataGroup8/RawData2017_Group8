@@ -35,7 +35,8 @@ namespace Server1
 
         public Category Retrieve(string path)
         {
-            return Data.ContainsKey(path) ? Data[path] : null;
+            
+            return path != null && Data.ContainsKey(path) ? Data[path] : null;
         }
 
         public Category[] ReadAll() {

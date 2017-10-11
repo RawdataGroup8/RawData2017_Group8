@@ -49,7 +49,7 @@ namespace Server1
                 var response = new Response();
                 Console.WriteLine(requestObj.Date);
                 if (string.IsNullOrEmpty(requestObj.Date)) response.Status += "missing date, ";
-                else if (!Helpers.IsUnixTimestamp(requestObj.Date)) response.Status += "illegal date, ";
+                else if (!Helpers.IsUnixTimestamp(requestObj.Date)){ response.Status += "illegal date, ";}
 
                 switch (requestObj.Method)
                 {
@@ -72,7 +72,7 @@ namespace Server1
                         DataAPI.Echo(requestObj, ref response);
                         break;
                     default:
-                        response.Status = "illegal method";
+                        response.Status += "illegal method";
                         break;
                 }
 
