@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection.Metadata.Ecma335;
@@ -11,6 +12,7 @@ namespace EchoServer
 {
     internal class EchoServ
     {
+        private static int _count = 0;
         private static void Main(string[] args)
         {
             const int port = 5000;
@@ -41,34 +43,46 @@ namespace EchoServer
             var stream = client.GetStream();
 
             var buffer = new byte[client.ReceiveBufferSize];
-            var bytesRead = stream.Read(buffer, 0, buffer.Length);
-            var request = Encoding.UTF8.GetString(buffer);
 
-            var requestObj = JsonConvert.DeserializeObject<RequestObj>(request.Trim('\0'));
-            var response = new Response();
-            switch (requestObj.Method)
+            try
             {
-                case "{}":
-                    response.Status = "missing method";
-                    break;
-                case "create":
-                    Create(requestObj, ref response);
-                    break;
-                case "read":
-                    Read(requestObj, ref response);
-                    break;
-                case "update":
-                    Update(requestObj, ref response);
-                    break;
-                case "delete":
-                    Delete(requestObj, ref response);
-                    break;
-                default:
-                    response.Status = "illegal method";
-                    break;
+                var bytesRead = stream.Read(buffer, 0, buffer.Length);
+
+                var request = Encoding.UTF8.GetString(buffer);
+
+                var requestObj = JsonConvert.DeserializeObject<RequestObj>(request.Trim('\0'));
+                var response = new Response();
+                switch (requestObj.Method)
+                {
+                    case "{}":
+                        response.Status = "missing method";
+                        break;
+                    case "create":
+                        Create(requestObj, ref response);
+                        break;
+                    case "read":
+                        Read(requestObj, ref response);
+                        break;
+                    case "update":
+                        Update(requestObj, ref response);
+                        break;
+                    case "delete":
+                        Delete(requestObj, ref response);
+                        break;
+                    default:
+                        response.Status = "illegal method";
+                        break;
+                }
+
+                WriteRepsonse(client, stream, response);
+                stream.Close();
+                client.Dispose();
+            }
+            catch (IOException)
+            {
+                Console.WriteLine("no request");
             }
 
-            WriteRepsonse(client, stream, response);
         }
 
         private static void Create(RequestObj requestObj, ref Response response)
@@ -98,10 +112,6 @@ namespace EchoServer
             //Console.WriteLine("here: "+ JsonConvert.SerializeObject(response));
             //Console.ReadKey();
             stream.Write(jsonResponse, 0, jsonResponse.Length);
-
-            stream.Close();
-
-            client.Dispose();
         }
 
         public class RequestObj

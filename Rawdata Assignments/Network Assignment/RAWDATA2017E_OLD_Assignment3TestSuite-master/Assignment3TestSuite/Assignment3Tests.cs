@@ -67,7 +67,7 @@ namespace Assignment3TestSuite
                 Method = "xxxx",
                 Path = "testing",
                 Date = UnixTimestamp(),
-                Body = "{}"
+                Body = "SGVsbG8gV29ybGQ="
             };
 
             client.SendRequest(request.ToJson());
@@ -621,22 +621,23 @@ namespace Assignment3TestSuite
             client.GetStream().Write(msg, 0, msg.Length);
         }
 
+
         public static Response ReadResponse(this TcpClient client)
         {
             var strm = client.GetStream();
-            //strm.ReadTimeout = 250;
+            strm.ReadTimeout = 250;
             byte[] resp = new byte[2048];
             using (var memStream = new MemoryStream())
             {
-                int bytesread = 0;
-                do
+                int bytesread = strm.Read(resp, 0, resp.Length);
+                while (bytesread > 0)
                 {
-                    bytesread = strm.Read(resp, 0, resp.Length);
                     memStream.Write(resp, 0, bytesread);
+                    bytesread = strm.Read(resp, 0, resp.Length);
+                }
 
-                } while (bytesread == 2048);
-                
                 var responseData = Encoding.UTF8.GetString(memStream.ToArray());
+                var response = new { Status = "", Body = "" };
                 return JsonConvert.DeserializeObject<Response>(responseData);
             }
         }
