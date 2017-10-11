@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection.Metadata.Ecma335;
@@ -12,7 +13,6 @@ namespace EchoServer
 {
     internal class EchoServ
     {
-        private static int _count = 0;
         private static void Main(string[] args)
         {
             const int port = 5000;
@@ -52,10 +52,14 @@ namespace EchoServer
 
                 var requestObj = JsonConvert.DeserializeObject<RequestObj>(request.Trim('\0'));
                 var response = new Response();
+                Console.WriteLine(requestObj.Date);
+                if (string.IsNullOrEmpty(requestObj.Date)) response.Status += "missing date, ";
+                else if (!IsUnixTimestamp(requestObj.Date)) response.Status += "illegal date, ";
+
                 switch (requestObj.Method)
                 {
                     case "{}":
-                        response.Status = "missing method";
+                        response.Status += "missing method, ";
                         break;
                     case "create":
                         Create(requestObj, ref response);
@@ -74,7 +78,7 @@ namespace EchoServer
                         break;
                 }
 
-                WriteRepsonse(client, stream, response);
+                WriteRepsonse(stream, response);
                 stream.Close();
                 client.Dispose();
             }
@@ -87,31 +91,35 @@ namespace EchoServer
 
         private static void Create(RequestObj requestObj, ref Response response)
         {
-            if (string.IsNullOrEmpty(requestObj.Body)) response.Status = "missing resource";
+            if (string.IsNullOrEmpty(requestObj.Body)) response.Status += "missing resource, ";
             
         }
 
         private static void Read(RequestObj requestObj, ref Response response)
         {
-            if (string.IsNullOrEmpty(requestObj.Body)) response.Status = "missing resource";
+            if (string.IsNullOrEmpty(requestObj.Body)) response.Status += "missing resource, ";
         }
 
         private static void Update(RequestObj requestObj, ref Response response)
         {
-            if (string.IsNullOrEmpty(requestObj.Body)) response.Status = "missing resource";
+            if (string.IsNullOrEmpty(requestObj.Body)) response.Status += "missing resource, ";
         }
 
         private static void Delete(RequestObj requestObj, ref Response response)
         {
-            if (string.IsNullOrEmpty(requestObj.Body)) response.Status = "missing resource";
+            if (string.IsNullOrEmpty(requestObj.Body)) response.Status += "missing resource, ";
         }
 
-        private static void WriteRepsonse(TcpClient client, NetworkStream stream, Response response)
+        private static void WriteRepsonse(Stream stream, Response response)
         {
             var jsonResponse = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response));
-            //Console.WriteLine("here: "+ JsonConvert.SerializeObject(response));
-            //Console.ReadKey();
             stream.Write(jsonResponse, 0, jsonResponse.Length);
+        }
+
+        private static bool IsUnixTimestamp(string str)
+        {
+            //only works for the next many many years
+            return str.Length <= 10 && str.All(c => c >= '0' && c <= '9');
         }
 
         public class RequestObj
