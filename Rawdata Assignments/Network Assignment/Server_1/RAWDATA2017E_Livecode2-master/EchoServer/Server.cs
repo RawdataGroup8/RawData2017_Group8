@@ -116,6 +116,7 @@ namespace Server1
         {
             CheckMissingResource(requestObj, response);
             CheckMissingBody(requestObj, response);
+            response.Body = requestObj.Body;
         }
 
         private static void CheckMissingResource(RequestObj requestObj, Response response)
