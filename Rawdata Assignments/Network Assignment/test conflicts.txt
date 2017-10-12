@@ -1,15 +1,14 @@
-Conflict 1: The "illegal date" status message added by Constraint_RequestWhereDateIsNotUnixTime_IllegalDateError, is later overwritten by "4 bad request" in Constraint_UpdateWithOutPathId_StatusBadRequest() which needs to stand alone according to the test.
+Conflict 1: The "illegal date" status message added by Constraint_RequestWhereDateIsNotUnixTime_IllegalDateError, is later overwritten by "4 bad request" in Constraint_UpdateWithOutPathId_StatusBadRequest() which needs to stand alone according to the test. (fixed by replacing the path "testing" with "/api/categories/1" in the test)
 
-Conflict 1:---------------------------
-Constraint_RequestWhereDateIsNotUnixTime_IllegalDateError(line 116)
-Constraint_UpdateWithOutPathId_StatusBadRequest() (line 269)
----------------------------------------
+	Conflict 1:---------------------------
+	Constraint_RequestWhereDateIsNotUnixTime_IllegalDateError(line 116)
+	Constraint_UpdateWithOutPathId_StatusBadRequest() (line 269)
+	---------------------------------------
 
-Conflict 2: In the same way as above, the create call testing for missing body (supposed to add "missing body" to the status) is overwritten by the test checking whether the client is trying to create on an already existing id.
+Conflict 2: In the same way as above, the create call checking for missing body (supposed to add "missing body" to the status) is overwritten by the test that checks whether the client is trying to call create, on an already existing id. 
 
-Conflict 2: -------------------------
-[InlineData("create")] 
-Constraint_RequestForCreateUpdateEchoWithoutBody_MissingBodyError(string method) (line 137)
-
-Constraint_CreateWithPathId_StatusBadRequest(line 248)
-------------------------------------
+	Conflict 2: -------------------------
+	[InlineData("create")] 
+	Constraint_RequestForCreateUpdateEchoWithoutBody_MissingBodyError(string method) (line 137)
+	Constraint_CreateWithPathId_StatusBadRequest(line 248)
+	------------------------------------

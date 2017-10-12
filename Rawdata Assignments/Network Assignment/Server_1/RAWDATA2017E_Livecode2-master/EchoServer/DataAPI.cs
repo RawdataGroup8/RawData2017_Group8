@@ -31,26 +31,60 @@ namespace Server1
 
         public static void Read(Server.RequestObj requestObj, ref Server.Response response)
         {
-            if (requestObj.Path == "/api/categories") //read all
+            //------------------ Constraints ----------------
+            //Check if path is present
+            if (string.IsNullOrEmpty(requestObj.Path)) //If there is nothing in the path, add 'missing resource'
+            {
+                response.Status += "missing resource, ";
+                return;
+            }
+
+            //------------------ API tests ------------------
+            //First check if it is a readAll call
+            if (requestObj.Path == "/api/categories")
+            {
+                response.Status = "1 Ok";
+                response.Body = JsonConvert.SerializeObject(_model.ReadAll());
+                return;
+            }
+
+            //Else, check if path is valid
+            if (!requestObj.Path.Contains("/api/categories") || !requestObj.Path.Any(char.IsDigit)) //Must be valid eg. contain "/api/categories", and must contain a number (the id)
+            {
+                response.Status = "4 Bad Request";
+                return;
+            }
+
+            //If not, check if exists
+            if (Exists(requestObj, response))
+            {
+                response.Status = "1 Ok";
+                response.Body = JsonConvert.SerializeObject(_model.Retrieve(requestObj.Path));
+            }
+
+            //If it does, retrieve and return it
+
+            /*if (requestObj.Path == "/api/categories") //read all (slightly hacky, i know) ;)
             {
                 response.Status = "1 Ok";
                 response.Body = JsonConvert.SerializeObject(_model.ReadAll());
             }
             else
             {
-                var passed = CheckPath(requestObj, response) || !CheckPathForId(requestObj, response);
-                if (!CheckExists(requestObj, response)) passed = false;
+                var passed = CheckPath(requestObj, response);
+                    passed = CheckPathForId(requestObj, response);
+                if (!Exists(requestObj, response)) passed = false;
                 if (!passed) return;
 
                 response.Status = "1 Ok";
                 response.Body = JsonConvert.SerializeObject(_model.Retrieve(requestObj.Path));
-            }
+            }*/
         }
 
         public static void Update(Server.RequestObj requestObj, ref Server.Response response)
         {
             var passed = CheckPath(requestObj, response);
-            if (!CheckExists(requestObj, response)) passed = false;
+            if (!Exists(requestObj, response)) passed = false;
             if (!CheckBody(requestObj, response)) passed = false;
             if (!CheckPathForId(requestObj, response)) passed = false;
             if (!passed) return;
@@ -63,7 +97,7 @@ namespace Server1
         public static void Delete(Server.RequestObj requestObj, ref Server.Response response)
         {
             var passed = CheckPath(requestObj, response);
-            if (!CheckExists(requestObj, response)) passed = false;
+            //if (!Exists(requestObj, response)) passed = false;
             if (!CheckPathForId(requestObj, response)) return;
 
             if (passed)
@@ -94,24 +128,26 @@ namespace Server1
             return true;
         }
 
-        private static bool CheckExists(Server.RequestObj requestObj, Server.Response response)
+        private static bool Exists(Server.RequestObj requestObj, Server.Response response)
         {
             if (_model.Retrieve(requestObj.Path) != null) return true;
-            if (!response.Status.Contains("Bad Request"))
+            //if (!response.Status.Contains("Bad Request"))
                 response.Status += "5 not found, ";
             return false;
         }
 
         private static bool CheckPath(Server.RequestObj requestObj, Server.Response response)
         {
-            if (string.IsNullOrEmpty(requestObj.Path))
+            if (string.IsNullOrEmpty(requestObj.Path)) //CONSTRAINT: if there is nothing in the path, add 'missing resource'
             {
                 response.Status += "missing resource, ";
                 return false;
             }
-            if (_model.Retrieve(requestObj.Path) == null)
+
+            if (_model.Retrieve(requestObj.Path) == null) //API: 
             {
-                response.Status = requestObj.Path.Contains("/api/categories") ? "5 Not Found" : "4 Bad Request";
+                if (requestObj.Path.Contains("/api/categories")) response.Status += "5 Not Found"; //if its a valid path but the id doesnt exist
+                else response.Status = "4 Bad Request"; //invalid path
                 return false;
             }
             return true;
