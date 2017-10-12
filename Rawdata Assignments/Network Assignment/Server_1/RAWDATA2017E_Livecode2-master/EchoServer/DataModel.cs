@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
 using Newtonsoft.Json;
 
 namespace Server1
@@ -33,17 +30,14 @@ namespace Server1
             return c;
         }
 
-        public void Delete(string path)
-        {
-            Data.Remove(path);
-        }
-
         public Category UpdateName(string path, string name)
         {
             Data[path].Name = name;
             PrintModel();
             return Data[path];
         }
+
+        public void Delete(string path) => Data.Remove(path);
 
         public Category Retrieve(string path) => path != null && Data.ContainsKey(path) ? Data[path] : null;
 

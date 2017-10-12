@@ -3,17 +3,14 @@ using Newtonsoft.Json;
 
 namespace Server1
 {
-    static class DataAPI
+    internal static class DataAPI
     {
         private static DataModel _model;
 
-        public static void InitDataModel()
-        {
-            _model = new DataModel();
-        }
+        public static void InitDataModel() => _model = new DataModel();
 
         public static void Create(Server.RequestObj requestObj, ref Server.Response response)
-        {
+        {   
             var passed = CheckPath(requestObj, response);
             if (_model.Retrieve(requestObj.Path) != null)
             {
@@ -80,8 +77,7 @@ namespace Server1
 
         public static void Echo(Server.RequestObj requestObj, ref Server.Response response)
         {
-            //_badRequest = false;
-            CheckBody(requestObj, response); //if (_badRequest) return;
+            CheckBody(requestObj, response);
             response.Body = requestObj.Body;
         }
 

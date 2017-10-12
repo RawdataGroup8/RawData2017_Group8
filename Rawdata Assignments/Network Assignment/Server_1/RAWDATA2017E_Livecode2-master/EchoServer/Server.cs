@@ -45,7 +45,7 @@ namespace Server1
 
             try
             {
-                var requestObj = Read(stream, client.ReceiveBufferSize);//Encoding.UTF8.GetString(buffer);
+                var requestObj = Read(stream, client.ReceiveBufferSize);
 
                 var response = new Response();
                 Console.WriteLine(requestObj.Method);
@@ -107,7 +107,6 @@ namespace Server1
             var buffer = new byte[size];
             var bytesRead = strm.Read(buffer, 0, buffer.Length);
             var request = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-            //Console.WriteLine($"Request: {JsonConvert.SerializeObject(request)}");
             return JsonConvert.DeserializeObject<RequestObj>(request);
         }
 
