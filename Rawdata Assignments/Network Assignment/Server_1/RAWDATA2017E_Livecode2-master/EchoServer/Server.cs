@@ -25,8 +25,6 @@ namespace Server1
 
             while(true)
             {
-
-
                 var client = server.AcceptTcpClient();
 
                 Console.WriteLine("Client connected");
@@ -49,8 +47,18 @@ namespace Server1
 
                 var response = new Response();
                 Console.WriteLine(requestObj.Method);
-                if (string.IsNullOrEmpty(requestObj.Date)) response.Status += "missing date, ";
-                else if (!Helpers.IsUnixTimestamp(requestObj.Date)){ response.Status += "illegal date, ";}
+
+                var violatedConstraint = false;
+                if (string.IsNullOrEmpty(requestObj.Date))
+                {
+                    response.Status += "missing date, ";
+                    violatedConstraint = true;
+                }
+                else if (!Helpers.IsUnixTimestamp(requestObj.Date))
+                {
+                    response.Status += "illegal date, ";
+                    violatedConstraint = true;
+                }
 
                 switch (requestObj.Method)
                 {
@@ -58,19 +66,19 @@ namespace Server1
                         response.Status += "missing method, ";
                         break;
                     case "create":
-                        DataAPI.Create(requestObj, ref response);
+                        DataAPI.Create(requestObj, ref response, violatedConstraint);
                         break;
                     case "read":
-                        DataAPI.Read(requestObj, ref response);
+                        DataAPI.Read(requestObj, ref response, violatedConstraint);
                         break;
                     case "update":
-                        DataAPI.Update(requestObj, ref response);
+                        DataAPI.Update(requestObj, ref response, violatedConstraint);
                         break;
                     case "delete":
-                        DataAPI.Delete(requestObj, ref response);
+                        DataAPI.Delete(requestObj, ref response, violatedConstraint);
                         break;
                     case "echo":
-                        DataAPI.Echo(requestObj, ref response);
+                        DataAPI.Echo(requestObj, ref response, violatedConstraint);
                         break;
                     default:
                         response.Status += "illegal method";

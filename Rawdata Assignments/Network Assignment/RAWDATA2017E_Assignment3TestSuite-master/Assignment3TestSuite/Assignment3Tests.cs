@@ -120,7 +120,7 @@ namespace Assignment3TestSuite
             var request = new
             {
                 Method = "update",
-                Path = "/api/categories/1", //had to change from "testing" to a valid path otherwise "illegal date" would be overwritten later by "4 Bad Request" (which needs to stand alone according to the test at line 269).
+                Path = "testing", //had to change from "testing" to a valid path otherwise "illegal date" would be overwritten later by "4 Bad Request" (which needs to stand alone according to the test at line 269).
                 Date = DateTimeOffset.Now.ToString(),
                 Body = (new { cid = 1, Name = "Beverages"}).ToJson()
             };
