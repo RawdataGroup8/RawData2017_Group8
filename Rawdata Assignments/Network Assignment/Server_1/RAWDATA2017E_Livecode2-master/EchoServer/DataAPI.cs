@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
+﻿using System.Linq;
 using Newtonsoft.Json;
-
 
 namespace Server1
 {
@@ -39,7 +34,7 @@ namespace Server1
 
         public static void Read(Server.RequestObj requestObj, ref Server.Response response)
         {
-            if (requestObj.Path == "/api/categories")
+            if (requestObj.Path == "/api/categories") //read all
             {
                 response.Status = "1 Ok";
                 response.Body = JsonConvert.SerializeObject(_model.ReadAll());
@@ -49,12 +44,10 @@ namespace Server1
                 var passed = CheckPath(requestObj, response) || !CheckPathForId(requestObj, response);
                 if (!CheckExists(requestObj, response)) passed = false;
                 if (!passed) return;
+
                 response.Status = "1 Ok";
                 response.Body = JsonConvert.SerializeObject(_model.Retrieve(requestObj.Path));
             }
-
-
-
         }
 
         public static void Update(Server.RequestObj requestObj, ref Server.Response response)
@@ -72,8 +65,6 @@ namespace Server1
 
         public static void Delete(Server.RequestObj requestObj, ref Server.Response response)
         {
-            Console.WriteLine("here: "+ int.TryParse("", out var reult));
-
             var passed = CheckPath(requestObj, response);
             if (!CheckExists(requestObj, response)) passed = false;
             if (!CheckPathForId(requestObj, response)) return;
@@ -87,9 +78,18 @@ namespace Server1
             
         }
 
+        public static void Echo(Server.RequestObj requestObj, ref Server.Response response)
+        {
+            //_badRequest = false;
+            CheckBody(requestObj, response); //if (_badRequest) return;
+            response.Body = requestObj.Body;
+        }
+
+        ////////// Private methods //////////
+
         private static bool CheckPathForId(Server.RequestObj requestObj, Server.Response response)
         {
-            if (response.Status != null && response.Status.ToLower().Contains("5 not found") 
+            if (response.Status != null && response.Status.ToLower().Contains("5 not found")
                 && requestObj.Path != null && !requestObj.Path.Any(char.IsDigit))
             {
                 response.Status = "4 Bad Request";
@@ -101,19 +101,11 @@ namespace Server1
         private static bool CheckExists(Server.RequestObj requestObj, Server.Response response)
         {
             if (_model.Retrieve(requestObj.Path) != null) return true;
-            if(!response.Status.Contains("Bad Request"))
+            if (!response.Status.Contains("Bad Request"))
                 response.Status += "5 not found, ";
             return false;
         }
 
-        public static void Echo(Server.RequestObj requestObj, ref Server.Response response)
-        {
-            //_badRequest = false;
-            CheckBody(requestObj, response); //if (_badRequest) return;
-            response.Body = requestObj.Body;
-        }
-
-        ////////// Private methods //////////
         private static bool CheckPath(Server.RequestObj requestObj, Server.Response response)
         {
             if (string.IsNullOrEmpty(requestObj.Path))
