@@ -1,4 +1,7 @@
-﻿namespace DBMapper
+﻿using System;
+using System.Linq;
+
+namespace TestADO_livecode
 {
     class Program
     {
