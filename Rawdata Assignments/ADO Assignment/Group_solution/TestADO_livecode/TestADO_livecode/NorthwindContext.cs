@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
 
-namespace TestADO_livecode
+namespace DBMapper
 {
     class NorthwindContext : DbContext
     {
