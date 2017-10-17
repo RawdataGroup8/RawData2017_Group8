@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DBMapper
 {
-    class NorthwindContext : DbContext
+    public class NorthwindContext : DbContext
     {
         public DbSet<Category> Categories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            var lines = File.ReadLines("credentials.txt").ToArray(); //Use credential file since we have different passwords on our DB servers
+            var lines = File.ReadLines("credentials.txt").ToArray(); //Use credential file since we have different passwords on our DB servers - first line <username> second line <password>
             optionsBuilder.UseMySql("server=localhost;database=northwind;uid=" + lines[0] +";" + "pwd= "+ lines[1]);
         }
 

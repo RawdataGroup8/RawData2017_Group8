@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DBMapper.DBObjects
 {
     public class OrderDetails
     {
-        public Order Order { get; set; }//both id and order?
+        [Key]
         public int OrderId { get; set; }
+        public Order Order { get; set; }//both id and order?
         //public string Name { get; set; }
         public float UnitPrice { get; set; }
         public float Discount { get; set; }

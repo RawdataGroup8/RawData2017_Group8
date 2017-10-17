@@ -9,7 +9,7 @@ namespace DBMapper
 
     public class DataLayer 
     {
-       // This method returns all the categories
+        // This method returns all the categories
         public static void Listingcategories()
         {
 
@@ -22,15 +22,12 @@ namespace DBMapper
                 {
                     Console.WriteLine((category1.Name));
 
-                  
+
                 }
 
             }
 
-            
+
         }
-   
-
-
-}
+    }
 }

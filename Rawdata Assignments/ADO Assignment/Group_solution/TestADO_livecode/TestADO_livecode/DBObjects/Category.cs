@@ -1,4 +1,4 @@
-﻿namespace DBMapper
+﻿namespace DBMapper.DBObjects
 {
     public class Category
     {
@@ -7,7 +7,8 @@
         public string Name { get; set; }
         public string Description { get; set; }
     }
-    class Product
+
+    /*public class Product
     {
         //[Column("categoryid")]
         public int Id { get; set; }
@@ -18,5 +19,5 @@
         public string UnitPrice { get; set; }
         public string UnitsInStock { get; set; }
 
-    }
+    }*/
 }

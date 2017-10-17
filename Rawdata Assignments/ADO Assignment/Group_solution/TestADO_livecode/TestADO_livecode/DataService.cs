@@ -7,12 +7,36 @@ namespace DBMapper
 {
     public class DataService
     {
-        public static void GetFullOrder(int id)
+        private readonly NorthwindContext _db;
+
+        public DataService()
+        {
+            _db = new NorthwindContext();
+        }
+        //---------------------------------------------------------- Categories
+        // This method returns all the categories
+        public void Listingcategories()
+        {
+            var categories = _db.Categories;
+            foreach (var category in categories)
+            {
+                Console.WriteLine((category.Name));
+            }
+        }
+
+        public Category GetCategory(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Category GetCategory(int id)
+        //---------------------------------------------------------- Products
+        public Product GetProduct(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        //---------------------------------------------------------- Orders
+        public void GetFullOrder(int id)
         {
             throw new NotImplementedException();
         }
@@ -22,15 +46,11 @@ namespace DBMapper
             throw new NotImplementedException();
         }
 
-        public Product GetProduct(int i)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<Order> GetOrders()
         {
             throw new NotImplementedException();
         }
+        //---------------------------------------------------------- Order Details
 
         public List<OrderDetails> GetOrderDetailsByOrderId(int i)
         {
@@ -41,5 +61,8 @@ namespace DBMapper
         {
             throw new NotImplementedException();
         }
+
+
+
     }
 }
