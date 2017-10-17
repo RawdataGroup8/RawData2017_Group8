@@ -1,6 +1,6 @@
 ﻿namespace DBMapper
 {
-    class Category
+    public class Category
     {
         //[Column("categoryid")]
         public int Id { get; set; }

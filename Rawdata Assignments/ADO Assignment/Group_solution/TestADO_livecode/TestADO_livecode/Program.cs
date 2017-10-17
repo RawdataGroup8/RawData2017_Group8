@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Linq;
 
-namespace TestADO_livecode
+namespace DBMapper
 {
     class Program
     {
@@ -9,7 +8,7 @@ namespace TestADO_livecode
         {
             using (var db = new NorthwindContext())
             {
-
+                //DataLayer.GetFullOrder(int orderId);
                 /*var categories = db.Categories.Where(x => x.Id < 5);
                 foreach (var category1 in categories)
                 {
