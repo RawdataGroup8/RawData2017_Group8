@@ -7,6 +7,7 @@ namespace DBMapper
     class NorthwindContext : DbContext
     {
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products{ get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -20,6 +21,8 @@ namespace DBMapper
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Category>().Property(x => x.Id).HasColumnName("categoryid");
             modelBuilder.Entity<Category>().Property(x => x.Name).HasColumnName("categoryname");
+
+            modelBuilder.Entity<Product>().Property(x => x.Id).HasColumnName("ProductId");
         }
     }
 }
