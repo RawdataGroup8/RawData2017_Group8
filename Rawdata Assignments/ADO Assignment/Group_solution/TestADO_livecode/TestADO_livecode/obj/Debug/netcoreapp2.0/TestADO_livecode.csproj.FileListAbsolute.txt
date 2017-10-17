@@ -20,3 +20,14 @@ C:\Users\Rune Barrett\Desktop\Rawdata_Group8\RawData2017_Group8\Rawdata Assignme
 C:\Users\Rune Barrett\Desktop\Rawdata_Group8\RawData2017_Group8\Rawdata Assignments\ADO Assignment\Group_solution\TestADO_livecode\TestADO_livecode\obj\Debug\netcoreapp2.0\TestADO_livecode.AssemblyInfo.cs
 C:\Users\Rune Barrett\Desktop\Rawdata_Group8\RawData2017_Group8\Rawdata Assignments\ADO Assignment\Group_solution\TestADO_livecode\TestADO_livecode\obj\Debug\netcoreapp2.0\TestADO_livecode.dll
 C:\Users\Rune Barrett\Desktop\Rawdata_Group8\RawData2017_Group8\Rawdata Assignments\ADO Assignment\Group_solution\TestADO_livecode\TestADO_livecode\obj\Debug\netcoreapp2.0\TestADO_livecode.pdb
+C:\Users\senay\OneDrive\Documents\RawData2017_Group8\Rawdata Assignments\ADO Assignment\Group_solution\TestADO_livecode\TestADO_livecode\bin\Debug\netcoreapp2.0\TestADO_livecode.deps.json
+C:\Users\senay\OneDrive\Documents\RawData2017_Group8\Rawdata Assignments\ADO Assignment\Group_solution\TestADO_livecode\TestADO_livecode\bin\Debug\netcoreapp2.0\TestADO_livecode.runtimeconfig.json
+C:\Users\senay\OneDrive\Documents\RawData2017_Group8\Rawdata Assignments\ADO Assignment\Group_solution\TestADO_livecode\TestADO_livecode\bin\Debug\netcoreapp2.0\TestADO_livecode.runtimeconfig.dev.json
+C:\Users\senay\OneDrive\Documents\RawData2017_Group8\Rawdata Assignments\ADO Assignment\Group_solution\TestADO_livecode\TestADO_livecode\bin\Debug\netcoreapp2.0\TestADO_livecode.dll
+C:\Users\senay\OneDrive\Documents\RawData2017_Group8\Rawdata Assignments\ADO Assignment\Group_solution\TestADO_livecode\TestADO_livecode\bin\Debug\netcoreapp2.0\TestADO_livecode.pdb
+C:\Users\senay\OneDrive\Documents\RawData2017_Group8\Rawdata Assignments\ADO Assignment\Group_solution\TestADO_livecode\TestADO_livecode\obj\Debug\netcoreapp2.0\TestADO_livecode.csprojResolveAssemblyReference.cache
+C:\Users\senay\OneDrive\Documents\RawData2017_Group8\Rawdata Assignments\ADO Assignment\Group_solution\TestADO_livecode\TestADO_livecode\obj\Debug\netcoreapp2.0\TestADO_livecode.csproj.CoreCompileInputs.cache
+C:\Users\senay\OneDrive\Documents\RawData2017_Group8\Rawdata Assignments\ADO Assignment\Group_solution\TestADO_livecode\TestADO_livecode\obj\Debug\netcoreapp2.0\TestADO_livecode.AssemblyInfoInputs.cache
+C:\Users\senay\OneDrive\Documents\RawData2017_Group8\Rawdata Assignments\ADO Assignment\Group_solution\TestADO_livecode\TestADO_livecode\obj\Debug\netcoreapp2.0\TestADO_livecode.AssemblyInfo.cs
+C:\Users\senay\OneDrive\Documents\RawData2017_Group8\Rawdata Assignments\ADO Assignment\Group_solution\TestADO_livecode\TestADO_livecode\obj\Debug\netcoreapp2.0\TestADO_livecode.dll
+C:\Users\senay\OneDrive\Documents\RawData2017_Group8\Rawdata Assignments\ADO Assignment\Group_solution\TestADO_livecode\TestADO_livecode\obj\Debug\netcoreapp2.0\TestADO_livecode.pdb
