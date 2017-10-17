@@ -5962,9 +5962,9 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\Rune Barrett\\Desktop\\Rawdata_Group8\\RawData2017_Group8\\Rawdata Assignments\\ADO Assignment\\Group_solution\\TestADO_livecode\\TestADO_livecode\\TestADO_livecode.csproj",
-      "projectName": "TestADO_livecode",
-      "projectPath": "C:\\Users\\Rune Barrett\\Desktop\\Rawdata_Group8\\RawData2017_Group8\\Rawdata Assignments\\ADO Assignment\\Group_solution\\TestADO_livecode\\TestADO_livecode\\TestADO_livecode.csproj",
+      "projectUniqueName": "C:\\Users\\Rune Barrett\\Desktop\\Rawdata_Group8\\RawData2017_Group8\\Rawdata Assignments\\ADO Assignment\\Group_solution\\TestADO_livecode\\TestADO_livecode\\DBMapper.csproj",
+      "projectName": "DBMapper",
+      "projectPath": "C:\\Users\\Rune Barrett\\Desktop\\Rawdata_Group8\\RawData2017_Group8\\Rawdata Assignments\\ADO Assignment\\Group_solution\\TestADO_livecode\\TestADO_livecode\\DBMapper.csproj",
       "packagesPath": "C:\\Users\\Rune Barrett\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Rune Barrett\\Desktop\\Rawdata_Group8\\RawData2017_Group8\\Rawdata Assignments\\ADO Assignment\\Group_solution\\TestADO_livecode\\TestADO_livecode\\obj\\",
       "projectStyle": "PackageReference",
