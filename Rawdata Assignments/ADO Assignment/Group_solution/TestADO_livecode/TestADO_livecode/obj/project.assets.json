@@ -5962,11 +5962,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "c:\\users\\rune barrett\\source\\repos\\TestADO_livecode\\TestADO_livecode\\TestADO_livecode.csproj",
+      "projectUniqueName": "C:\\Users\\Rune Barrett\\Desktop\\Rawdata_Group8\\RawData2017_Group8\\Rawdata Assignments\\ADO Assignment\\Group_solution\\TestADO_livecode\\TestADO_livecode\\TestADO_livecode.csproj",
       "projectName": "TestADO_livecode",
-      "projectPath": "c:\\users\\rune barrett\\source\\repos\\TestADO_livecode\\TestADO_livecode\\TestADO_livecode.csproj",
+      "projectPath": "C:\\Users\\Rune Barrett\\Desktop\\Rawdata_Group8\\RawData2017_Group8\\Rawdata Assignments\\ADO Assignment\\Group_solution\\TestADO_livecode\\TestADO_livecode\\TestADO_livecode.csproj",
       "packagesPath": "C:\\Users\\Rune Barrett\\.nuget\\packages\\",
-      "outputPath": "c:\\users\\rune barrett\\source\\repos\\TestADO_livecode\\TestADO_livecode\\obj\\",
+      "outputPath": "C:\\Users\\Rune Barrett\\Desktop\\Rawdata_Group8\\RawData2017_Group8\\Rawdata Assignments\\ADO Assignment\\Group_solution\\TestADO_livecode\\TestADO_livecode\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
