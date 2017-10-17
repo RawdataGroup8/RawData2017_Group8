@@ -4,7 +4,8 @@ using System.Text;
 
 namespace DBMapper
 {
-    class DataLayer
+    public class DataLayer
     {
+
     }
 }

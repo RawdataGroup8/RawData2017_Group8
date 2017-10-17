@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace DBMapper
+﻿namespace DBMapper
 {
     class Program
     {
@@ -9,7 +6,8 @@ namespace DBMapper
         {
             using (var db = new NorthwindContext())
             {
-                var categories = db.Categories.Where(x => x.Id < 5);
+
+                /*var categories = db.Categories.Where(x => x.Id < 5);
                 foreach (var category1 in categories)
                 {
                     Console.WriteLine(category1.Name);
@@ -31,7 +29,7 @@ namespace DBMapper
                     Description = "a description"
                 };
                 db.Add(category3);
-                db.SaveChanges();
+                db.SaveChanges();*/
             }
         }
     }
