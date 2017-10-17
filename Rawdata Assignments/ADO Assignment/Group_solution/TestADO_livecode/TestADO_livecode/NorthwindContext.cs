@@ -21,6 +21,7 @@ namespace TestADO_livecode
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Category>().Property(x => x.Id).HasColumnName("categoryid");
             modelBuilder.Entity<Category>().Property(x => x.Name).HasColumnName("categoryname");
         }
     }

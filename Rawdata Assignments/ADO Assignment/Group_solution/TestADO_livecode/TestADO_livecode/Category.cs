@@ -7,10 +7,8 @@ namespace TestADO_livecode
 {
     class Category
     {
-        [Column("categoryid")]
+        //[Column("categoryid")]
         public int Id { get; set; }
-
-        //[Column]
         public string Name { get; set; }
         public string Description { get; set; }
     }
