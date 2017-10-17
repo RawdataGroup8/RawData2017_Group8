@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace TestADO_livecode
+namespace DBMapper
 {
     class Program
     {
