@@ -40,24 +40,17 @@ namespace DBMapper
         {
             var category = _db.Categories.FirstOrDefault(x => x.Id == id);
             if (category != null)
-            {
-                category.Name =  name;
-            }
+                category.Name =  name;            
         }
 
         public void DeleteCategory(int id)
         {
             var category = _db.Categories.FirstOrDefault(x => x.Id == id);
-            if (category != null) // need null check
-            {
-                _db.Categories.Remove(category);
-            }
+            if (category != null) // need null check          
+                _db.Categories.Remove(category);          
         }
 
-        public Category GetCategory(int id)
-        {
-            return _db.Categories.FirstOrDefault(x => x.Id == id);
-        }
+        public Category GetCategory(int id) => _db.Categories.FirstOrDefault(x => x.Id == id);
 
         //---------------------------------------------------------- Products
         public Product GetProduct(int id)
@@ -66,22 +59,17 @@ namespace DBMapper
         }
 
         //---------------------------------------------------------- Orders
-        public Order GetSingleOrder(int id)
-        {
-            return _db.Orders.FirstOrDefault(x => x.Id == id);
-        }
+        public Order GetSingleOrder(int id) => _db.Orders.FirstOrDefault(x => x.Id == id);
+
+        public List<Order> GetOrders() => _db.Orders.ToList();
 
         public Order GetOrder(int id) 
         {
             var order = _db.Orders.FirstOrDefault(x => x.Id == id);
-            if (order != null)
-            {
-                order.OrderDetails = _db.OrderDetails.Where(z => z.OrderId == id).ToList();
-            }
+            if (order != null)           
+                order.OrderDetails = _db.OrderDetails.Where(z => z.OrderId == id).ToList();           
             return order;
         }
-
-        public List<Order> GetOrders() => _db.Orders.ToList();
 
         //---------------------------------------------------------- Order Details
         public List<OrderDetails> GetOrderDetailsByOrderId(int id)
