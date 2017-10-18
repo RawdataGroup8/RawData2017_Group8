@@ -8,11 +8,11 @@ namespace DBMapper
     public class DataService
     {
         private readonly NorthwindContext _db;
-
         public DataService()
         {
             _db = new NorthwindContext(); 
         }
+
         //---------------------------------------------------------- Categories
         // This method returns all the categories
         public List<Category> Listingcategories() //Made it return a list as well :)
@@ -56,7 +56,7 @@ namespace DBMapper
 
         public Category GetCategory(int id)
         {
-            throw new NotImplementedException();
+            return _db.Categories.FirstOrDefault(x => x.Id == id);
         }
 
         //---------------------------------------------------------- Products
@@ -66,17 +66,17 @@ namespace DBMapper
         }
 
         //---------------------------------------------------------- Orders
-        public void GetFullOrder(int id)
+        public Order GetSingleOrder(int id)
         {
-            throw new NotImplementedException();
+            return _db.Orders.FirstOrDefault(x => x.Id == id);
         }
 
-        public Order GetOrder(int id)
+        public Order GetOrder(int id) 
         {
             var order = _db.Orders.FirstOrDefault(x => x.Id == id);
             if (order != null)
             {
-                order.OrderDetails = _db.OrderDetails.Where(x => x.OrderId == id).ToList();
+                order.OrderDetails = _db.OrderDetails.Where(z => z.OrderId == id).ToList();
             }
             return order;
         }
@@ -84,12 +84,12 @@ namespace DBMapper
         public List<Order> GetOrders() => _db.Orders.ToList();
 
         //---------------------------------------------------------- Order Details
-        public List<OrderDetails> GetOrderDetailsByOrderId(int i)
+        public List<OrderDetails> GetOrderDetailsByOrderId(int id)
         {
             throw new NotImplementedException();
         }
 
-        public List<OrderDetails> GetOrderDetailsByProductId(int i)
+        public List<OrderDetails> GetOrderDetailsByProductId(int id)
         {
             throw new NotImplementedException();
         }

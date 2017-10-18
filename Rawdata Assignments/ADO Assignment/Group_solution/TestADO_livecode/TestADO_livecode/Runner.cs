@@ -16,7 +16,7 @@ namespace DBMapper
             //foreach (var o in ds.GetOrders())
             //    Console.WriteLine(o.Freight);
 
-            Console.WriteLine(ds.GetOrder(10248));
+            Console.WriteLine(ds.GetSingleOrder(10248).Id);
            
 
 
