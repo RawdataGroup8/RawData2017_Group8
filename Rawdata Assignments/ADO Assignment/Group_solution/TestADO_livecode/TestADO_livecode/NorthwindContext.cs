@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using DBMapper.DBObjects;
 using Microsoft.EntityFrameworkCore;
@@ -8,12 +9,25 @@ namespace DBMapper
     public class NorthwindContext : DbContext
     {
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetails> OrderDetails { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            var lines = File.ReadLines("credentials.txt").ToArray(); //Use credential file since we have different passwords on our DB servers - first line <username> second line <password>
-            optionsBuilder.UseMySql("server=localhost;database=northwind;uid=" + lines[0] +";" + "pwd= "+ lines[1]);
+            try
+            {
+                var lines = File.ReadLines("credentials.txt").ToArray(); //Use credential due to different passwords - first line <username> second line <password>
+                optionsBuilder.UseMySql("server=localhost;database=northwind;uid=" + lines[0] + ";pwd= " + lines[1]);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                //throw;
+                optionsBuilder.UseMySql("server=localhost;database=northwind;uid=root;pwd=toor");
+            }
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,6 +47,7 @@ namespace DBMapper
             //Product
 
             //OrderDetails
+            //modelBuilder.Entity<OrderDetails>().Property(x => x.OrderId).HasColumnName("orderid");
         }
     }
 }

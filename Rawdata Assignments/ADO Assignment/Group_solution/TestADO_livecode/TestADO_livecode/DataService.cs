@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using DBMapper.DBObjects;
 
 namespace DBMapper
@@ -11,16 +11,46 @@ namespace DBMapper
 
         public DataService()
         {
-            _db = new NorthwindContext();
+            _db = new NorthwindContext(); 
         }
         //---------------------------------------------------------- Categories
         // This method returns all the categories
-        public void Listingcategories()
+        public List<Category> Listingcategories() //Made it return a list as well :)
         {
-            var categories = _db.Categories;
-            foreach (var category in categories)
+            //var categories = _db.Categories; // no need ;) 
+            foreach (var category in _db.Categories)
             {
                 Console.WriteLine((category.Name));
+            }
+            return _db.Categories.ToList();
+        }
+
+        public void AddCategory(string name, string description)
+        {
+            var category = new Category
+            {
+                Name = name,
+                Description = description
+            };
+            _db.Add(category);
+            _db.SaveChanges();
+        }
+
+        public void UpdateCategory(int id, string name)
+        {
+            var category = _db.Categories.FirstOrDefault(x => x.Id == id);
+            if (category != null)
+            {
+                category.Name =  name;
+            }
+        }
+
+        public void DeleteCategory(int id)
+        {
+            var category = _db.Categories.FirstOrDefault(x => x.Id == id);
+            if (category != null) // need null check
+            {
+                _db.Categories.Remove(category);
             }
         }
 
@@ -43,15 +73,17 @@ namespace DBMapper
 
         public Order GetOrder(int id)
         {
-            throw new NotImplementedException();
+            var order = _db.Orders.FirstOrDefault(x => x.Id == id);
+            if (order != null)
+            {
+                order.OrderDetails = _db.OrderDetails.Where(x => x.OrderId == id).ToList();
+            }
+            return order;
         }
 
-        public List<Order> GetOrders()
-        {
-            throw new NotImplementedException();
-        }
+        public List<Order> GetOrders() => _db.Orders.ToList();
+
         //---------------------------------------------------------- Order Details
-
         public List<OrderDetails> GetOrderDetailsByOrderId(int i)
         {
             throw new NotImplementedException();
@@ -61,8 +93,5 @@ namespace DBMapper
         {
             throw new NotImplementedException();
         }
-
-
-
     }
 }

@@ -7,34 +7,18 @@ namespace DBMapper
     {
         private static void Main(string[] args)
         {
-            //DataLayer.Listingcategories();
+            var ds = new DataService();
 
-            var dataService = new DataService();
-            dataService.Listingcategories();
+            /*ds.Listingcategories();
+            ds.AddCategory("Testagory", "Its just a test");
+            ds.Listingcategories();*/
 
-            /*var categories = db.Categories.Where(x => x.Id < 5);
-            foreach (var category in categories)
-            {
-                Console.WriteLine(category.Name);
-            }*/
+            //foreach (var o in ds.GetOrders())
+            //    Console.WriteLine(o.Freight);
 
-            //var category = db.Categories.FirstOrDefault(x => x.Id == 11);
-            /*if (category != null)
-            {
-                category.Name = "Retesting";
-            }*/
+            Console.WriteLine(ds.GetOrder(10248));
+           
 
-
-            //db.Categories.Remove(category);
-
-
-            /*var category = new Category
-            {
-                Name = "New Obj",
-                Description = "a description"
-            };
-            db.Add(category);
-            db.SaveChanges();*/
 
         }
     }    
