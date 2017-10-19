@@ -12,9 +12,9 @@ namespace DBMapper
 
         //---------------------------------------------------------- Categories
         // This method returns all the categories
-        public List<Category> Listingcategories() //Made it return a list as well :)
+        //rune comment: Are you guys up for dropping prints in dataservice and doing that in runner? that way the code in this library class becomes a lot simpler. this method could be a one liner :)
+        public List<Category> Listingcategories() 
         {
-            //var categories = _db.Categories; // no need ;) 
             foreach (var category in _db.Categories)
             {
                 Console.WriteLine((category.Id, category.Name, category.Description));
@@ -26,7 +26,6 @@ namespace DBMapper
         {
             var category = new Category
             {
-                //Id = _db.Categories.Count() + 1,
                 Name = name,
                 Description = description
             };
@@ -34,11 +33,14 @@ namespace DBMapper
             _db.SaveChanges();
         }
 
-        public void UpdateCategory(int id, string name)
+        public bool UpdateCategory(int id, string name, string description)
         {
             var category = _db.Categories.FirstOrDefault(x => x.Id == id);
-            if (category != null)
-                category.Name =  name;            
+            if (category == null) return false;
+            category.Name = name;
+            category.Description = description;
+            _db.SaveChanges();
+            return true;
         }
 
         public void DeleteCategory(int id)
@@ -61,9 +63,11 @@ namespace DBMapper
 
         public List<Order> GetOrders() => _db.Orders.ToList();
 
+        // not working as intended
         public Order GetOrder(int id) 
         {
             var order = _db.Orders.FirstOrDefault(x => x.Id == id);
+            //var od = new List<OrderDetails>();
             if (order != null)           
                 order.OrderDetails = _db.OrderDetails.Where(z => z.OrderId == id).ToList();           
             return order;

@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using DBMapper.DBObjects;
 using Microsoft.EntityFrameworkCore;
@@ -16,18 +15,8 @@ namespace DBMapper
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            try
-            {
-                var lines = File.ReadLines("credentials.txt").ToArray(); //Use credential due to different passwords - first line <username> second line <password>
-                optionsBuilder.UseMySql("server=localhost;database=northwind;uid=" + lines[0] + ";pwd= " + lines[1]);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                //throw;
-                optionsBuilder.UseMySql("server=localhost;database=northwind;uid=root;pwd=toor");
-            }
-
+            var lines = File.ReadLines("credentials.txt").ToArray(); //Use credential due to different passwords - first line <username> second line <password>
+            optionsBuilder.UseMySql("server=localhost;database=northwind;uid=" + lines[0] + ";pwd= " + lines[1]);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
