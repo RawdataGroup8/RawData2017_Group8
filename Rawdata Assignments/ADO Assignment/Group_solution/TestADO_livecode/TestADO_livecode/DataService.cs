@@ -20,7 +20,7 @@ namespace DBMapper
             //var categories = _db.Categories; // no need ;) 
             foreach (var category in _db.Categories)
             {
-                Console.WriteLine((category.Name));
+                Console.WriteLine((category.Id, category.Name, category.Description));
             }
             return _db.Categories.ToList();
         }
