@@ -45,10 +45,10 @@ namespace DBMapper
             _db.SaveChanges();
         }
 
-        public bool UpdateCategory(int id, string name, string description)
+        public bool UpdateCategory(int id, string name, string description) //id of the category you want to modify, followed by new name and description
         {
             var selectedCategory = _db.Categories.FirstOrDefault(x => x.Id == id);
-            if (_db.Categories.Contains(selectedCategory))
+            if (_db.Categories..Contains(selectedCategory))
             {
                 selectedCategory.Name = name;
                 selectedCategory.Description = description;
