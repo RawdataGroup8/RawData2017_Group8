@@ -5953,7 +5953,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Rune Barrett\\.nuget\\packages\\": {},
+    "C:\\Users\\Eugenio\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -5962,17 +5962,17 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Users\\Rune Barrett\\Desktop\\Rawdata_Group8\\RawData2017_Group8\\Rawdata Assignments\\ADO Assignment\\Group_solution\\TestADO_livecode\\TestADO_livecode\\DBMapper.csproj",
+      "projectUniqueName": "C:\\Users\\Eugenio\\Documents\\GitHub repos\\Rawdata Assignments\\ADO Assignment\\Group_solution\\TestADO_livecode\\TestADO_livecode\\DBMapper.csproj",
       "projectName": "DBMapper",
-      "projectPath": "C:\\Users\\Rune Barrett\\Desktop\\Rawdata_Group8\\RawData2017_Group8\\Rawdata Assignments\\ADO Assignment\\Group_solution\\TestADO_livecode\\TestADO_livecode\\DBMapper.csproj",
-      "packagesPath": "C:\\Users\\Rune Barrett\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Rune Barrett\\Desktop\\Rawdata_Group8\\RawData2017_Group8\\Rawdata Assignments\\ADO Assignment\\Group_solution\\TestADO_livecode\\TestADO_livecode\\obj\\",
+      "projectPath": "C:\\Users\\Eugenio\\Documents\\GitHub repos\\Rawdata Assignments\\ADO Assignment\\Group_solution\\TestADO_livecode\\TestADO_livecode\\DBMapper.csproj",
+      "packagesPath": "C:\\Users\\Eugenio\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Eugenio\\Documents\\GitHub repos\\Rawdata Assignments\\ADO Assignment\\Group_solution\\TestADO_livecode\\TestADO_livecode\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Rune Barrett\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Eugenio\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

@@ -29,6 +29,7 @@ namespace DBMapper
         {
             var category = new Category
             {
+                //Id = _db.Categories.Count() + 1,
                 Name = name,
                 Description = description
             };
