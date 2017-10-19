@@ -10,7 +10,7 @@ namespace DBMapper
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }
-
+        public DbSet<Product> Products { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -34,9 +34,12 @@ namespace DBMapper
             modelBuilder.Entity<Order>().Property(x => x.Shipped).HasColumnName("shippeddate");
 
             //Product
+            modelBuilder.Entity<Product>().Property(x => x.Id).HasColumnName("productid");
+            modelBuilder.Entity<Product>().Property(x => x.Name).HasColumnName("productname");
+            modelBuilder.Entity<Product>().Property(x => x.QuantityPerUnit).HasColumnName("quantityunit");
 
             //OrderDetails
-            //modelBuilder.Entity<OrderDetails>().Property(x => x.OrderId).HasColumnName("orderid");
+            modelBuilder.Entity<OrderDetails>().Property(x => x.OrderId1).HasColumnName("orderid");
         }
     }
 }

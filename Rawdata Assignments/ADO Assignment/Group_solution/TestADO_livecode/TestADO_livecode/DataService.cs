@@ -12,7 +12,7 @@ namespace DBMapper
 
         //---------------------------------------------------------- Categories
         // This method returns all the categories
-        //rune comment: Are you guys up for dropping prints in dataservice and doing that in runner? that way the code in this library class becomes a lot simpler. this method could be a one liner :)
+        //rune comment: Are you guys up for dropping prints in dataservice.cs and doing that in runner.cs? that way the code in this library becomes a lot simpler. this method could be a one liner :)
         public List<Category> Listingcategories() 
         {
             foreach (var category in _db.Categories)
@@ -63,21 +63,24 @@ namespace DBMapper
 
         public List<Order> GetOrders() => _db.Orders.ToList();
 
-        // not working as intended
         public Order GetOrder(int id) 
         {
             var order = _db.Orders.FirstOrDefault(x => x.Id == id);
-            //var od = new List<OrderDetails>();
-            if (order != null)           
-                order.OrderDetails = _db.OrderDetails.Where(z => z.OrderId == id).ToList();           
+            if (order == null) return null;
+
+            order.OrderDetails = GetOrderDetailsByOrderId(id);
+            foreach (var od in order.OrderDetails)
+            {
+                od.Product = _db.Products.FirstOrDefault(x => x.Id == od.ProductId);
+                od.Product.Category = _db.Categories.FirstOrDefault(x => x.Id == od.Product.CategoryId);
+                od.Order = order;
+            }
+
             return order;
         }
 
         //---------------------------------------------------------- Order Details
-        public List<OrderDetails> GetOrderDetailsByOrderId(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public List<OrderDetails> GetOrderDetailsByOrderId(int id) => _db.OrderDetails.Where(z => z.OrderId1 == id).ToList();
 
         public List<OrderDetails> GetOrderDetailsByProductId(int id)
         {

@@ -18,10 +18,8 @@ namespace DBMapper
             //    Console.WriteLine(o.Freight);
 
             Console.WriteLine(ds.GetOrder(10248).Id);
-            //Console.ReadLine(); //Alternatively use ctrl+F5 instead of just F5 to run (debug/nodebug), then ReadLine() is not needed
-
-
-
+            //ds.GetOrderDetailsByOrderId(10248);
+            Console.ReadKey();
         }
     }    
 }
