@@ -8,10 +8,7 @@ namespace DBMapper
     public class DataService
     {
         private readonly NorthwindContext _db;
-        public DataService()
-        {
-            _db = new NorthwindContext(); 
-        }
+        public DataService() => _db = new NorthwindContext();
 
         //---------------------------------------------------------- Categories
         // This method returns all the categories
