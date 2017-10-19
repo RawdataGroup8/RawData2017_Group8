@@ -55,7 +55,9 @@ namespace DBMapper
         //---------------------------------------------------------- Products
         public Product GetProduct(int id)
         {
-            throw new NotImplementedException();
+            var p = _db.Products.FirstOrDefault(x => x.Id == id);
+            p.Category = GetCategory(p.CategoryId);
+            return p;
         }
 
         //---------------------------------------------------------- Orders
@@ -71,8 +73,7 @@ namespace DBMapper
             order.OrderDetails = GetOrderDetailsByOrderId(id);
             foreach (var od in order.OrderDetails)
             {
-                od.Product = _db.Products.FirstOrDefault(x => x.Id == od.ProductId);
-                od.Product.Category = _db.Categories.FirstOrDefault(x => x.Id == od.Product.CategoryId);
+                od.Product = GetProduct(od.ProductId);
                 od.Order = order;
             }
 
@@ -80,7 +81,16 @@ namespace DBMapper
         }
 
         //---------------------------------------------------------- Order Details
-        public List<OrderDetails> GetOrderDetailsByOrderId(int id) => _db.OrderDetails.Where(z => z.OrderId1 == id).ToList();
+        public List<OrderDetails> GetOrderDetailsByOrderId(int id)
+        {
+            var orderDetails =_db.OrderDetails.Where(z => z.OrderId1 == id).ToList();
+            foreach (var od in orderDetails)
+            {
+                od.Product = GetProduct(od.ProductId);
+                od.Order = GetSingleOrder(id);
+            }
+            return orderDetails;
+        }
 
         public List<OrderDetails> GetOrderDetailsByProductId(int id)
         {
