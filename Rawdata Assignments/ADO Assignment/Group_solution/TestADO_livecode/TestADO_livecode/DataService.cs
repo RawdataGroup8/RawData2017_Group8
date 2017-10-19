@@ -27,21 +27,37 @@ namespace DBMapper
 
         public void AddCategory(string name, string description)
         {
-            var category = new Category
+            int maxId  =  0;
+            foreach(var category in _db.Categories)
             {
-                //Id = _db.Categories.Count() + 1,
+                if (category.Id > maxId)
+                {
+                    maxId = category.Id;
+                }
+            }
+            var category2 = new Category
+            {
+                Id = maxId + 1,
                 Name = name,
                 Description = description
             };
-            _db.Add(category);
+            _db.Add(category2);
             _db.SaveChanges();
         }
 
-        public void UpdateCategory(int id, string name)
+        public bool UpdateCategory(int id, string name, string description)
         {
-            var category = _db.Categories.FirstOrDefault(x => x.Id == id);
-            if (category != null)
-                category.Name =  name;            
+            var selectedCategory = _db.Categories.FirstOrDefault(x => x.Id == id);
+            if (_db.Categories.Contains(selectedCategory))
+            {
+                selectedCategory.Name = name;
+                selectedCategory.Description = description;
+                return true;
+            } else
+            {
+                return false;
+            }
+                            
         }
 
         public void DeleteCategory(int id)

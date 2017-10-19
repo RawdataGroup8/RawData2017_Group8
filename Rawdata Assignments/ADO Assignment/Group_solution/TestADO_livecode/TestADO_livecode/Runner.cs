@@ -8,7 +8,7 @@ namespace DBMapper
         private static void Main(string[] args)
         {
             var ds = new DataService();
-            ds.AddCategory("Guns", "They go pew pew");
+            ds.UpdateCategory(15, "bows", "is actually bows");
             ds.Listingcategories();
             /*ds.Listingcategories();
             ds.AddCategory("Testagory", "Its just a test");*/
