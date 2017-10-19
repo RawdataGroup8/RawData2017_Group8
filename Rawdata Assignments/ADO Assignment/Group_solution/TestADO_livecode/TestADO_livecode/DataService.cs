@@ -17,7 +17,7 @@ namespace DBMapper
             //var categories = _db.Categories; // no need ;) 
             foreach (var category in _db.Categories)
             {
-                Console.WriteLine((category.Name));
+                Console.WriteLine((category.Id, category.Name, category.Description));
             }
             return _db.Categories.ToList();
         }
@@ -26,6 +26,7 @@ namespace DBMapper
         {
             var category = new Category
             {
+                //Id = _db.Categories.Count() + 1,
                 Name = name,
                 Description = description
             };
