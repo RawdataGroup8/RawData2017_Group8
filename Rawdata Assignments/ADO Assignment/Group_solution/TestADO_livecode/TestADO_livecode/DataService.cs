@@ -9,7 +9,7 @@ namespace DBMapper
     public class DataService
     {
         private readonly NorthwindContext _db;
-        public DataService() => _db = new NorthwindContext();
+        public DataService() => _db = new NorthwindContext(); // use injection
 
         //---------------------------------------------------------- Categories
         // This method returns all the categories
@@ -85,11 +85,11 @@ namespace DBMapper
             if (order == null) return null;
 
             order.OrderDetails = GetOrderDetailsByOrderId(id);
-            foreach (var od in order.OrderDetails)
+            /*foreach (var od in order.OrderDetails)
             {
                 od.Product = GetProduct(od.ProductId);
                 od.Order = order;
-            }
+            }*/
 
             return order;
         }
@@ -109,7 +109,13 @@ namespace DBMapper
 
         public List<OrderDetails> GetOrderDetailsByProductId(int id)
         {
-            throw new NotImplementedException();
+            var orderDetails = _db.OrderDetails.Where(z => z.ProductId == id).ToList();
+            foreach (var od in orderDetails)
+            {
+                od.Product = GetProduct(od.ProductId);
+                od.Order = GetSingleOrder(id);
+            }
+            return orderDetails;
         }
     }
 }
