@@ -11,67 +11,36 @@ namespace WebServiceLayer.Controllers
     [Route("api/Categories")]
     public class CategoriesController : Controller
     {
+        // GET: api/Categories
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "Categories" };
+            return new string[] { "value1", "value2" };
+        }
+
+        // GET: api/Categories/5
+        [HttpGet("{id}", Name = "Get")]
+        public string Get(int id)
+        {
+            return "value";
+        }
+        
+        // POST: api/Categories
+        [HttpPost]
+        public void Post([FromBody]string value)
+        {
+        }
+        
+        // PUT: api/Categories/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody]string value)
+        {
+        }
+        
+        // DELETE: api/ApiWithActions/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
         }
     }
 }
-
-//[Route("/api/persons")]
-//public class PersonsController : Controller
-//{
-//    private IDataService _dataService;
-
-//    public PersonsController(IDataService dataService)
-//    {
-//        _dataService = dataService;
-//    }
-//    [HttpGet]
-//    public IActionResult GetPersons()
-//    {
-//        return Ok(_dataService.GetPersons());
-//    }
-
-//    [HttpGet("{name}")]
-//    public IActionResult GetPerson(string name)
-//    {
-//        var person = _dataService.GetPersons()
-//            .FirstOrDefault(x => x.Name == name);
-//        if (person == null) return NotFound();
-//        return Ok(person);
-//    }
-//}
-
-//// GET api/values
-//[HttpGet]
-//public IEnumerable<string> Get()
-//{
-//return new string[] { "value1", "value2" };
-//}
-
-//// GET api/values/5
-//[HttpGet("{id}")]
-//public string Get(int id)
-//{
-//return "value " + id;
-//}
-
-//// POST api/values
-//[HttpPost]
-//public void Post([FromBody]string value)
-//{
-//}
-
-//// PUT api/values/5
-//[HttpPut("{id}")]
-//public void Put(int id, [FromBody]string value)
-//{
-//}
-
-//// DELETE api/values/5
-//[HttpDelete("{id}")]
-//public void Delete(int id)
-//{
-//}

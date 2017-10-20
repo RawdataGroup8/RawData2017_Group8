@@ -8,8 +8,9 @@ namespace DBMapper
         private static void Main(string[] args)
         {
             var ds = new DataService();
-            ds.GetProductsMatching("Gula");
-            ds.GetProductsByCategory(2);
+
+           
+
 
             //ds.AddCategory("Guns", "They go pew pew");
             //ds.Listingcategories();
@@ -21,7 +22,7 @@ namespace DBMapper
             //    Console.WriteLine(o.Freight);
 
             //ds.GetOrderDetailsByOrderId(10248);
-            Console.ReadLine();
+            Console.ReadKey();
         }
     }    
 }

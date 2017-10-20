@@ -5,13 +5,10 @@ using DBMapper.DBObjects;
 
 namespace DBMapper
 {
-    public class DataService : IDataService
+    public class DataService
     {
         private readonly NorthwindContext _db;
-        public DataService()
-        {
-            _db = new NorthwindContext();
-        }
+        public DataService() => _db = new NorthwindContext(); // use injection
 
         //---------------------------------------------------------- Categories
         // This method returns all the categories
@@ -65,20 +62,6 @@ namespace DBMapper
             return p;
         }
 
-        public List<Product> GetProductsMatching(String input)
-        {
-            List<Product> productsFound = _db.Products.Where(prod => prod.Name.Contains(input)).ToList();
-
-            return productsFound;  // should we have an else or something?
-        }
-
-        public List<Product> GetProductsByCategory(int catid) //RETURNS NULL LIST
-        {
-            List<Product> productslist = _db.Products.Where(prod => prod.CategoryId == catid).ToList();
-          
-            return productslist; // should we have an else or something?
-        }
-
         //---------------------------------------------------------- Orders
         public Order GetSingleOrder(int id) => _db.Orders.FirstOrDefault(x => x.Id == id);
 
@@ -124,18 +107,23 @@ namespace DBMapper
 
         public List<Category> GetCategories()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+
+            return _db.Categories.ToList();
         }
 
         public List<Product> GetProductByCategory(int i)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return _db.Products.Where(z => z.CategoryId == i).ToList();
+
         }
 
         public List<Product> GetProductByName(string ant)
         {
             throw new NotImplementedException();
+
+
         }
     }
-
 }
