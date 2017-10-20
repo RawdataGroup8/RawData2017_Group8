@@ -5,13 +5,12 @@ namespace DBMapper.DBObjects
     public class OrderDetails
     {
         [Key]
-        public int OrderId { get; set; }
-        public Order Order { get; set; }//both id and order?
-        //public string Name { get; set; }
-        public float UnitPrice { get; set; }
-        public float Discount { get; set; }
-        public Product Product { get; set; }//both id and product?
+        public int OrderId1 { get; set; }
+        public Order Order { get; set; }
+        public double UnitPrice { get; set; }
+        public double Discount { get; set; }
+        public Product Product { get; set; }
         public int ProductId { get; set; }
-        public float Quantity { get; set; }
+        public int Quantity { get; set; }
     }
 }

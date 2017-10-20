@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using DBMapper.DBObjects;
 using Microsoft.EntityFrameworkCore;
@@ -11,23 +10,13 @@ namespace DBMapper
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }
-
+        public DbSet<Product> Products { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            try
-            {
-                var lines = File.ReadLines("credentials.txt").ToArray(); //Use credential due to different passwords - first line <username> second line <password>
-                optionsBuilder.UseMySql("server=localhost;database=northwind;uid=" + lines[0] + ";pwd= " + lines[1]);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                //throw;
-                optionsBuilder.UseMySql("server=localhost;database=northwind;uid=root;pwd=toor");
-            }
-
+            var lines = File.ReadLines("credentials.txt").ToArray(); //Use credential due to different passwords - first line <username> second line <password>
+            optionsBuilder.UseMySql("server=localhost;database=northwind;uid=" + lines[0] + ";pwd= " + lines[1]);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -45,9 +34,12 @@ namespace DBMapper
             modelBuilder.Entity<Order>().Property(x => x.Shipped).HasColumnName("shippeddate");
 
             //Product
+            modelBuilder.Entity<Product>().Property(x => x.Id).HasColumnName("productid");
+            modelBuilder.Entity<Product>().Property(x => x.Name).HasColumnName("productname");
+            modelBuilder.Entity<Product>().Property(x => x.QuantityPerUnit).HasColumnName("quantityunit");
 
             //OrderDetails
-            //modelBuilder.Entity<OrderDetails>().Property(x => x.OrderId).HasColumnName("orderid");
+            modelBuilder.Entity<OrderDetails>().Property(x => x.OrderId1).HasColumnName("orderid");
         }
     }
 }

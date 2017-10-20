@@ -86,7 +86,7 @@ namespace Assignment4Tests
         public void OrderDetails_Object_HasOrderProductUnitPriceQuantityAndDiscount()
         {
             var orderDetails = new OrderDetails();
-            Assert.Equal(0, orderDetails.OrderId);
+            Assert.Equal(0, orderDetails.OrderId1); //had to rename orderid to orderid1. mysql error 'cannot find o.OrderId1' even though it is called OrderId everywhere. I guess EF6 is renaming for some reason? 
             Assert.Null(orderDetails.Order);
             Assert.Equal(0, orderDetails.ProductId);
             Assert.Null(orderDetails.Product);
@@ -116,5 +116,7 @@ namespace Assignment4Tests
             Assert.Equal(14, orderDetails.First().UnitPrice);
             Assert.Equal(12, orderDetails.First().Quantity);
         }
+
+        // ---------------------------- Our added tests
     }
 }
