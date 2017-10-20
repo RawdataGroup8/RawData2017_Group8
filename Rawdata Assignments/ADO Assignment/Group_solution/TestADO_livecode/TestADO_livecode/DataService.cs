@@ -12,9 +12,8 @@ namespace DBMapper
         {
             _db = new NorthwindContext();
         }
-
         //---------------------------------------------------------- Categories
-        // This method returns all the categories
+        #region Categories  
         public List<Category> GetCategories() => _db.Categories.ToList();
 
         public Category CreateCategory(string name, string description)
@@ -49,39 +48,40 @@ namespace DBMapper
         }
 
         public Category GetCategory(int id) => _db.Categories.FirstOrDefault(x => x.Id == id);
+        #endregion
 
         //---------------------------------------------------------- Products
-        public Product GetProduct(int id)
+        #region Products
+        public List<ProductDTO> GetProducts()
+        {
+            return _db.Products.ToList().Select(p => new ProductDTO(p.Name, p.UnitPrice, p.Category)).ToList();
+        }
+
+        public ProductDTO GetProduct(int id)
         {
             var p = _db.Products.FirstOrDefault(x => x.Id == id);
             p.Category = GetCategory(p.CategoryId);
-            return p;
+            return new ProductDTO(p.Name, p.UnitPrice, p.Category);
         }
 
-
-        public List<Product> GetProductsByCategory(int i)
+        public List<ProductDTO> GetProductByName(string name)
         {
-            throw new NotImplementedException();
+            var products = _db.Products.Where(x => x.Name.Contains(name)).ToList();
+            return products.Select(p => new ProductDTO(p.Name, p.UnitPrice, p.Category)).ToList();
+            //return _db.Products.Where(x => x.Name.Contains(name)).ToList();
         }
 
-        public List<Product> GetProductByName(string name) => _db.Products.Where(x => x.Name.Contains(name)).ToList();
-
-        public List<Product> GetProductsMatching(string input)
-        {
-            List<Product> productsFound = _db.Products.Where(prod => prod.Name.Contains(input)).ToList();
-
-            return productsFound;  // should we have an else or something?
-        }
-
-        public List<Product> GetProductByCategory(int id)
+        public List<ProductDTO> GetProductByCategory(int id)
         {
             var products = _db.Products.Where(x => x.CategoryId == id).ToList();
             foreach (var p in products)           
                 p.Category = GetCategory(p.CategoryId);            
-            return products;
+            return products.Select(p => new ProductDTO(p.Name, p.UnitPrice, p.Category)).ToList();
         }
+        #endregion
 
         //---------------------------------------------------------- Orders
+        #region Orders
         public Order GetSingleOrder(int id) => _db.Orders.FirstOrDefault(x => x.Id == id);
 
         public List<Order> GetOrders() => _db.Orders.ToList();
@@ -95,8 +95,10 @@ namespace DBMapper
 
             return order;
         }
+        #endregion
 
         //---------------------------------------------------------- Order Details
+        #region Order Details
         public List<OrderDetails> GetOrderDetailsByOrderId(int id)
         {
             var orderDetails =_db.OrderDetails.Where(z => z.OrderId1 == id).ToList();
@@ -112,12 +114,18 @@ namespace DBMapper
         {
             foreach (var od in orderDetails)
             {
-                od.Product = GetProduct(od.ProductId);
+                od.Product = FillProduct(od.ProductId);
                 od.Order = GetSingleOrder(od.OrderId1);
             }
             return orderDetails;
         }
-
+        private Product FillProduct(int id)
+        {
+            var p = _db.Products.FirstOrDefault(x => x.Id == id);
+            p.Category = GetCategory(p.CategoryId);
+            return p;
+        }
+        #endregion
 
     }
 

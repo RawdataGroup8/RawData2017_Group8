@@ -7,19 +7,19 @@ namespace DBMapper
 {
     public interface IDataService
     {
-        //List<Category> ListAllCategories();
-        Category CreateCategory(string name, string description);
         bool UpdateCategory(int id, string name, string description);
         bool DeleteCategory(int id);
+        Category CreateCategory(string name, string description);
         Category GetCategory(int id);
-        Product GetProduct(int id);
         Order GetSingleOrder(int id);
-        List<Order> GetOrders();
         Order GetOrder(int id);
+        List<Order> GetOrders();
         List<OrderDetails> GetOrderDetailsByOrderId(int id);
         List<OrderDetails> GetOrderDetailsByProductId(int id);
         List<Category> GetCategories();
-        List<Product> GetProductByCategory(int i);
-        List<Product> GetProductByName(string ant);
+        ProductDTO GetProduct(int id);
+        List<ProductDTO> GetProducts(); 
+        List<ProductDTO> GetProductByCategory(int i);
+        List<ProductDTO> GetProductByName(string ant); 
     }
 }

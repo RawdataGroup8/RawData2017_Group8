@@ -8,7 +8,10 @@ namespace DBMapper
         private static void Main(string[] args)
         {
             var ds = new DataService();
-            Console.WriteLine(ds.DeleteCategory(13));
+            //Delete the "Testing, Testing" categories
+            for (var i = 11; i < 14; i++)            
+                Console.WriteLine(ds.DeleteCategory(i));
+            
             Console.ReadKey();
         }
     }    
