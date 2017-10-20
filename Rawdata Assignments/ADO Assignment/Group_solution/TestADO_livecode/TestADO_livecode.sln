@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment4Tests", "Assignm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebServiceLayer", "WebServiceLayer\WebServiceLayer.csproj", "{373B1851-3B15-4288-83F5-208861407EB0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assignment4.PartII.Tests", "Assignment4.PartII.Tests\Assignment4.PartII.Tests.csproj", "{9CF47FD3-C382-4C62-B91F-E314C91E2A61}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{373B1851-3B15-4288-83F5-208861407EB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{373B1851-3B15-4288-83F5-208861407EB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{373B1851-3B15-4288-83F5-208861407EB0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9CF47FD3-C382-4C62-B91F-E314C91E2A61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9CF47FD3-C382-4C62-B91F-E314C91E2A61}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9CF47FD3-C382-4C62-B91F-E314C91E2A61}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9CF47FD3-C382-4C62-B91F-E314C91E2A61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

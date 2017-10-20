@@ -15,8 +15,8 @@ namespace DBMapper
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            //var lines = File.ReadLines("credentials.txt").ToArray(); //Use credential due to different passwords - first line <username> second line <password>
-            optionsBuilder.UseMySql("server=localhost;database=northwind;uid=root; pwd=KIDane12");
+            var lines = File.ReadLines("credentials.txt").ToArray(); //Use credential due to different passwords - first line <username> second line <password>
+            optionsBuilder.UseMySql("server=localhost;database=northwind;uid="+lines[0]+";pwd="+lines[1]+";");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

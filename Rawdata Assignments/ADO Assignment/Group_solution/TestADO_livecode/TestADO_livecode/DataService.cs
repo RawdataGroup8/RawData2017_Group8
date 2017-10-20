@@ -44,6 +44,7 @@ namespace DBMapper
             var category = _db.Categories.FirstOrDefault(x => x.Id == id);
             if (category == null) return false;
             _db.Categories.Remove(category);
+            _db.SaveChanges();
             return true;
         }
 
@@ -57,18 +58,30 @@ namespace DBMapper
             return p;
         }
 
-        public List<Product> GetProductsMatching(String input)
+
+        public List<Product> GetProductsByCategory(int i)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Product> GetProductByName(string ant)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Product> GetProductsMatching(string input)
         {
             List<Product> productsFound = _db.Products.Where(prod => prod.Name.Contains(input)).ToList();
 
             return productsFound;  // should we have an else or something?
         }
 
-        public List<Product> GetProductsByCategory(int catid) //RETURNS NULL LIST
+        public List<Product> GetProductByCategory(int id)
         {
-            List<Product> productslist = _db.Products.Where(prod => prod.CategoryId == catid).ToList();
-          
-            return productslist; // should we have an else or something?
+            var products = _db.Products.Where(x => x.CategoryId == id).ToList();
+            foreach (var p in products)           
+                p.Category = GetCategory(p.CategoryId);            
+            return products;
         }
 
         //---------------------------------------------------------- Orders
@@ -107,16 +120,6 @@ namespace DBMapper
                 od.Order = GetSingleOrder(id);
             }
             return orderDetails;
-        }
-
-        public List<Product> GetProductByCategory(int i)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Product> GetProductByName(string ant)
-        {
-            throw new NotImplementedException();
         }
     }
 
