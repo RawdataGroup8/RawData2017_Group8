@@ -14,5 +14,10 @@ namespace DBMapper.DBObjects
         public string ShipCity { get; set; }
         
         public List<OrderDetails> OrderDetails { get; set; }
+
+        public Order()
+        {
+            Date = DateTime.MinValue;
+        }
     }
 }
