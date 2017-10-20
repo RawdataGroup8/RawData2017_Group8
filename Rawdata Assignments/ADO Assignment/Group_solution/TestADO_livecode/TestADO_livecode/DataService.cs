@@ -22,7 +22,7 @@ namespace DBMapper
             return _db.Categories.ToList();
         }
 
-        public void AddCategory(string name, string description)
+        public Category CreateCategory(string name, string description)
         {
             var category = new Category
             {
@@ -31,6 +31,7 @@ namespace DBMapper
             };
             _db.Add(category);
             _db.SaveChanges();
+            return category;
         }
 
         public bool UpdateCategory(int id, string name, string description)
@@ -43,11 +44,12 @@ namespace DBMapper
             return true;
         }
 
-        public void DeleteCategory(int id)
+        public bool DeleteCategory(int id)
         {
             var category = _db.Categories.FirstOrDefault(x => x.Id == id);
-            if (category != null) // need null check          
-                _db.Categories.Remove(category);          
+            if (category == null) return false;
+            _db.Categories.Remove(category);
+            return true;
         }
 
         public Category GetCategory(int id) => _db.Categories.FirstOrDefault(x => x.Id == id);
@@ -101,6 +103,21 @@ namespace DBMapper
                 od.Order = GetSingleOrder(id);
             }
             return orderDetails;
+        }
+
+        public List<Category> GetCategories()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Product> GetProductByCategory(int i)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Product> GetProductByName(string ant)
+        {
+            throw new NotImplementedException();
         }
     }
 }
