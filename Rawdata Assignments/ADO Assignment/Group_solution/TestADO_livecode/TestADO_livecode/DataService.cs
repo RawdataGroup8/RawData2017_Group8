@@ -15,15 +15,7 @@ namespace DBMapper
 
         //---------------------------------------------------------- Categories
         // This method returns all the categories
-        //rune comment: Are you guys up for dropping prints in dataservice.cs and doing that in runner.cs? that way the code in this library becomes a lot simpler. this method could be a one liner :)
-        public List<Category> Listingcategories() 
-        {
-            foreach (var category in _db.Categories)
-            {
-                Console.WriteLine((category.Id, category.Name, category.Description));
-            }
-            return _db.Categories.ToList();
-        }
+        public List<Category> GetCategories() => _db.Categories.ToList();
 
         public Category CreateCategory(string name, string description)
         {
@@ -90,11 +82,6 @@ namespace DBMapper
             if (order == null) return null;
 
             order.OrderDetails = GetOrderDetailsByOrderId(id);
-            /*foreach (var od in order.OrderDetails)
-            {
-                od.Product = GetProduct(od.ProductId);
-                od.Order = order;
-            }*/
 
             return order;
         }
@@ -120,11 +107,6 @@ namespace DBMapper
                 od.Order = GetSingleOrder(id);
             }
             return orderDetails;
-        }
-
-        public List<Category> GetCategories()
-        {
-            throw new NotImplementedException();
         }
 
         public List<Product> GetProductByCategory(int i)
