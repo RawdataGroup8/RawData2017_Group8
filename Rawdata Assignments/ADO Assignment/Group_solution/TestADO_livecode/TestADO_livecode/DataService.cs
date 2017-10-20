@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using DBMapper.DBObjects;
-using System.Text.RegularExpressions;
 
 namespace DBMapper
 {
     public class DataService
     {
         private readonly NorthwindContext _db;
-        public DataService() => _db = new NorthwindContext(); // use injection
+        public DataService() => _db = new NorthwindContext();
 
         //---------------------------------------------------------- Categories
         // This method returns all the categories
@@ -68,10 +67,14 @@ namespace DBMapper
 
         public List<Product> GetProductsMatching(String input)
         {
-            Regex regex = new Regex(".+");
-            //List<Product> otherList = (_db.Products.Where(prod => prod.Name.Contains(String.Concat(regex, input, regex))).ToList());
-            List<Product> otherList = (_db.Products.Where(prod => prod.Name.Contains(input)).ToList());
-            return otherList;
+            List<Product> productsFound = (_db.Products.Where(prod => prod.Name.Contains(input)).ToList());
+            return productsFound;
+        }
+
+        public List<Product> GetProductsByCategory(int categoryid)
+        {
+            List<Product> productslist = (_db.Products.Where(prod => prod.CategoryId == categoryid).ToList());
+            return productslist;
         }
 
         //---------------------------------------------------------- Orders
@@ -85,11 +88,11 @@ namespace DBMapper
             if (order == null) return null;
 
             order.OrderDetails = GetOrderDetailsByOrderId(id);
-            /*foreach (var od in order.OrderDetails)
+            foreach (var od in order.OrderDetails)
             {
                 od.Product = GetProduct(od.ProductId);
                 od.Order = order;
-            }*/
+            }
 
             return order;
         }
@@ -109,13 +112,7 @@ namespace DBMapper
 
         public List<OrderDetails> GetOrderDetailsByProductId(int id)
         {
-            var orderDetails = _db.OrderDetails.Where(z => z.ProductId == id).ToList();
-            foreach (var od in orderDetails)
-            {
-                od.Product = GetProduct(od.ProductId);
-                od.Order = GetSingleOrder(id);
-            }
-            return orderDetails;
+            throw new NotImplementedException();
         }
     }
 }
