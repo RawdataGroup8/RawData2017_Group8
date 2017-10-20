@@ -5,10 +5,13 @@ using DBMapper.DBObjects;
 
 namespace DBMapper
 {
-    public class DataService
+    public class DataService : IDataService
     {
         private readonly NorthwindContext _db;
-        public DataService() => _db = new NorthwindContext(); // use injection
+        public DataService()
+        {
+            _db = new NorthwindContext();
+        }
 
         //---------------------------------------------------------- Categories
         // This method returns all the categories
@@ -120,4 +123,5 @@ namespace DBMapper
             throw new NotImplementedException();
         }
     }
+
 }
