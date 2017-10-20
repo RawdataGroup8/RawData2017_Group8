@@ -64,9 +64,9 @@ namespace DBMapper
             throw new NotImplementedException();
         }
 
-        public List<Product> GetProductByName(string ant)
+        public List<Product> GetProductByName(string name)
         {
-            throw new NotImplementedException();
+            return _db.Products.Where(x => x.Name.Contains(name)).ToList();
         }
 
         public List<Product> GetProductsMatching(string input)
