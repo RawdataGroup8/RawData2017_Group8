@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DBMapper.DBObjects;
+using System.Text.RegularExpressions;
 
 namespace DBMapper
 {
@@ -43,12 +44,17 @@ namespace DBMapper
             return true;
         }
 
-        public void DeleteCategory(int id)
+        public bool DeleteCategory(int id)
         {
             var category = _db.Categories.FirstOrDefault(x => x.Id == id);
-            if (category != null) // need null check          
-                _db.Categories.Remove(category);          
+            if (category != null)
+            {
+                _db.Categories.Remove(category);
+                return true;
+            } else { return false;}
         }
+            
+        
 
         public Category GetCategory(int id) => _db.Categories.FirstOrDefault(x => x.Id == id);
 
@@ -58,6 +64,14 @@ namespace DBMapper
             var p = _db.Products.FirstOrDefault(x => x.Id == id);
             p.Category = GetCategory(p.CategoryId);
             return p;
+        }
+
+        public List<Product> GetProductsMatching(String input)
+        {
+            Regex regex = new Regex(".+");
+            //List<Product> otherList = (_db.Products.Where(prod => prod.Name.Contains(String.Concat(regex, input, regex))).ToList());
+            List<Product> otherList = (_db.Products.Where(prod => prod.Name.Contains(input)).ToList());
+            return otherList;
         }
 
         //---------------------------------------------------------- Orders
@@ -79,6 +93,7 @@ namespace DBMapper
 
             return order;
         }
+
 
         //---------------------------------------------------------- Order Details
         public List<OrderDetails> GetOrderDetailsByOrderId(int id)
