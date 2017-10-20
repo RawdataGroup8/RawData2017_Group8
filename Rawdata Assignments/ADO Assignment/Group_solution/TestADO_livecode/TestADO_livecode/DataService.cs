@@ -67,14 +67,16 @@ namespace DBMapper
 
         public List<Product> GetProductsMatching(String input)
         {
-            List<Product> productsFound = (_db.Products.Where(prod => prod.Name.Contains(input)).ToList());
-            return productsFound;
+            List<Product> productsFound = _db.Products.Where(prod => prod.Name.Contains(input)).ToList();
+
+            return productsFound;  // should we have an else or something?
         }
 
-        public List<Product> GetProductsByCategory(int categoryid)
+        public List<Product> GetProductsByCategory(int catid) //RETURNS NULL LIST
         {
-            List<Product> productslist = (_db.Products.Where(prod => prod.CategoryId == categoryid).ToList());
-            return productslist;
+            List<Product> productslist = _db.Products.Where(prod => prod.CategoryId == catid).ToList();
+          
+            return productslist; // should we have an else or something?
         }
 
         //---------------------------------------------------------- Orders
