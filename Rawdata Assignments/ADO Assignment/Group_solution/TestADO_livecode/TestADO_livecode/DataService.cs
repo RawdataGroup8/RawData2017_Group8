@@ -64,10 +64,7 @@ namespace DBMapper
             throw new NotImplementedException();
         }
 
-        public List<Product> GetProductByName(string name)
-        {
-            return _db.Products.Where(x => x.Name.Contains(name)).ToList();
-        }
+        public List<Product> GetProductByName(string name) => _db.Products.Where(x => x.Name.Contains(name)).ToList();
 
         public List<Product> GetProductsMatching(string input)
         {
@@ -103,24 +100,25 @@ namespace DBMapper
         public List<OrderDetails> GetOrderDetailsByOrderId(int id)
         {
             var orderDetails =_db.OrderDetails.Where(z => z.OrderId1 == id).ToList();
-            foreach (var od in orderDetails)
-            {
-                od.Product = GetProduct(od.ProductId);
-                od.Order = GetSingleOrder(id);
-            }
-            return orderDetails;
+            return FillOrderDetails(orderDetails);
         }
 
         public List<OrderDetails> GetOrderDetailsByProductId(int id)
         {
             var orderDetails = _db.OrderDetails.Where(z => z.ProductId == id).ToList();
+            return FillOrderDetails(orderDetails);
+        }
+        private List<OrderDetails> FillOrderDetails(List<OrderDetails> orderDetails)
+        {
             foreach (var od in orderDetails)
             {
                 od.Product = GetProduct(od.ProductId);
-                od.Order = GetSingleOrder(id);
+                od.Order = GetSingleOrder(od.OrderId1);
             }
             return orderDetails;
         }
+
+
     }
 
 }

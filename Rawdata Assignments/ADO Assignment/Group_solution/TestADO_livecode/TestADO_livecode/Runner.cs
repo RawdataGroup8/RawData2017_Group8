@@ -8,7 +8,7 @@ namespace DBMapper
         private static void Main(string[] args)
         {
             var ds = new DataService();
-            Console.WriteLine(ds.GetProductByCategory(1).Count);
+            Console.WriteLine(ds.DeleteCategory(13));
             Console.ReadKey();
         }
     }    
