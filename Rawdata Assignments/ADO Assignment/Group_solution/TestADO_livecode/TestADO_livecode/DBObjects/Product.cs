@@ -15,13 +15,15 @@
     {
         public string Name { get; set; }
         public double UnitPrice { get; set; }
-        public Category Category { get; set; }
+        public string CategoryName { get; set; } // Needed to pass webservice tests
+        public Category Category { get; set; } //Needed to pass db tests
 
         public ProductDTO(string pName, double pUnitPrice, Category pCategory)
         {
             Name = pName;
             UnitPrice = pUnitPrice;
             Category = pCategory;
+            CategoryName = Category.Name;
         }
     }
 }

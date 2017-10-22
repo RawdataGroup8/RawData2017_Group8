@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 namespace WebServiceLayer.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Products")]
+    [Route("api/products")]
     public class ProductsController : Controller
     {
         private readonly IDataService _ds = new DataService();
@@ -22,19 +22,20 @@ namespace WebServiceLayer.Controllers
             return JsonConvert.SerializeObject(_ds.GetProducts());
         }
 
-        // GET: api/Products/5
+        // GET: api/products/5
         [HttpGet("{id}", Name = "GetProduct")]
-        public string GetProduct(int id)
+        public IActionResult GetProduct(int id)
         {
-            return JsonConvert.SerializeObject(_ds.GetProduct(id)); ;
+            return Ok(_ds.GetProduct(id)); 
         }
 
         // GET: api/products/category/5
         //[HttpGet("{id}", Name = "GetProductByCatId")]
         [Route("category/{id}")]
-        public string GetBy(int id)
+        public IActionResult GetBy(int id)
         {
-            return JsonConvert.SerializeObject(_ds.GetProductByCategory(id)); ;
+            //return JsonConvert.SerializeObject(_ds.GetProductByCategory(id)); ;
+            return Ok(_ds.GetProductByCategory(id));
         }
 
         // POST: api/Products

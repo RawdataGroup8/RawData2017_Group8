@@ -43,8 +43,14 @@ namespace WebServiceLayer.Controllers
         
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}", Name = "DeleteCategory")]
-        public void Delete(int id)
-        {
+        public IActionResult Delete(int id)
+        {            
+            var del = _ds.DeleteCategory(id);
+            if (del)
+            {
+                return Ok(_ds.DeleteCategory(id));
+            }
+            return NotFound(_ds.DeleteCategory(id));
         }
     }
 }
