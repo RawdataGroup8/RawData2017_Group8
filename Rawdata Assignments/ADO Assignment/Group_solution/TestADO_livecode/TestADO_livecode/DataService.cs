@@ -60,6 +60,7 @@ namespace DBMapper
         public ProductDTO GetProduct(int id)
         {
             var p = _db.Products.FirstOrDefault(x => x.Id == id);
+            if (p == null) return null;
             p.Category = GetCategory(p.CategoryId);
             return new ProductDTO(p.Name, p.UnitPrice, p.Category);
         }
@@ -67,16 +68,15 @@ namespace DBMapper
         public List<ProductDTO> GetProductByName(string name)
         {
             var products = _db.Products.Where(x => x.Name.Contains(name)).ToList();
-            return products.Select(p => new ProductDTO(p.Name, p.UnitPrice, p.Category)).ToList();
-            //return _db.Products.Where(x => x.Name.Contains(name)).ToList();
+            return products.Any() ? products.Select(p => new ProductDTO(p.Name, p.UnitPrice, p.Category)).ToList() : new List<ProductDTO>();
         }
 
         public List<ProductDTO> GetProductByCategory(int id)
         {
             var products = _db.Products.Where(x => x.CategoryId == id).ToList();
             foreach (var p in products)           
-                p.Category = GetCategory(p.CategoryId);            
-            return products.Select(p => new ProductDTO(p.Name, p.UnitPrice, p.Category)).ToList();
+                p.Category = GetCategory(p.CategoryId);               
+            return products.Count > 0 ? products.Select(p => new ProductDTO(p.Name, p.UnitPrice, p.Category)).ToList() : new List<ProductDTO>();
         }
         #endregion
 

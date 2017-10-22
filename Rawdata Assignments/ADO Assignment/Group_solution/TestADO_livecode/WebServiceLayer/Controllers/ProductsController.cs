@@ -24,18 +24,22 @@ namespace WebServiceLayer.Controllers
 
         // GET: api/products/5
         [HttpGet("{id}", Name = "GetProduct")]
-        public IActionResult GetProduct(int id)
-        {
-            return Ok(_ds.GetProduct(id)); 
-        }
+        public IActionResult GetProduct(int id) => _ds.GetProduct(id) != null ? (IActionResult)Ok(_ds.GetProduct(id)) : NotFound(_ds.GetProduct(id));
 
         // GET: api/products/category/5
-        //[HttpGet("{id}", Name = "GetProductByCatId")]
         [Route("category/{id}")]
-        public IActionResult GetBy(int id)
+        public IActionResult GetByCat(int id)
         {
-            //return JsonConvert.SerializeObject(_ds.GetProductByCategory(id)); ;
-            return Ok(_ds.GetProductByCategory(id));
+            var product = _ds.GetProductByCategory(id);
+            return product.Any() ? (IActionResult)Ok(product) : NotFound(product);
+        }
+
+        // GET: api/products/name/<str>
+        [Route("name/{str}")]
+        public IActionResult GetBy(string str)
+        {
+            var products = _ds.GetProductByName(str);
+            return products.Any() ? (IActionResult) Ok(products) : NotFound(products);
         }
 
         // POST: api/Products
