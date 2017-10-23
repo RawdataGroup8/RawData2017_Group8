@@ -36,13 +36,17 @@ namespace WebServiceLayer.Controllers
         [HttpPost(Name = "AddCategory")]
         public void Post([FromBody]string value)
         {
+
         }
         
         // PUT: api/Categories/5
         [HttpPut("{id}", Name = "UpdateOrAddCategory")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Put(int id, [FromBody]string values)
         {
-
+            if (values == null) return NotFound();
+            var content = ((string, string)) JsonConvert.DeserializeObject(values);
+            var res = _ds.UpdateCategory(id, content.Item1, content.Item2);
+            return res ? (IActionResult) Ok() : NotFound();
         }
         
         // DELETE: api/ApiWithActions/5
@@ -50,12 +54,12 @@ namespace WebServiceLayer.Controllers
         public IActionResult Delete(int id)
         {
             return _ds.DeleteCategory(id) ? (IActionResult) Ok(_ds.DeleteCategory(id)) : NotFound(_ds.DeleteCategory(id));
-            var del = _ds.DeleteCategory(id);
-            if (del)
-            {
-                return Ok(_ds.DeleteCategory(id));
-            }
-            return NotFound(_ds.DeleteCategory(id));
+        }
+
+        // helpers
+        public T Deserialize<T>(string json)
+        {
+            return JsonConvert.DeserializeObject<T>(json);
         }
     }
 }

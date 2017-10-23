@@ -2,7 +2,7 @@
 
 namespace DTOLayer
 {
-    public class DTO
+    public class DTO //Just a "parent" placeholder currently
     {
     }
 }
