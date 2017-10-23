@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using DBMapper;
-using Microsoft.AspNetCore.Http;
+using DBMapper.DBObjects;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -15,33 +14,28 @@ namespace WebServiceLayer.Controllers
     {
         private readonly IDataService _ds = new DataService();
 
-        // GET: api/Products
-        [HttpGet(Name = "GetProducts")]
-        public string GetProducts()
-        {
-            return JsonConvert.SerializeObject(_ds.GetProducts());
-        }
+        [HttpGet("{id}", Name = "GetProduct")] // GET: api/products/5
+        public IActionResult GetProduct(int id) => _ds.GetProduct(id) != null ? (IActionResult) Ok(_ds.GetProduct(id)) : NotFound(_ds.GetProduct(id));
 
-        // GET: api/products/5
-        [HttpGet("{id}", Name = "GetProduct")]
-        public IActionResult GetProduct(int id) => _ds.GetProduct(id) != null ? (IActionResult)Ok(_ds.GetProduct(id)) : NotFound(_ds.GetProduct(id));
+        [HttpGet(Name = "GetProducts")] // GET: api/products
+        public IActionResult GetProducts() => Ok(_ds.GetProducts());
+       
+        [Route("category/{id}")] // GET: api/products/category/5
+        public IActionResult GetByCategory(int id) => ListResult(id, method => _ds.GetProductByCategory(id)); 
+        //alternative: public IActionResult GetByCat(int id) => _ds.GetProductByCategory(id).Any() ? (IActionResult) Ok(_ds.GetProductByCategory(id)) : NotFound(_ds.GetProductByCategory(id));
+        
+        [Route("name/{str}")] // GET: api/products/name/<str>
+        public IActionResult GetByNameMatch(string str) => ListResult(str, method => _ds.GetProductByName(str)); 
+        //alternative: public IActionResult GetByNameMatch(string str) => _ds.GetProductByName(str).Any() ? (IActionResult)Ok(_ds.GetProductByName(str)) : NotFound(_ds.GetProductByName(str));
 
-        // GET: api/products/category/5
-        [Route("category/{id}")]
-        public IActionResult GetByCat(int id)
+        //Used for all queries that take one input and returns a list of ProductDTO's
+        public IActionResult ListResult(object input, Func<object, List<ProductDTO>> genericFunc)
         {
-            var product = _ds.GetProductByCategory(id);
-            return product.Any() ? (IActionResult)Ok(product) : NotFound(product);
-        }
-
-        // GET: api/products/name/<str>
-        [Route("name/{str}")]
-        public IActionResult GetBy(string str)
-        {
-            var products = _ds.GetProductByName(str);
+            var products = genericFunc(input);
             return products.Any() ? (IActionResult) Ok(products) : NotFound(products);
+            
         }
-
+        /*
         // POST: api/Products
         [HttpPost(Name = "AddProduct")]
         public void Post([FromBody]string value)
@@ -58,6 +52,10 @@ namespace WebServiceLayer.Controllers
         [HttpDelete("{id}", Name = "DeleteProduct")]
         public void Delete(int id)
         {
-        }
+        }*/
+
+        [Route("coffee")]// GET: api/coffee/inapot
+        public IActionResult GetCoffee() => StatusCode(418, JsonConvert.SerializeObject("{Not a french press!}"));
+
     }
 }

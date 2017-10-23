@@ -1,20 +1,10 @@
-﻿namespace DBMapper.DBObjects
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using DBMapper.DBObjects;
+
+namespace DTOLayer
 {
-    public class Product
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public double UnitPrice { get; set; }
-        public string QuantityPerUnit { get; set; }
-        public int UnitsInStock { get; set; }
-        public int CategoryId { get; set; }
-        public Category Category { get; set; }
-    }
-
-    public class DTO
-    {
-    }
-
     public class ProductDTO : DTO
     {
         public string Name { get; set; } //needed for db tests 
