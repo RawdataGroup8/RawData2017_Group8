@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DBMapper;
+using DBMapper.DBObjects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -34,19 +35,20 @@ namespace WebServiceLayer.Controllers
 
         // POST: api/Categories
         [HttpPost(Name = "AddCategory")]
-        public IActionResult CreateCategory([FromBody](string, string) content)
+        public IActionResult CreateCategory([FromBody](string, string) content) //
         {
-            return Created("created", _ds.CreateCategory(content.Item1, content.Item2));
+            var cat = _ds.CreateCategory(content.Item1, content.Item2);
+            return Created("", cat);
         }
 
         // PUT: api/Categories/5
         [HttpPut("{id}", Name = "UpdateOrAddCategory")]
-        public IActionResult Put(int id, [FromBody](string, string) values)
+        public IActionResult Put(int id, [FromBody]Category category)
         {
             //if (values == null) return NotFound();
             //var content = ((string, string))JsonConvert.DeserializeObject(values);
-            var res = _ds.UpdateCategory(id, values.Item1, values.Item2);
-            return res ? (IActionResult)Ok() : NotFound();
+            var updated = _ds.UpdateCategory(category.Id, category.Name, category.Description);
+            return updated ? (IActionResult) Ok() : NotFound();
         }
 
         // DELETE: api/ApiWithActions/5

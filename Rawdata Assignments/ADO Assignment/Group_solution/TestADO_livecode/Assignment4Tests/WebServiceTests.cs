@@ -49,10 +49,11 @@ namespace Assignment4Tests
             var newCategory = new
             {
                 Name = "Created",
-                Description = " ur mom is fat "
+                Description = ""
             };
             var (category, statusCode) = PostData(CategoriesApi, newCategory);
 
+            //Assert.True(JsonConvert.SerializeObject(category).Contains("Created"));
             Assert.Equal(HttpStatusCode.Created, statusCode);
 
             DeleteData($"{CategoriesApi}/{category["id"]}");
@@ -113,7 +114,7 @@ namespace Assignment4Tests
                 Description = "Created"
             };
             var (category, _) = PostData($"{CategoriesApi}", data);
-
+            
             var statusCode = DeleteData($"{CategoriesApi}/{category["id"]}");
 
             Assert.Equal(HttpStatusCode.OK, statusCode);

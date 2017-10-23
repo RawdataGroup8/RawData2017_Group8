@@ -11,7 +11,13 @@ namespace DBMapper
             //Delete the "Testing, Testing" categories
             for (var i = 11; i < 14; i++)            
                 Console.WriteLine(ds.DeleteCategory(i));
-            
+            foreach (var c in ds.GetCategories())
+            {
+                if (c.Id > 8)
+                {
+                    Console.WriteLine(ds.DeleteCategory(c.Id));
+                }
+            }
             Console.ReadKey();
         }
     }    
