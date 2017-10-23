@@ -12,10 +12,7 @@ namespace WebServiceLayer.Controllers
     [Route("api/products")]
     public class ProductsController : Controller
     {
-        public ProductsController(IDataService iDataService)
-        {
-            _ds = iDataService;
-        }
+        public ProductsController(IDataService iDataService) => _ds = iDataService;
         private readonly IDataService _ds;
 
         [HttpGet("{id}", Name = "GetProduct")] // GET: api/products/5
