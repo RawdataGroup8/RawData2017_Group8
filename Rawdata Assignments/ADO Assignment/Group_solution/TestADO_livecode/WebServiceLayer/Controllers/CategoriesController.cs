@@ -19,18 +19,19 @@ namespace WebServiceLayer.Controllers
 
         // GET: api/Categories
         [HttpGet(Name = "GetCategories")]
-        public string Get()
+        public IActionResult Get()
         {
-            return JsonConvert.SerializeObject(_ds.GetCategories());
+            return Ok(_ds.GetCategories());
         }
 
         // GET: api/Categories/5
         [HttpGet("{id}", Name = "GetCategory")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            return _ds.GetCategory(id) != null ? (IActionResult)Ok(_ds.GetCategory(id)) : NotFound(_ds.GetCategory(id));
+
         }
-        
+
         // POST: api/Categories
         [HttpPost(Name = "AddCategory")]
         public void Post([FromBody]string value)
@@ -41,12 +42,14 @@ namespace WebServiceLayer.Controllers
         [HttpPut("{id}", Name = "UpdateOrAddCategory")]
         public void Put(int id, [FromBody]string value)
         {
+
         }
         
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}", Name = "DeleteCategory")]
         public IActionResult Delete(int id)
-        {            
+        {
+            return _ds.DeleteCategory(id) ? (IActionResult) Ok(_ds.DeleteCategory(id)) : NotFound(_ds.DeleteCategory(id));
             var del = _ds.DeleteCategory(id);
             if (del)
             {

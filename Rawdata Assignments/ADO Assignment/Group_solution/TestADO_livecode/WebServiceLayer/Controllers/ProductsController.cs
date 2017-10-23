@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DBMapper;
-using DBMapper.DBObjects;
+using DBMapper.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -33,8 +33,7 @@ namespace WebServiceLayer.Controllers
         public IActionResult ListResult(object input, Func<object, List<ProductDTO>> genericFunc)
         {
             var products = genericFunc(input);
-            return products.Any() ? (IActionResult) Ok(products) : NotFound(products);
-            
+            return products.Any() ? (IActionResult) Ok(products) : NotFound(products);         
         }
         /*
         // POST: api/Products
