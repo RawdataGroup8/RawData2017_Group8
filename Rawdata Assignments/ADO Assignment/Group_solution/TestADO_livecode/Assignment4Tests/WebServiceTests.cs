@@ -49,7 +49,7 @@ namespace Assignment4Tests
             var newCategory = new
             {
                 Name = "Created",
-                Description = ""
+                Description = " ur mom is fat "
             };
             var (category, statusCode) = PostData(CategoriesApi, newCategory);
 

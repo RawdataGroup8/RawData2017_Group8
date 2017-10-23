@@ -30,13 +30,19 @@ namespace WebServiceLayer.Controllers
         {
             return "value";
         }
-        
+
         // POST: api/Categories
         [HttpPost(Name = "AddCategory")]
-        public void Post([FromBody]string value)
+        public IActionResult createCategory([FromBody]string content)
         {
+            (string, string) t = ((string, string)) JsonConvert.DeserializeObject(content);
+            if (!(_ds.CreateCategory(t.Item1, t.Item2).Equals(null)))
+            {
+                return Created("created", content);
+            }
+            else { return NotFound(); }
+            //Ok(_ds.CreateCategory(name, value));
         }
-        
         // PUT: api/Categories/5
         [HttpPut("{id}", Name = "UpdateOrAddCategory")]
         public void Put(int id, [FromBody]string value)
