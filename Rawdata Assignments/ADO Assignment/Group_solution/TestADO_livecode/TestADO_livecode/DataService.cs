@@ -9,10 +9,7 @@ namespace DBMapper
     public class DataService : IDataService
     {
         private readonly NorthwindContext _db;
-        public DataService()
-        {
-            _db = new NorthwindContext();
-        }
+        public DataService() => _db = new NorthwindContext();
         //---------------------------------------------------------- Categories
         #region Categories  
         public List<Category> GetCategories() => _db.Categories.ToList();

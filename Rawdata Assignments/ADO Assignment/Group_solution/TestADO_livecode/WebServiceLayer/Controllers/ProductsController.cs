@@ -26,35 +26,22 @@ namespace WebServiceLayer.Controllers
         //alternative: public IActionResult GetByCat(int id) => _ds.GetProductByCategory(id).Any() ? (IActionResult) Ok(_ds.GetProductByCategory(id)) : NotFound(_ds.GetProductByCategory(id));
         
         [Route("name/{str}")] // GET: api/products/name/<str>
-        public IActionResult GetByNameMatch(string str) => ListResult(str, method => _ds.GetProductByName(str)); 
+        public IActionResult GetByNameMatch(string str) => ListResult(str, method => _ds.GetProductByName(str));
         //alternative: public IActionResult GetByNameMatch(string str) => _ds.GetProductByName(str).Any() ? (IActionResult)Ok(_ds.GetProductByName(str)) : NotFound(_ds.GetProductByName(str));
 
-        //Used for all queries that take one input and returns a list of ProductDTO's
+        //Used for all queries that take one input and returns a list of DTO's. Would be more useful with more queries, and a "dto
+        //layer" between the datalayer and the webservice allowing use of the same ListResult funtion for all entities)
         public IActionResult ListResult(object input, Func<object, List<ProductDTO>> genericFunc)
         {
             var products = genericFunc(input);
             return products.Any() ? (IActionResult) Ok(products) : NotFound(products);         
         }
-        /*
-        // POST: api/Products
-        [HttpPost(Name = "AddProduct")]
-        public void Post([FromBody]string value)
-        {
-        }
-        
-        // PUT: api/Products/5
-        [HttpPut("{id}", Name = "UpdateOrAddProduct")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-        
-        // DELETE: api/Products/5
-        [HttpDelete("{id}", Name = "DeleteProduct")]
-        public void Delete(int id)
-        {
-        }*/
 
-        [Route("coffee")]// GET: api/coffee/inapot
+
+
+
+
+        [Route("coffee")]// GET: api/coffee
         public IActionResult GetCoffee() => StatusCode(418, JsonConvert.SerializeObject("{Not a french press!}"));
 
     }
