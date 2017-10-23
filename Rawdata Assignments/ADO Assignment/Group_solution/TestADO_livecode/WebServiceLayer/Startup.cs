@@ -26,7 +26,7 @@ namespace WebServiceLayer
         {
             services.AddMvc();
 
-            services.AddSingleton<DataService>();
+            services.AddSingleton<IDataService, DataService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

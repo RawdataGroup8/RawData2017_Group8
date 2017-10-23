@@ -13,7 +13,11 @@ namespace WebServiceLayer.Controllers
     [Route("/api/categories")]
     public class CategoriesController : Controller
     {
-        private readonly IDataService _ds = new DataService();
+        public CategoriesController(IDataService iDataService)
+        {
+            _ds = iDataService;
+        }
+        private readonly IDataService _ds;
 
         // GET: api/Categories
         [HttpGet(Name = "GetCategories")]

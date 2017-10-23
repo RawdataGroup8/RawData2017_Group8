@@ -12,7 +12,11 @@ namespace WebServiceLayer.Controllers
     [Route("api/products")]
     public class ProductsController : Controller
     {
-        private readonly IDataService _ds = new DataService();
+        public ProductsController(IDataService iDataService)
+        {
+            _ds = iDataService;
+        }
+        private readonly IDataService _ds;
 
         [HttpGet("{id}", Name = "GetProduct")] // GET: api/products/5
         public IActionResult GetProduct(int id) => _ds.GetProduct(id) != null ? (IActionResult) Ok(_ds.GetProduct(id)) : NotFound(_ds.GetProduct(id));
