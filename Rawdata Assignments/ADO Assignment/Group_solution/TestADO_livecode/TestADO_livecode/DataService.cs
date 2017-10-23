@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DBMapper.DBObjects;
+using DBMapper.DTOs;
 
 namespace DBMapper
 {
