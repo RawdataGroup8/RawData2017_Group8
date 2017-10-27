@@ -1,0 +1,29 @@
+user (user_id(PK), user_name, user_creation_date, user_location, user_age) 
+
+post(post_id(PK), creation_date, score, body, title, owner_user_id(FK), type_id) /* type id somewhat redundant */
+
+question(accepted_answer_id(FK), closed_date, tags, _post_id(PK,FK))
+answer(parent_id, post_id(PK,FK))
+
+comment(comment_id(PK), comment_score, comment_text, comment_create_date, user_id(FK), post_id(FK))
+
+post_tags((post_id(FK), tag)(PK))//tag_id
+//tags(TAG_ID, tag)  <split tags on '::'>
+
+//post_type(type_id, type); /* redundant? a post with a parentid is an answer, other posts are questions */ /* could remove and store type directly in the post table*/
+
+history((USER_ID, DATE_TIME_ADDED)(PK), post_id(FK)); /*Index by users for search*/
+
+marking(USER_ID, POST_ID, date_time_added, folder_tag); 
+
+linked_posts(LINK_POST_ID, POST_ID)
+
+------------------------
+
+//In posts(), index questions aside from answers
+
+
+
+
+
+
