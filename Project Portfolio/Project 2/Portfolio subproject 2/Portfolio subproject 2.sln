@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{93E3C7BE-93AF-4944-893D-91B9A2D2D17C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{93E3C7BE-93AF-4944-893D-91B9A2D2D17C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WSL", "WSL\WSL.csproj", "{775FEF6E-7FE4-44A7-8481-B178CAC0358B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WSL", "WSL\WSL.csproj", "{775FEF6E-7FE4-44A7-8481-B178CAC0358B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestProject", "XUnitTestProject\XUnitTestProject.csproj", "{B2058DA1-3E16-4F8B-A56F-C94FFA7B78B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitTestProject", "XUnitTestProject\XUnitTestProject.csproj", "{B2058DA1-3E16-4F8B-A56F-C94FFA7B78B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
