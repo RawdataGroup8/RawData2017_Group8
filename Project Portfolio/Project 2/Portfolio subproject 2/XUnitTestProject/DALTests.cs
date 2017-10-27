@@ -3,7 +3,7 @@ using Xunit;
 
 namespace XUnitTestProject
 {
-    public class UnitTest1
+    public class DALTests
     {
         [Fact]
         public void Test1()
