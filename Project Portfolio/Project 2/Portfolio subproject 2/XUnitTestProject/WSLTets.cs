@@ -1,7 +1,14 @@
-﻿namespace XUnitTestProject
+﻿using System;
+using Xunit;
+
+namespace XUnitTestProject
 {
-    public class WSLTets
+    public class WSLTests
     {
-        
+        [Fact]
+        public void Test1()
+        {
+
+        }
     }
 }
