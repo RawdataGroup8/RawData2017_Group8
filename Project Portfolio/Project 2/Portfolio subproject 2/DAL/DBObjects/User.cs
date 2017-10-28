@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace WSL.Models
+namespace DAL.DBObjects
 {
     class User
     {
@@ -9,8 +11,5 @@ namespace WSL.Models
         public DateTime UserCreationDate { get; set; }
         public string UserLocation { get; set; }
         public int Userage { get; set; }
-
-        
-
     }
 }

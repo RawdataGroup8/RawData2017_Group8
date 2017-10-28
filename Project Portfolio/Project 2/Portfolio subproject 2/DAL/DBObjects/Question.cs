@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace WSL.Models
+namespace DAL.DBObjects
 {
     class Question
     {
@@ -8,9 +10,5 @@ namespace WSL.Models
         public DateTime ClosedDate { get; set; }
 
         public Post QuestionPost { get; set; }
-       
-
-        
-
     }
 }

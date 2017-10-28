@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace WSL.Models
+namespace DAL.DBObjects
 {
     class Post
     {
@@ -12,7 +14,7 @@ namespace WSL.Models
         public int OwnerUserId { get; set; }
         public int TypeId { get; set; }
 
-        
+
         private User PostUser { get; set; }
     }
 }
