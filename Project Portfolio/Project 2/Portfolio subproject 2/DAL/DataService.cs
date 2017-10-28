@@ -6,21 +6,21 @@ using DAL.DBObjects;
 
 namespace DAL
 {
-    class DataService
+    class DataService: IDataService
+
     {
 
-        private readonly StackoverflowContext _db;
-        public DataService()
-        {
-            _db = new StackoverflowContext();
-        }
+    private readonly StackoverflowContext _db;
+
+    public DataService()
+    {
+        _db = new StackoverflowContext();
+    }
 
         public List<User> GetUsers()
         {
             return _db.User.ToList();
         }
-
-
-
+            
     }
 }
