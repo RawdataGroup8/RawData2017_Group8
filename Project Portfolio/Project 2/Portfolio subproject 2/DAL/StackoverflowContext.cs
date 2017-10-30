@@ -38,9 +38,25 @@ namespace DAL
             //modelBuilder.Entity<Comment>().Property(x => x.CommentUser).HasColumnName("CommentUser");
             modelBuilder.Entity<Comment>().Property(x => x.CommentText).HasColumnName("comment_text");
 
+            //History
+            modelBuilder.Entity<History>().Property(x => x.Userid).HasColumnName("user_id");
+            modelBuilder.Entity<History>().Property(x => x.Linkpost_id).HasColumnName("link_post_id");
+            modelBuilder.Entity<History>().Property(x => x.DateTime_aded).HasColumnName("datetime_added");
+            modelBuilder.Entity<History>().HasKey(k => new { k.Userid, k.DateTime_aded });
+            
             //LinkedPosts 
             modelBuilder.Entity<LinkedPosts>().Property(x => x.LinkPostId).HasColumnName("link_post_id");
             modelBuilder.Entity<LinkedPosts>().Property(x => x.PostId).HasColumnName("post_id");
+            modelBuilder.Entity<LinkedPosts>().HasKey(k => new { k.LinkPostId, k.PostId});
+
+            //Marking
+            modelBuilder.Entity<Marking>().Property(x => x.Userid).HasColumnName("user_id");
+            modelBuilder.Entity<Marking>().Property(x => x.Postid).HasColumnName("post_id");
+            modelBuilder.Entity<Marking>().Property(x => x.Datetime_added).HasColumnName("datetime_added");
+            modelBuilder.Entity<Marking>().Property(x => x.Folder_label).HasColumnName("folder_tag");
+            modelBuilder.Entity<Marking>().HasKey(k => new { k.Userid, k.Postid });
+
+
 
             //Post
             modelBuilder.Entity<Post>().Property(x => x.PostId).HasColumnName("post_id");
