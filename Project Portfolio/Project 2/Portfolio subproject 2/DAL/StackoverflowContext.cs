@@ -22,7 +22,7 @@ namespace DAL
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseMySql("server=localhost;database=stack_overflow_normalized;uid=root;pwd=toor");
+            optionsBuilder.UseMySql("server=localhost;database=stack_overflow_normalized;uid=root; pwd=toor;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,40 +30,39 @@ namespace DAL
             base.OnModelCreating(modelBuilder);
 
             // Answers
-            modelBuilder.Entity<Answers>().Property(x => x.Parentid).HasColumnName("Parentid");
-            modelBuilder.Entity<Answers>().Property(x => x.Postid).HasColumnName("Postid");
+            modelBuilder.Entity<Answers>().Property(x => x.Parentid).HasColumnName("parent_id");
+            modelBuilder.Entity<Answers>().Property(x => x.Postid1).HasColumnName("post_id");
 
             // Comment
-            modelBuilder.Entity<Comment>().Property(x => x.CommentId).HasColumnName("CommentId");
-            modelBuilder.Entity<Comment>().Property(x => x.CommentUser).HasColumnName("CommentUser");
-            modelBuilder.Entity<Comment>().Property(x => x.CommentText).HasColumnName("CommentText");
+            modelBuilder.Entity<Comment>().Property(x => x.CommentId).HasColumnName("comment_id");
+            //modelBuilder.Entity<Comment>().Property(x => x.CommentUser).HasColumnName("CommentUser");
+            modelBuilder.Entity<Comment>().Property(x => x.CommentText).HasColumnName("comment_text");
 
-            // 
-            modelBuilder.Entity<LinkedPosts>().Property(x => x.LinkPostId).HasColumnName("LinkPostId");
-            modelBuilder.Entity<LinkedPosts>().Property(x => x.PostId).HasColumnName("PostId");
+            //LinkedPosts 
+            modelBuilder.Entity<LinkedPosts>().Property(x => x.LinkPostId).HasColumnName("link_post_id");
+            modelBuilder.Entity<LinkedPosts>().Property(x => x.PostId).HasColumnName("post_id");
 
             //Post
-            modelBuilder.Entity<Post>().Property(x => x.PostId).HasColumnName("PostId");
-            modelBuilder.Entity<Post>().Property(x => x.OwnerUserId).HasColumnName("OwnerUserId");
-            modelBuilder.Entity<Post>().Property(x => x.Body).HasColumnName("Body");
-            modelBuilder.Entity<Post>().Property(x => x.Title).HasColumnName("Title");
-            modelBuilder.Entity<Post>().Property(x => x.PostId).HasColumnName("PostIdt");
-            modelBuilder.Entity<Post>().Property(x => x.TypeId).HasColumnName("TypeId");
+            modelBuilder.Entity<Post>().Property(x => x.PostId).HasColumnName("post_id");
+            //modelBuilder.Entity<Post>().Property(x => x.OwnerUserId).HasColumnName("OwnerUserId");
+            modelBuilder.Entity<Post>().Property(x => x.Body).HasColumnName("body");
+            modelBuilder.Entity<Post>().Property(x => x.Title).HasColumnName("title");
+            //modelBuilder.Entity<Post>().Property(x => x.TypeId).HasColumnName("TypeId");
 
             //Posttags
-            modelBuilder.Entity<PostTags>().Property(x => x.PostId).HasColumnName("PostId");
-            modelBuilder.Entity<PostTags>().Property(x => x.LinkPostId).HasColumnName("linkPostId");
+            modelBuilder.Entity<PostTags>().Property(x => x.PostId).HasColumnName("post_id");
+            modelBuilder.Entity<PostTags>().Property(x => x.TagName).HasColumnName("tag_name");
 
             //Question
-            modelBuilder.Entity<Question>().Property(x => x.QuestionPost).HasColumnName("QuestionPost");
-            modelBuilder.Entity<Question>().Property(x => x.AcceptedAnswerId).HasColumnName("AcceptedAnswerId");
-            modelBuilder.Entity<Question>().Property(x => x.ClosedDate).HasColumnName("ClosedDate");
+            //modelBuilder.Entity<Question>().Property(x => x.PostId).HasColumnName("post_id");
+            modelBuilder.Entity<Question>().Property(x => x.AcceptedAnswerId).HasColumnName("accepted_answer_id");
+            modelBuilder.Entity<Question>().Property(x => x.ClosedDate).HasColumnName("closed_date");
 
             //User
-            modelBuilder.Entity<User>().Property(x => x.Userid).HasColumnName("Userid");
-            modelBuilder.Entity<User>().Property(x => x.UserName).HasColumnName("UserName");
-            modelBuilder.Entity<User>().Property(x => x.UserLocation).HasColumnName("UserLocation");
-            modelBuilder.Entity<User>().Property(x => x.Userage).HasColumnName("Userage");
+            modelBuilder.Entity<User>().Property(x => x.Userid).HasColumnName("user_id");
+            modelBuilder.Entity<User>().Property(x => x.UserName).HasColumnName("user_name");
+            modelBuilder.Entity<User>().Property(x => x.UserLocation).HasColumnName("user_location");
+            //modelBuilder.Entity<User>().Property(x => x.Userage).HasColumnName("Userage");
 
 
 

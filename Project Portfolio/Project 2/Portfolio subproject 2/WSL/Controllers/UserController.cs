@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.DataAnnotations.Internal;
 using DAL;
+using DAL.DBObjects;
 
 namespace WSL.Controllers
 {
@@ -20,7 +21,7 @@ namespace WSL.Controllers
         private readonly IDataService _ds;
 
 
-        [HttpGet(Name = "GetUsers")]
+        [HttpGet(Name = "GetUsers")] 
         public IActionResult GetUsers()
         {
             return Ok(_ds.GetUsers());

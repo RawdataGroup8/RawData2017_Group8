@@ -6,7 +6,7 @@ using DAL.DBObjects;
 
 namespace DAL
 {
-    class DataService: IDataService
+    public class DataService: IDataService
 
     {
 

@@ -9,6 +9,6 @@ namespace DAL.DBObjects
         public int AcceptedAnswerId { get; set; }
         public DateTime ClosedDate { get; set; }
 
-        public Post QuestionPost { get; set; }
+        //public Post PostId { get; set; }
     }
 }

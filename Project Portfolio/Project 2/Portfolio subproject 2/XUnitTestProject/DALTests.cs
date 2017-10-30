@@ -1,5 +1,8 @@
 using System;
+using System.Linq;
 using Xunit;
+using DAL;
+using  DAL.DBObjects;
 
 namespace XUnitTestProject
 {
@@ -8,6 +11,9 @@ namespace XUnitTestProject
         [Fact]
         public void Test1()
         {
+            var service = new DataService();
+            Assert.NotEqual("", service.GetUsers().First().UserName);
+
 
         }
     }
