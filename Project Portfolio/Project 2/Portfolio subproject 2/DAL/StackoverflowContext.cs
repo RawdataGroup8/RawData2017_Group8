@@ -68,6 +68,7 @@ namespace DAL
             //Posttags
             modelBuilder.Entity<PostTags>().Property(x => x.PostId).HasColumnName("post_id");
             modelBuilder.Entity<PostTags>().Property(x => x.TagName).HasColumnName("tag_name");
+            modelBuilder.Entity<PostTags>().HasKey(k => new { k.PostId, k.TagName });
 
             //Question
             //modelBuilder.Entity<Question>().Property(x => x.PostId).HasColumnName("post_id");
