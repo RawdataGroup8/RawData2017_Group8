@@ -21,6 +21,5 @@ namespace DAL
         {
             return _db.User.ToList();
         }
-            
     }
 }

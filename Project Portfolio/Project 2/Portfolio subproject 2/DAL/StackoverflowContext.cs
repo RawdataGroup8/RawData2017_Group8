@@ -79,7 +79,8 @@ namespace DAL
             modelBuilder.Entity<User>().Property(x => x.Userid).HasColumnName("user_id");
             modelBuilder.Entity<User>().Property(x => x.UserName).HasColumnName("user_name");
             modelBuilder.Entity<User>().Property(x => x.UserLocation).HasColumnName("user_location");
-            //modelBuilder.Entity<User>().Property(x => x.Userage).HasColumnName("Userage");
+            modelBuilder.Entity<User>().Property(x => x.UserCreationDate).HasColumnName("user_creation_date");
+            modelBuilder.Entity<User>().Property(x => x.Userage).HasColumnName("user_age");
 
 
 
