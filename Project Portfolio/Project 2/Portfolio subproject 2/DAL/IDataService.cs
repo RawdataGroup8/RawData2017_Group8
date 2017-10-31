@@ -9,5 +9,6 @@ namespace DAL
     public interface IDataService
     {
         List<User> GetUsers();
+        Post GetPost(int id);
     }
 }

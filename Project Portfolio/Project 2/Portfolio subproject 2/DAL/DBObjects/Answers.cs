@@ -8,10 +8,8 @@ namespace DAL.DBObjects
 {
     class Answers
     {
-
-        public int Parentid { get; set; }
         [Key]
         public int Postid1 { get; set; }
-
+        public int Parentid { get; set; }      
     }
 }
