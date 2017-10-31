@@ -14,11 +14,11 @@ namespace WSL.Controllers
     [Route("api/User")]
     public class UserController : Controller
     {
+        private readonly IDataService _ds;
         public UserController(IDataService iDataService)
         {
             _ds = iDataService;
         }
-        private readonly IDataService _ds;
 
 
         [HttpGet(Name = "GetUsers")] 
