@@ -4,17 +4,22 @@ using System.Text;
 
 namespace DAL.DBObjects
 {
-    class Post
+    public class Post
     {
+        public Post()
+        {
+            Comments = new List<Comment>();
+        }
         public int PostId { get; set; }
         public DateTime CreationDate { get; set; }
         public int Score { get; set; }
-        public String Body { get; set; }
+        public string Body { get; set; }
         public string Title { get; set; }
         public int OwnerUserId { get; set; }
         public int TypeId { get; set; }
 
-
         private User PostUser { get; set; }
+
+        public List<Comment> Comments { get; set; }
     }
 }

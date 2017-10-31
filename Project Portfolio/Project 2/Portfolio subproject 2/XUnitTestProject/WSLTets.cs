@@ -5,11 +5,11 @@ namespace XUnitTestProject
 {
     public class WSLTests
     {
-        [Fact]
+        /*[Fact]
         public void Test1()
         {
 
 
-        }
+        }*/
     }
 }

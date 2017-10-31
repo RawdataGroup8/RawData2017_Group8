@@ -37,6 +37,12 @@ namespace DAL
             modelBuilder.Entity<Comment>().Property(x => x.CommentId).HasColumnName("comment_id");
             //modelBuilder.Entity<Comment>().Property(x => x.CommentUser).HasColumnName("CommentUser");
             modelBuilder.Entity<Comment>().Property(x => x.CommentText).HasColumnName("comment_text");
+            modelBuilder.Entity<Comment>().Property(x => x.CommentScore).HasColumnName("comment_score"); 
+            modelBuilder.Entity<Comment>().Property(x => x.PostId).HasColumnName("post_id");
+            modelBuilder.Entity<Comment>().Property(x => x.CommentCreateDate).HasColumnName("comment_create_date");
+
+
+            modelBuilder.Entity<Comment>().HasOne(c => c.Post).WithMany(p => p.Comments).HasForeignKey(c => c.PostId);
 
             //History
             modelBuilder.Entity<History>().Property(x => x.Userid).HasColumnName("user_id");
@@ -60,10 +66,12 @@ namespace DAL
 
             //Post
             modelBuilder.Entity<Post>().Property(x => x.PostId).HasColumnName("post_id");
-            //modelBuilder.Entity<Post>().Property(x => x.OwnerUserId).HasColumnName("OwnerUserId");
+            modelBuilder.Entity<Post>().Property(x => x.CreationDate).HasColumnName("creation_date");
             modelBuilder.Entity<Post>().Property(x => x.Body).HasColumnName("body");
             modelBuilder.Entity<Post>().Property(x => x.Title).HasColumnName("title");
-            //modelBuilder.Entity<Post>().Property(x => x.TypeId).HasColumnName("TypeId");
+            modelBuilder.Entity<Post>().Property(x => x.OwnerUserId).HasColumnName("owner_user_id");
+            modelBuilder.Entity<Post>().Property(x => x.TypeId).HasColumnName("type_id");
+
 
             //Posttags
             modelBuilder.Entity<PostTags>().Property(x => x.PostId).HasColumnName("post_id");
@@ -81,9 +89,7 @@ namespace DAL
             modelBuilder.Entity<User>().Property(x => x.UserLocation).HasColumnName("user_location");
             modelBuilder.Entity<User>().Property(x => x.UserCreationDate).HasColumnName("user_creation_date");
             modelBuilder.Entity<User>().Property(x => x.Userage).HasColumnName("user_age");
-
-
-
+            //modelBuilder.Entity<User>().HasMany(Comment).WithOne();
         }
 
     }
