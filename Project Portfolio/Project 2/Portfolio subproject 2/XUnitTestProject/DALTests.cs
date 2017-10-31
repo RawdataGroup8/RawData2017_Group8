@@ -12,7 +12,7 @@ namespace XUnitTestProject
         public void Test1()
         {
             var service = new DataService();
-            Assert.NotEmpty(service.GetUsers());
+            Assert.Equal("Jeff Atwood", service.GetUsers().First().UserName);
 
 
         }
