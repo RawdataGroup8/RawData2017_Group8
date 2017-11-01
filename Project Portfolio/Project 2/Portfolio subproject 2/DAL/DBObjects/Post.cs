@@ -17,6 +17,7 @@ namespace DAL.DBObjects
         public string Title { get; set; }
         public int OwnerUserId { get; set; }
         public int TypeId { get; set; }
+
         public User User { get; set; }
         public List<Comment> Comments { get; set; }
     }
