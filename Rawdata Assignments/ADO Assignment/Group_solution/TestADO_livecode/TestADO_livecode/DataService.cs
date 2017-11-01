@@ -2,84 +2,80 @@
 using System.Collections.Generic;
 using System.Linq;
 using DBMapper.DBObjects;
-using DBMapper.DTOs;
 
 namespace DBMapper
 {
-    public class DataService : IDataService
+    public class DataService
     {
         private readonly NorthwindContext _db;
-        public DataService() => _db = new NorthwindContext();
-        //---------------------------------------------------------- Categories
-        #region Categories  
-        public List<Category> GetCategories() => _db.Categories.ToList();
-
-        public Category CreateCategory(string name, string description)
+        public DataService()
         {
-            var category = new Category
+            _db = new NorthwindContext(); 
+        }
+
+        //---------------------------------------------------------- Categories
+        // This method returns all the categories
+        public List<Category> Listingcategories() //Made it return a list as well :)
+        {
+            //var categories = _db.Categories; // no need ;) 
+            foreach (var category in _db.Categories)
             {
+                Console.WriteLine((category.Id, category.Name, category.Description));
+            }
+            return _db.Categories.ToList();
+        }
+
+        public void AddCategory(string name, string description)
+        {
+            int maxId  =  0;
+            foreach(var category in _db.Categories)
+            {
+                if (category.Id > maxId)
+                {
+                    maxId = category.Id;
+                }
+            }
+            var category2 = new Category
+            {
+                Id = maxId + 1,
                 Name = name,
                 Description = description
             };
-            _db.Add(category);
+            _db.Add(category2);
             _db.SaveChanges();
-            return category;
         }
 
-        public bool UpdateCategory(int id, string name, string description)
+        public bool UpdateCategory(int id, string name, string description) //id of the category you want to modify, followed by new name and description
         {
-            var category = _db.Categories.FirstOrDefault(x => x.Id == id);
-            if (category == null) return false;
-            category.Name = name;
-            category.Description = description;
-            _db.SaveChanges();
-            return true;
+            var selectedCategory = _db.Categories.FirstOrDefault(x => x.Id == id);
+            if (_db.Categories..Contains(selectedCategory))
+            {
+                selectedCategory.Name = name;
+                selectedCategory.Description = description;
+                return true;
+            } else
+            {
+                return false;
+            }
+                            
         }
 
-        public bool DeleteCategory(int id)
+        public void DeleteCategory(int id)
         {
             var category = _db.Categories.FirstOrDefault(x => x.Id == id);
-            if (category == null) return false;
-            _db.Categories.Remove(category);
-            _db.SaveChanges();
-            return true;
+            if (category != null) // need null check          
+                _db.Categories.Remove(category);          
         }
 
         public Category GetCategory(int id) => _db.Categories.FirstOrDefault(x => x.Id == id);
-        #endregion
 
         //---------------------------------------------------------- Products
-        #region Products
-        public List<ProductDTO> GetProducts()
+        public Product GetProduct(int id)
         {
-            return _db.Products.ToList().Select(p => new ProductDTO(p.Name, p.UnitPrice, p.Category)).ToList();
+            throw new NotImplementedException();
         }
-
-        public ProductDTO GetProduct(int id)
-        {
-            var p = _db.Products.FirstOrDefault(x => x.Id == id);
-            if (p == null) return null;
-            p.Category = GetCategory(p.CategoryId);
-            return new ProductDTO(p.Name, p.UnitPrice, p.Category);
-        }
-
-        public List<ProductDTO> GetProductByName(string name)
-        {
-            var products = _db.Products.Where(x => x.Name.Contains(name)).ToList();
-            return products.Any() ? products.Select(p => new ProductDTO(p.Name, p.UnitPrice, p.Category)).ToList() : new List<ProductDTO>();
-        }
-
-        public List<ProductDTO> GetProductByCategory(int id)
-        {
-            var products = _db.Products.Where(x => x.CategoryId == id).ToList();
-            foreach (var p in products)           
-                p.Category = GetCategory(p.CategoryId);               
-            return products.Count > 0 ? products.Select(p => new ProductDTO(p.Name, p.UnitPrice, p.Category)).ToList() : new List<ProductDTO>();
-        }
-        #endregion
 
         //---------------------------------------------------------- Orders
-        #region Orders
         public Order GetSingleOrder(int id) => _db.Orders.FirstOrDefault(x => x.Id == id);
 
         public List<Order> GetOrders() => _db.Orders.ToList();
@@ -87,44 +83,20 @@ namespace DBMapper
         public Order GetOrder(int id) 
         {
             var order = _db.Orders.FirstOrDefault(x => x.Id == id);
-            if (order == null) return null;
-
-            order.OrderDetails = GetOrderDetailsByOrderId(id);
-
+            if (order != null)           
+                order.OrderDetails = _db.OrderDetails.Where(z => z.OrderId == id).ToList();           
             return order;
         }
-        #endregion
 
         //---------------------------------------------------------- Order Details
-        #region Order Details
         public List<OrderDetails> GetOrderDetailsByOrderId(int id)
         {
-            var orderDetails =_db.OrderDetails.Where(z => z.OrderId1 == id).ToList();
-            return FillOrderDetails(orderDetails);
+            throw new NotImplementedException();
         }
 
         public List<OrderDetails> GetOrderDetailsByProductId(int id)
         {
-            var orderDetails = _db.OrderDetails.Where(z => z.ProductId == id).ToList();
-            return FillOrderDetails(orderDetails);
+            throw new NotImplementedException();
         }
-        private List<OrderDetails> FillOrderDetails(List<OrderDetails> orderDetails)
-        {
-            foreach (var od in orderDetails)
-            {
-                od.Product = FillProduct(od.ProductId);
-                od.Order = GetSingleOrder(od.OrderId1);
-            }
-            return orderDetails;
-        }
-        private Product FillProduct(int id)
-        {
-            var p = _db.Products.FirstOrDefault(x => x.Id == id);
-            p.Category = GetCategory(p.CategoryId);
-            return p;
-        }
-        #endregion
-
     }
-
 }

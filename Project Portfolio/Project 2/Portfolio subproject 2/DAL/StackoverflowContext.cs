@@ -73,6 +73,10 @@ namespace DAL
             modelBuilder.Entity<Post>().Property(x => x.TypeId).HasColumnName("type_id");
             //modelBuilder.Entity<Post>(). //fill comments here?
 
+            //One to many relationship between the user and the post.
+
+            modelBuilder.Entity<Post>().HasOne(c => c.User).WithMany(p => p.Posts).HasForeignKey(c => c.OwnerUserId);
+
 
             //Posttags
             modelBuilder.Entity<PostTags>().Property(x => x.PostId).HasColumnName("post_id");
@@ -83,6 +87,7 @@ namespace DAL
             //modelBuilder.Entity<Question>().Property(x => x.PostId).HasColumnName("post_id");
             modelBuilder.Entity<Question>().Property(x => x.AcceptedAnswerId).HasColumnName("accepted_answer_id");
             modelBuilder.Entity<Question>().Property(x => x.ClosedDate).HasColumnName("closed_date");
+            
 
             //User
             modelBuilder.Entity<User>().Property(x => x.Userid).HasColumnName("user_id");

@@ -12,9 +12,20 @@ namespace XUnitTestProject
         public void Test1()
         {
             var service = new DataService();
-            Assert.NotEmpty(service.GetUsers());
+            Assert.Equal("Jeff Atwood", service.GetUsers().First().UserName);
         }
 
+        [Fact]
+
+        //This test fails if you put ID 2 which is not avaliable in the data base--- needs attention.
+        public void Test_UserWithposts()
+        {
+            var ds = new DataService();
+            var user = ds.GetUser(1);
+            Assert.Equal(2, user.Posts.Count);
+        }
+
+        //This test fails if you put ID 2 which is not avaliable in the data base--- needs attention.
         [Fact]
         public void Test_PostWithComments()
         {
@@ -23,5 +34,8 @@ namespace XUnitTestProject
             Assert.Equal(post.Score, 176);
             Assert.Equal(24, post.Comments.Count);
         }
+
+
+
     }
 }

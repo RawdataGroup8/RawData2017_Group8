@@ -8,14 +8,20 @@ namespace DBMapper
         private static void Main(string[] args)
         {
             var ds = new DataService();
-            foreach (var c in ds.GetCategories())
-            {
-                if (c.Id > 8)
-                {
-                    Console.WriteLine(ds.DeleteCategory(c.Id));
-                }
-            }
-            Console.ReadKey();
+            ds.UpdateCategory(15, "bows", "is actually bows");
+            ds.Listingcategories();
+            /*ds.Listingcategories();
+            ds.AddCategory("Testagory", "Its just a test");*/
+
+
+            //foreach (var o in ds.GetOrders())
+            //    Console.WriteLine(o.Freight);
+
+            //Console.WriteLine(ds.GetSingleOrder(10248).Id);
+            Console.ReadLine();
+           
+
+
         }
     }    
 }
