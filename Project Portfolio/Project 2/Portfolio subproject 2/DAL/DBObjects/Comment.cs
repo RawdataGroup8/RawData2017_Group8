@@ -12,7 +12,7 @@ namespace DAL.DBObjects
         public DateTime CommentCreateDate { get; set; }
         public int PostId { get; set; }
         //public User CommentUser { get; set; }
-        public Post Post { get; set; }
+        //public Post Post { get; set; }
 
 
     }

@@ -42,7 +42,7 @@ namespace DAL
             modelBuilder.Entity<Comment>().Property(x => x.CommentCreateDate).HasColumnName("comment_create_date");
 
 
-            modelBuilder.Entity<Comment>().HasOne(c => c.Post).WithMany(p => p.Comments).HasForeignKey(c => c.PostId);
+            //modelBuilder.Entity<Comment>().HasOne(c => c.Post).WithMany(p => p.Comments).HasForeignKey(c => c.PostId);
 
             //History
             modelBuilder.Entity<History>().Property(x => x.Userid).HasColumnName("user_id");
@@ -71,6 +71,7 @@ namespace DAL
             modelBuilder.Entity<Post>().Property(x => x.Title).HasColumnName("title");
             modelBuilder.Entity<Post>().Property(x => x.OwnerUserId).HasColumnName("owner_user_id");
             modelBuilder.Entity<Post>().Property(x => x.TypeId).HasColumnName("type_id");
+            //modelBuilder.Entity<Post>(). //fill comments here?
 
 
             //Posttags

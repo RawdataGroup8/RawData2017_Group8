@@ -18,8 +18,6 @@ namespace DAL.DBObjects
         public int OwnerUserId { get; set; }
         public int TypeId { get; set; }
 
-        private User PostUser { get; set; }
-
         public List<Comment> Comments { get; set; }
     }
 }
