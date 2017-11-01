@@ -23,11 +23,12 @@ namespace DAL
             return _db.User.ToList();
         }
 
+        // returns a post and include the comments
         public Post GetPost(int id)
         {
             return _db.Post.Include(c => c.Comments).FirstOrDefault(p => p.PostId == id);
         }
-
+        //retuns a user with their posts
         public User GetUser(int id)
         {
             return _db.User.Include(c => c.Posts).FirstOrDefault(p => p.Userid == id);
