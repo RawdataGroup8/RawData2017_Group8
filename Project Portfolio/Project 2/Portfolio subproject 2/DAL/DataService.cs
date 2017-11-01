@@ -27,5 +27,12 @@ namespace DAL
         {
             return _db.Post.Include(c => c.Comments).FirstOrDefault(p => p.PostId == id);
         }
+
+        public User GetUser(int id)
+        {
+            return _db.User.Include(c => c.Posts).FirstOrDefault(p => p.Userid == id);
+        }
+
     }
+
 }
