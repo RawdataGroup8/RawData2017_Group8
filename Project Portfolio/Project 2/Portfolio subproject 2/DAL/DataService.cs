@@ -44,6 +44,12 @@ namespace DAL
             return _db.User.Include(c => c.Posts).FirstOrDefault(p => p.Userid == id);
         }
 
+        public List<Question> SeachQuestionsByTag(string tagname, int limit)
+        {
+            List<Question> result = _db.Question.FromSql("call search_questions_by_tag({0},{1})", tagname, limit).ToList();
+            return result;
+        }
+
     }
 
 }

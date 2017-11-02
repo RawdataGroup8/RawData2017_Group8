@@ -35,7 +35,13 @@ namespace XUnitTestProject
             Assert.Equal(24, post.Comments.Count);
         }
 
-
+        [Fact]
+        public void DBProcedure_SearchQuestionByID_ReturnsQuestionList()
+        {
+            var ds = new DataService();
+            var results = ds.SeachQuestionsByTag("YourMum", 10);
+            Assert.NotEmpty(results);
+        }
 
     }
 }
