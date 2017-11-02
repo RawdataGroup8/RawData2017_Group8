@@ -13,7 +13,6 @@ namespace WSL.Controllers
     public class Post_tagsController : Controller
     {
         private readonly IDataService _ds;
-
         public Post_tagsController(IDataService iDataService)
         {
             _ds = iDataService;

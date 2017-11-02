@@ -13,7 +13,6 @@ namespace WSL.Controllers
     public class MarkingController : Controller
     {
         private readonly IDataService _ds;
-
         public MarkingController(IDataService iDataService)
         {
             _ds = iDataService;

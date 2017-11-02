@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 namespace DAL
 {
     public class DataService : IDataService
-
     {
         private readonly StackoverflowContext _db;
 
