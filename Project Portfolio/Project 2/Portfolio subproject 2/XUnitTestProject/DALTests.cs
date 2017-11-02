@@ -16,9 +16,6 @@ namespace XUnitTestProject
         }*/
 
         [Fact]
-        //KI: This test fails if you put ID 2 which is not avaliable in the data base--- needs attention.
-        /*RB: it is supposed to - unit tests are specific, this one tests whether the user with id==1 has 2 posts. If you want to test whether
-        the expected thing happens if the user has no posts, it needs to be done in a different test. */
         public void GetUser_ValidId_ReturnsUsersWithPosts()
         {
             var ds = new DataService();

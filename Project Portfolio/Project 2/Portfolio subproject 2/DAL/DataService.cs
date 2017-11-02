@@ -32,19 +32,11 @@ namespace DAL
             return q;
         }
 
-        // returns a post and include the comments
-        public Post GetPost(int id)
-        {
-            /*var question = from post in _db.Post.ToList()
-                           join q in _db.Question.ToList() on post.PostId == q.PostId;*/
-            return _db.Post.Include(c => c.Comments).FirstOrDefault(p => p.PostId == id);
-        }
-        //retuns a user with their posts
-        public User GetUser(int id)
-        {
-            return _db.User.Include(c => c.Posts).FirstOrDefault(p => p.Userid == id);
-        }
+        //return a full post, including all comments.
+        public Post GetPost(int id) => _db.Post.Include(c => c.Comments).FirstOrDefault(p => p.PostId == id);
 
+        //return a full user, including all posts.
+        public User GetUser(int id) => _db.User.Include(c => c.Posts).FirstOrDefault(p => p.Userid == id);
     }
 
 }
