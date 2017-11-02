@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,5 +12,10 @@ namespace WSL.Controllers
     [Route("api/History")]
     public class HistoryController : Controller
     {
+        private readonly IDataService _ds;
+        public HistoryController(IDataService iDataService)
+        {
+            _ds = iDataService;
+        }
     }
 }

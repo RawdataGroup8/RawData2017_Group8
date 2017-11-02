@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,5 +12,10 @@ namespace WSL.Controllers
     [Route("api/Answer")]
     public class AnswerController : Controller
     {
+        private readonly IDataService _ds;
+        public AnswerController (IDataService iDataService)
+        {
+            _ds = iDataService;
+        }
     }
 }

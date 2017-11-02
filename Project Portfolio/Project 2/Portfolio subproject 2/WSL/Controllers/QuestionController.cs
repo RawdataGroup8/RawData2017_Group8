@@ -13,7 +13,6 @@ namespace WSL.Controllers
     public class QuestionController : Controller
     {
         private readonly IDataService _ds;
-
         public QuestionController(IDataService iDataService)
         {
             _ds = iDataService;

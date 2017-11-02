@@ -13,7 +13,6 @@ namespace WSL.Controllers
     public class PostController : Controller
     {
         private readonly IDataService _ds;
-
         public PostController(IDataService iDataService)
         {
             _ds = iDataService;
