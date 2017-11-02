@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
 
 namespace DAL.DBObjects
 {
@@ -11,7 +13,7 @@ namespace DAL.DBObjects
             Comments = new List<Comment>();
         }
         public int PostId { get; set; }
-        public DateTime CreationDate { get; set; }
+        public DateTime? CreationDate { get; set; }
         public int Score { get; set; }
         public string Body { get; set; }
         public string Title { get; set; }
@@ -20,5 +22,17 @@ namespace DAL.DBObjects
 
         public User User { get; set; }
         public List<Comment> Comments { get; set; }
+    }
+
+    public class Post1
+    {
+       
+        public int post_id { get; set; }
+        //public DateTime? CreationDate { get; set; }
+        public int Score { get; set; }
+        public string Body { get; set; }
+        public string Title { get; set; }
+       
+       
     }
 }

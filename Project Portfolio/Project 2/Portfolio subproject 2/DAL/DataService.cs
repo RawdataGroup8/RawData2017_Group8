@@ -36,6 +36,31 @@ namespace DAL
 
         //return a full user, including all posts.
         public User GetUser(int id) => _db.User.Include(c => c.Posts).FirstOrDefault(p => p.Userid == id);
+
+
+        // A procedure that searches
+
+        public IQueryable<Post1> Searching_usingtype_String()
+        {
+           // using (var db = new StackoverflowContext())
+            //{
+
+                // you can also use the string interpolation syntax
+                var str = "What used for java";
+                var id1 = 1;
+                //var id2 = 2;
+                return _db.Post1.FromSql($"call fulltext_search({str},{id1})");
+
+                /*foreach (var text in result)
+                {
+                    Console.WriteLine($"{text.post_id}, {text.Body}");
+                }*/
+
+              
+
+
+            //}
+        }
     }
 
 }

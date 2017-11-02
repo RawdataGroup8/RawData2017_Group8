@@ -9,6 +9,9 @@ namespace DAL
 {
     class StackoverflowContext : DbContext
     {
+        //internal readonly object Post1;
+        public DbSet<Post1> Post1 { get; set; }
+
         public DbSet<Answers> Answers { get; set; }
         public DbSet<Comment> Comment { get; set; }
         public DbSet<History> History { get; set; } // Not yet created.
@@ -28,6 +31,9 @@ namespace DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Post1>().ToTable("post");
+            modelBuilder.Entity<Post1>().HasKey(x => x.post_id);
 
             // Answers
             modelBuilder.Entity<Answers>().Property(x => x.Parentid).HasColumnName("parent_id");
