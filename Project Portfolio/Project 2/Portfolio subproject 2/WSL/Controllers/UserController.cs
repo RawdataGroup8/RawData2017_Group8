@@ -21,11 +21,17 @@ namespace WSL.Controllers
             _ds = iDataService;
         }
 
-
-        [HttpGet(Name = "GetUsers")] 
+        [HttpGet(Name = nameof(GetUsers))] 
         public IActionResult GetUsers()
         {
             return Ok(_ds.GetUsers());
+        }
+
+        //like: "api/User/1"
+        [HttpGet("{id}", Name = nameof(GetUser))]
+        public IActionResult GetUser(int id)
+        {
+            return Ok(_ds.GetUser(id));
         }
 
 
