@@ -16,9 +16,11 @@ namespace DAL
             _db = new StackoverflowContext();
         }
 
-        public List<User> GetUsers() => _db.User.ToList();
+        //public List<User> GetUsers() => _db.User.ToList();
+        public List<User> GetUsers(int page, int pageSize) => _db.User.OrderBy(x => x.Userid).Skip(page*pageSize).Take(pageSize).ToList();
 
- 
+
+
         public IQueryable GetQuestion(int id) //NOT WORKING/DONE
         {
             /*var question = from post in _db.Post.ToList()
