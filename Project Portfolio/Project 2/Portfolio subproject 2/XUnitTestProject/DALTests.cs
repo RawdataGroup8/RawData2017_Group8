@@ -41,7 +41,7 @@ namespace XUnitTestProject
             Assert.Equal(5, post.PostTags.Count);
         }
 
-        /* [Fact]
+         [Fact]
          public void DBProcedure_SearchQuestionByID_ReturnsQuestionList()
          {
              var ds = new DataService();
@@ -65,7 +65,7 @@ namespace XUnitTestProject
              var text = ds.Retrieve_Answers_Procedure();
              Assert.Equal(10, text.Count);
 
-         }*/
+         }
 
     }
 }
