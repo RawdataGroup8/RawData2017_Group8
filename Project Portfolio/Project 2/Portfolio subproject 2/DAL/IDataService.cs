@@ -10,6 +10,6 @@ namespace DAL
     {
         List<User> GetUsers();
         Post GetPost(int id);
-        User GetUser(int id);
+        User GetUser_Posts(int id);
     }
 }

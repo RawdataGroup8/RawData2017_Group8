@@ -22,6 +22,7 @@ namespace DAL.DBObjects
 
         public User User { get; set; }
         public List<Comment> Comments { get; set; }
+        public List<PostTags> PostTags { get; set; }
     }
 
     public class Post1

@@ -35,9 +35,14 @@ namespace DAL
             modelBuilder.Entity<Post1>().ToTable("post");
             modelBuilder.Entity<Post1>().HasKey(x => x.post_id);
 
+            modelBuilder.Entity<Answers1>().ToTable("answers");
+            modelBuilder.Entity<Answers1>().HasKey(x => x.post_id);
+
             // Answers
             modelBuilder.Entity<Answers>().Property(x => x.Parentid).HasColumnName("parent_id");
-            modelBuilder.Entity<Answers>().Property(x => x.Postid1).HasColumnName("post_id");
+            modelBuilder.Entity<Answers>().Property(x => x.post_id).HasColumnName("post_id");
+
+           
 
             // Comment
             modelBuilder.Entity<Comment>().Property(x => x.CommentId).HasColumnName("comment_id");
@@ -49,6 +54,10 @@ namespace DAL
 
 
             //modelBuilder.Entity<Comment>().HasOne(c => c.Post).WithMany(p => p.Comments).HasForeignKey(c => c.PostId);
+
+             
+
+
 
             //History
             modelBuilder.Entity<History>().Property(x => x.Userid).HasColumnName("user_id");
@@ -77,6 +86,8 @@ namespace DAL
             modelBuilder.Entity<Post>().Property(x => x.Title).HasColumnName("title");
             modelBuilder.Entity<Post>().Property(x => x.OwnerUserId).HasColumnName("owner_user_id");
             modelBuilder.Entity<Post>().Property(x => x.TypeId).HasColumnName("type_id");
+
+
             //modelBuilder.Entity<Post>(). //fill comments here?
 
             //One to many relationship between the user and the post.
@@ -88,6 +99,9 @@ namespace DAL
             modelBuilder.Entity<PostTags>().Property(x => x.PostId).HasColumnName("post_id");
             modelBuilder.Entity<PostTags>().Property(x => x.TagName).HasColumnName("tag_name");
             modelBuilder.Entity<PostTags>().HasKey(k => new { k.PostId, k.TagName });
+
+            //modelBuilder.Entity<PostTags>().HasOne(c => c.Post).WithMany(p => PostTags).HasForeignKey(c => c.PostId);
+
 
             //Question
             //modelBuilder.Entity<Question>().Property(x => x.PostId).HasColumnName("post_id");

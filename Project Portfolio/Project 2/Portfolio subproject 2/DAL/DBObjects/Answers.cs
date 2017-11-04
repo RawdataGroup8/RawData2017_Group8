@@ -6,10 +6,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DAL.DBObjects
 {
-    class Answers
+    public class Answers
     {
         [Key]
-        public int Postid1 { get; set; }
+        public int post_id { get; set; }
         public int Parentid { get; set; }      
+    }
+
+    public class Answers1
+    {
+        [Key]
+        public int post_id { get; set; }
+        public int Parentid { get; set; }
     }
 }

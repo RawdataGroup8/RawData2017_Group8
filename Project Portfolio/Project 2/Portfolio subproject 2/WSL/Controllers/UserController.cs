@@ -31,7 +31,7 @@ namespace WSL.Controllers
         [HttpGet("{id}", Name = nameof(GetUser))]
         public IActionResult GetUser(int id)
         {
-            return Ok(_ds.GetUser(id));
+            return Ok(_ds.GetUser_Posts(id));
         }
 
 
