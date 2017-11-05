@@ -2,9 +2,9 @@
 using System.Linq;
 using AutoMapper;
 using DataAccesLayer;
-using DAL.DBObjects;
+using DataAccesLayer.DBObjects;
 using Microsoft.AspNetCore.Mvc;
-using WSL.Models;
+using WebServiceLayer.Models;
 
 namespace WebServiceLayer.Controllers
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WSL.Models
+namespace WebServiceLayer.Models
 {
     public class SimpleReturnModel
     {

@@ -1,6 +1,5 @@
 using DataAccesLayer;
 using Xunit;
-using DAL;
 
 namespace XUnitTestProject
 {

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace DAL.DBObjects
+namespace DataAccesLayer.DBObjects
 {
     public class User
     {
