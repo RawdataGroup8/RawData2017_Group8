@@ -1,28 +1,23 @@
-﻿
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.DataAnnotations.Internal;
-using DAL;
+using DataAccesLayer;
 using DAL.DBObjects;
+using Microsoft.AspNetCore.Mvc;
 using WSL.Models;
 
-namespace WSL.Controllers
+namespace WebServiceLayer.Controllers
 {
     [Produces("application/json")]
     [Route("api/User")]
     public class UserController : Controller
     {
         private readonly IDataService _ds;
-        private readonly IMapper mapper;
+        private readonly IMapper _mapper;
         public UserController(IDataService iDataService)
         {
             _ds = iDataService;
-            mapper = CreateMapper();
+            _mapper = CreateMapper();
         }
 
         [HttpGet(Name = nameof(GetUsers))] 

@@ -1,24 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using DataAccesLayer.DBObjects;
 using DAL.DBObjects;
 using Microsoft.EntityFrameworkCore;
 
-namespace DAL
+namespace DataAccesLayer
 {
-    class StackoverflowContext : DbContext
+    internal class StackoverflowContext : DbContext
     {
         //internal readonly object Post1;
-        public DbSet<Post1> Post1 { get; set; }
+        //public DbSet<Post1> Post1 { get; set; }
 
-        public DbSet<Answers> Answers { get; set; }
+        public DbSet<Answers> Answer { get; set; }
         public DbSet<Comment> Comment { get; set; }
         public DbSet<History> History { get; set; } // Not yet created.
-        public DbSet<LinkedPosts> LinkedPosts { get; set; }
+        // ReSharper disable once InconsistentNaming
+        public DbSet<LinkedPosts> Linked_Posts { get; set; }
         public DbSet<Marking> Marking { get; set; } // Not yet
         public DbSet<Post> Post { get; set; }
-        public DbSet<PostTags> PostTags { get; set; }
+
+        // ReSharper disable once InconsistentNaming
+        public DbSet<PostTags> Post_Tags { get; set; }
         public DbSet<Question> Question { get; set; }
         public DbSet<User> User { get; set; }
 
@@ -32,33 +32,24 @@ namespace DAL
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Post1>().ToTable("post");
-            modelBuilder.Entity<Post1>().HasKey(x => x.post_id);
-
-            modelBuilder.Entity<Answers1>().ToTable("answers");
-            modelBuilder.Entity<Answers1>().HasKey(x => x.post_id);
+            //modelBuilder.Entity<Post1>().ToTable("post");
+            //modelBuilder.Entity<Post1>().HasKey(x => x.post_id);
 
             // Answers
+            modelBuilder.Entity<Answers>().ToTable("answer");
+            modelBuilder.Entity<Answers>().HasKey(x => x.PostId);
             modelBuilder.Entity<Answers>().Property(x => x.Parentid).HasColumnName("parent_id");
-            modelBuilder.Entity<Answers>().Property(x => x.post_id).HasColumnName("post_id");
-
-           
-
+            modelBuilder.Entity<Answers>().Property(x => x.PostId).HasColumnName("post_id");
+          
             // Comment
             modelBuilder.Entity<Comment>().Property(x => x.CommentId).HasColumnName("comment_id");
-            //modelBuilder.Entity<Comment>().Property(x => x.CommentUser).HasColumnName("CommentUser");
             modelBuilder.Entity<Comment>().Property(x => x.CommentText).HasColumnName("comment_text");
             modelBuilder.Entity<Comment>().Property(x => x.CommentScore).HasColumnName("comment_score"); 
             modelBuilder.Entity<Comment>().Property(x => x.PostId).HasColumnName("post_id");
             modelBuilder.Entity<Comment>().Property(x => x.CommentCreateDate).HasColumnName("comment_create_date");
 
-
             //modelBuilder.Entity<Comment>().HasOne(c => c.Post).WithMany(p => p.Comments).HasForeignKey(c => c.PostId);
-
              
-
-
-
             //History
             modelBuilder.Entity<History>().Property(x => x.Userid).HasColumnName("user_id");
             modelBuilder.Entity<History>().Property(x => x.Linkpost_id).HasColumnName("link_post_id");
@@ -77,8 +68,6 @@ namespace DAL
             modelBuilder.Entity<Marking>().Property(x => x.Folder_label).HasColumnName("folder_tag");
             modelBuilder.Entity<Marking>().HasKey(k => new { k.Userid, k.Postid });
 
-
-
             //Post
             modelBuilder.Entity<Post>().Property(x => x.PostId).HasColumnName("post_id");
             modelBuilder.Entity<Post>().Property(x => x.CreationDate).HasColumnName("creation_date");
@@ -87,13 +76,8 @@ namespace DAL
             modelBuilder.Entity<Post>().Property(x => x.OwnerUserId).HasColumnName("owner_user_id");
             modelBuilder.Entity<Post>().Property(x => x.TypeId).HasColumnName("type_id");
 
-
-            //modelBuilder.Entity<Post>(). //fill comments here?
-
             //One to many relationship between the user and the post.
-
             modelBuilder.Entity<Post>().HasOne(c => c.User).WithMany(p => p.Posts).HasForeignKey(c => c.OwnerUserId);
-
 
             //Posttags
             modelBuilder.Entity<PostTags>().Property(x => x.PostId).HasColumnName("post_id");
@@ -102,12 +86,10 @@ namespace DAL
 
             //modelBuilder.Entity<PostTags>().HasOne(c => c.Post).WithMany(p => PostTags).HasForeignKey(c => c.PostId);
 
-
             //Question
-            //modelBuilder.Entity<Question>().Property(x => x.PostId).HasColumnName("post_id");
+            modelBuilder.Entity<Question>().Property(x => x.PostId1).HasColumnName("post_id");
             modelBuilder.Entity<Question>().Property(x => x.AcceptedAnswerId).HasColumnName("accepted_answer_id");
-            modelBuilder.Entity<Question>().Property(x => x.ClosedDate).HasColumnName("closed_date");
-            
+            modelBuilder.Entity<Question>().Property(x => x.ClosedDate).HasColumnName("closed_date");           
 
             //User
             modelBuilder.Entity<User>().Property(x => x.Userid).HasColumnName("user_id");

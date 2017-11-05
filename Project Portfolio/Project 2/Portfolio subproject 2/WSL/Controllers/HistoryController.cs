@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DAL;
-using Microsoft.AspNetCore.Http;
+﻿using DataAccesLayer;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WSL.Controllers
+namespace WebServiceLayer.Controllers
 {
     [Produces("application/json")]
     [Route("api/History")]

@@ -11,7 +11,9 @@ namespace DAL.DBObjects
         public Post()
         {
             Comments = new List<Comment>();
+            PostTags = new List<PostTags>();
         }
+        [Key]
         public int PostId { get; set; }
         public DateTime? CreationDate { get; set; }
         public int Score { get; set; }
