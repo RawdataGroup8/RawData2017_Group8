@@ -4,7 +4,7 @@ using AutoMapper;
 using DataAccesLayer;
 using DataAccesLayer.DBObjects;
 using Microsoft.AspNetCore.Mvc;
-using WebServiceLayer.Models;
+using WebServiceLayer.DataTransferObjects;
 
 namespace WebServiceLayer.Controllers
 {
@@ -13,11 +13,11 @@ namespace WebServiceLayer.Controllers
     public class UserController : Controller
     {
         private readonly IDataService _ds;
-        private readonly IMapper _mapper;
+        //private readonly IMapper _mapper;
         public UserController(IDataService iDataService)
         {
             _ds = iDataService;
-            _mapper = CreateMapper();
+            //_mapper = CreateMapper();
         }
 
         [HttpGet(Name = nameof(GetUsers))] 
@@ -29,7 +29,7 @@ namespace WebServiceLayer.Controllers
             var totalPages = GetTotalPages(pageSize, total);
 
             var data = _ds.GetUsers(page, pageSize)
-                .Select(x => new SimpleReturnModel
+                .Select(x => new BaseDTO
                 {
                     Url = Url.Link(nameof(GetUser), new {id = x.Userid}),
                     Name = x.UserName
@@ -63,11 +63,13 @@ namespace WebServiceLayer.Controllers
             return Ok(_ds.GetUser(id));
         }
 
-        public IMapper CreateMapper()
+        //Maybe generically like this: IMapper CreateMapper(Type BaseEntity, Type BaseDTO)
+        public IMapper CreateMapper() //Never used
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<User, UserReturnModel>()
+                //BaseDTO test = new UserDTO();
+                cfg.CreateMap<User, UserDTO>()
                     .ReverseMap();
             });
 
@@ -83,14 +85,11 @@ namespace WebServiceLayer.Controllers
                 : null;
         }
 
-        private static int GetTotalPages(int pageSize, int total)
-        {
-            return (int)Math.Ceiling(total / (double)pageSize);
-        }
+        private static int GetTotalPages(int pageSize, int total) => (int)Math.Ceiling(total / (double)pageSize);
 
         private static void CheckPageSize(ref int pageSize)
         {
-            pageSize = pageSize > 50 ? 50 : pageSize;
+            pageSize = pageSize > 50 ? 50 : pageSize; //What is 50 all about? :P 
         }
     }
 }

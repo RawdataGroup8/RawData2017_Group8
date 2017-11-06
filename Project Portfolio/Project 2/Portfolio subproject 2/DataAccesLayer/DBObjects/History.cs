@@ -6,9 +6,9 @@ namespace DataAccesLayer.DBObjects
     {
         public int Userid { set; get; }
         
-        public DateTime DateTime_aded { set; get; }
+        public DateTime DateTimeAdded { set; get; }
 
-        public int Linkpost_id { set; get; }
+        public int LinkPostId { set; get; }
 
     }
 }
