@@ -31,7 +31,7 @@ namespace WebServiceLayer.Controllers
             var data = _ds.GetUsers(page, pageSize)
                 .Select(x => new SimpleReturnModel
                 {
-                    Url = Url.Link(nameof(GetUsers), new {id = x.Userid}),
+                    Url = Url.Link(nameof(GetUser), new {id = x.Userid}),
                     Name = x.UserName
                 });
 
