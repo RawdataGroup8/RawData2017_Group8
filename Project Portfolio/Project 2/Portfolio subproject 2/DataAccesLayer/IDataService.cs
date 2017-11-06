@@ -6,10 +6,11 @@ namespace DataAccesLayer
 {
     public interface IDataService
     {
-        //List<User> GetUsers();
-        Question GetQuestion(int id);
         List<User> GetUsers(int page = 0, int pageSize = 10);
         Post GetPost(int id);
+        Post GetPosts_Tags(int id);
+        Question GetQuestion(int id);
+        Answers GetAnswer(int id);
         User GetUser(int id);
         List<Post> LinkedFromThisPost(int id);
         List<Post> LinkingToThisPost(int id);
