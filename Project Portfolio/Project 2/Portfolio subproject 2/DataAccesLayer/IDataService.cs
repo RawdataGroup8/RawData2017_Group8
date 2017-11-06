@@ -8,8 +8,12 @@ namespace DataAccesLayer
     {
         //List<User> GetUsers();
         Question GetQuestion(int id);
-        List<User> GetUsers(int page = 0, int pageSiez = 10);
+        List<User> GetUsers(int page = 0, int pageSize = 10);
         Post GetPost(int id);
         User GetUser(int id);
+        List<Post> LinkedFromThisPost(int id);
+        List<Post> LinkingToThisPost(int id);
+        List<History> UserHistory(int id);
+        List<Marking> UserBookmarks(int id);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace DataAccesLayer.DBObjects
 {
-    class History //PRIMARY KEY USERID+DATE TIME
+    public class History //PRIMARY KEY USERID+DATE TIME
     {
         public int Userid { set; get; }
         

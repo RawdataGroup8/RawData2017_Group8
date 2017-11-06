@@ -11,10 +11,11 @@ namespace DataAccesLayer
 
         public DbSet<Answers> Answer { get; set; }
         public DbSet<Comment> Comment { get; set; }
-        public DbSet<History> History { get; set; } // Not yet created.
+        public DbSet<History> History { get; set; } 
+
         // ReSharper disable once InconsistentNaming
         public DbSet<LinkedPosts> Linked_Posts { get; set; }
-        public DbSet<Marking> Marking { get; set; } // Not yet
+        public DbSet<Marking> Marking { get; set; } 
         public DbSet<Post> Post { get; set; }
 
         // ReSharper disable once InconsistentNaming

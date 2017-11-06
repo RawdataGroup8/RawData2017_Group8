@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace DAL.DBObjects
+namespace DataAccesLayer.DBObjects
 {
-    class Marking
+    public class Marking
     {
         public int Userid { get; set; }
         public int Postid { get; set; }
