@@ -21,6 +21,7 @@ namespace DataAccesLayer
         public DbSet<PostTags> Post_Tags { get; set; }
         public DbSet<Question> Question { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<Output_object> Output_object { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

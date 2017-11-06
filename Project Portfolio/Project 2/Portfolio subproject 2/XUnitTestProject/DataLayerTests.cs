@@ -1,6 +1,5 @@
 using DataAccesLayer;
 using Xunit;
-
 namespace XUnitTestProject
 {
     public class DataLayerTests
@@ -71,10 +70,12 @@ namespace XUnitTestProject
          public void Retrieve_Answers_Procedure()
          {
              var ds = new DataService();
-             var text = ds.Retrieve_Answers_Procedure();
-             Assert.Equal(10, text.Count);
+             var text = ds.Retrieve_Answers_Procedure(99, 10);
+            Assert.NotEqual(0, text.Count);
 
-         }
+            
+
+        }
 
     }
 }
