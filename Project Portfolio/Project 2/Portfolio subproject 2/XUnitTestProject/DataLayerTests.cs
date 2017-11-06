@@ -42,7 +42,7 @@ namespace XUnitTestProject
         }
 
         [Fact]
-        public void GetPosts_ValidID_ReturnsPostByTag() //added tags to fullpost as well :)
+        public void GetPosts_ValidID_ReturnsPostWithTags() 
         {
             var ds = new DataService();
             var post = ds.GetPosts_Tags(19);
@@ -75,6 +75,14 @@ namespace XUnitTestProject
              Assert.NotEqual(0, text.Count);
 
          }
+
+        [Fact]
+        public void SearchQuestionsByTag_Tag_ReturnsFullQuestionsByTag()
+        {
+            var ds = new DataService();
+            var questions = ds.SearchQuestionsByTag("java",10);
+            Assert.Equal(34571, questions[0].PostId1);
+        }
 
     }
 }

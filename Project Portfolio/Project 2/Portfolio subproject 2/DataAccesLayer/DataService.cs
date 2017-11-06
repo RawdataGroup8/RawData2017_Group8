@@ -83,6 +83,25 @@ namespace DataAccesLayer
             var type_id = 1;
             return _db.Answer.FromSql($"call fulltext_search({query},{type_id})").ToList();
         }
+
+        public List<Question> SearchQuestionsByTag(string tag, int limit)
+        {
+            throw new System.NotImplementedException();
+
+            // you can also use the string interpolation syntax
+            var result = _db.Question.FromSql($"call search_questions_by_tag({tag},{limit})");
+                foreach (var q in result)
+                {
+                    //Console.WriteLine($"{category.CategoryId}, {category.CategoryName}");
+
+                }
+            return null;
+        }
+        public bool AddMarking(int userId, int postId, string text)
+        {
+            throw new System.NotImplementedException();
+            //var result = _db.Question.FromSql($"call search_questions_by_tag({tag},{limit})");
+        }
     }
 
 }   
