@@ -51,13 +51,12 @@ namespace DataAccesLayer
             }
             return false;
         }
-        public List<Answers> Retrieve_Answers_Procedure()
+        public List<Answers> Retrieve_Answers_Procedure(string query)
         {
             // you can also use the string interpolation syntax
-            var id = 99;
-            var limit = 10;
-            return _db.Answer.FromSql($"call fulltext_search({id},{limit})").ToList();
+            var type_id = 1;
+            return _db.Answer.FromSql($"call fulltext_search({query},{type_id})").ToList();
         }
     }
 
-}
+}   
