@@ -51,15 +51,9 @@ namespace DataAccesLayer
         }
 
         // ------------------------ HISTORY & BOOKMARKS ------------------------         
-        public List<History> UserHistory(int id)
-        {
-            throw new System.NotImplementedException();
-        }
+        public List<History> UserHistory(int id) => _db.History.Where(h => h.Userid == id).ToList();
 
-        public List<Marking> UserBookmarks(int id)
-        {
-            return _db.Marking.Where(m => m.Postid == id).ToList();
-        }
+        public List<Marking> UserBookmarks(int id) => _db.Marking.Where(m => m.Postid == id).ToList();
 
         // ------------------------ PROCEDURES ------------------------         
         // A procedure that searches

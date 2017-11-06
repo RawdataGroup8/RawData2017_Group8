@@ -53,9 +53,9 @@ namespace DataAccesLayer
              
             //History
             modelBuilder.Entity<History>().Property(x => x.Userid).HasColumnName("user_id");
-            modelBuilder.Entity<History>().Property(x => x.Linkpost_id).HasColumnName("link_post_id");
-            modelBuilder.Entity<History>().Property(x => x.DateTime_aded).HasColumnName("datetime_added");
-            modelBuilder.Entity<History>().HasKey(k => new { k.Userid, k.DateTime_aded });
+            modelBuilder.Entity<History>().Property(x => x.LinkPostId).HasColumnName("link_post_id");
+            modelBuilder.Entity<History>().Property(x => x.DateTimeAdded).HasColumnName("datetime_added");
+            modelBuilder.Entity<History>().HasKey(k => new { k.Userid, DateTime_aded = k.DateTimeAdded });
             
             //LinkedPosts 
             modelBuilder.Entity<LinkedPosts>().Property(x => x.LinkPostId).HasColumnName("link_post_id");

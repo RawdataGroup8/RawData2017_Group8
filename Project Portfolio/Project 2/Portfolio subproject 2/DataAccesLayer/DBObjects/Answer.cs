@@ -1,6 +1,4 @@
-﻿using DAL.DBObjects;
-
-namespace DataAccesLayer.DBObjects
+﻿namespace DataAccesLayer.DBObjects
 {
     public class Answers
     {
