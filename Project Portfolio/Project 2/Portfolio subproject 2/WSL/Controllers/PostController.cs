@@ -12,5 +12,21 @@ namespace WebServiceLayer.Controllers
         {
             _ds = iDataService;
         }
+
+        [HttpGet("id", Name = nameof(GetPost))]
+        public IActionResult GetPost(int id)
+        {
+            var data = new
+            {
+
+            };
+
+            var resultat = new
+            {
+                Warning= "not implementet yet"
+            };
+
+            return Ok(resultat);
+        }
     }
 }
