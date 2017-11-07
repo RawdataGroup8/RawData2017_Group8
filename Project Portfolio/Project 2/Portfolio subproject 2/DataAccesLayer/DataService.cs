@@ -71,7 +71,7 @@ namespace DataAccesLayer
             // you can also use the string interpolation syntax
             //var str = "What used for java";
             //var id1 = 1;
-            var result = _db.Post1.FromSql("call fulltext_search({0},{1})", "What used for java", 1);
+            var result = _db.SimplePost.FromSql("call fulltext_search({0},{1})", "What used for java", 1);
 
             foreach (var text in result)
             {
