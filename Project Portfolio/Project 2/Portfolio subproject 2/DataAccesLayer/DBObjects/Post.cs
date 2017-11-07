@@ -1,5 +1,4 @@
-﻿using DAL.DBObjects;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -24,8 +23,6 @@ namespace DataAccesLayer.DBObjects
         public User User { get; set; }
         public List<Comment> Comments { get; set; }
         public List<PostTags> PostTags { get; set; }
-
-        //public LinkedPosts LinkedPosts { get; set; }
     }
 
     public class Post1
@@ -33,9 +30,6 @@ namespace DataAccesLayer.DBObjects
        
         [Key]
         public int PostId { get; set; }
-        //public object PostId { get; internal set; }
-
-        //public DateTime? CreationDate { get; set; }
         public double Score { get; set; }
         public string Body { get; set; }
         public string Title { get; set; }
