@@ -16,5 +16,6 @@ namespace DataAccesLayer
         List<Post> LinkingToThisPost(int id);
         List<History> UserHistory(int id);
         List<Marking> UserBookmarks(int id);
+        int AddMarking(int uid, int pid, string mark);
     }
 }
