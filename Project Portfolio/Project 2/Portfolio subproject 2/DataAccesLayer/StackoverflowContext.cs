@@ -7,14 +7,14 @@ namespace DataAccesLayer
     internal class StackoverflowContext : DbContext
     {
         //internal readonly object Post1;
-        //public DbSet<Post1> Post1 { get; set; }
+        public DbSet<Post1> Post1 { get; set; }
 
         public DbSet<Answers> Answer { get; set; }
         public DbSet<Comment> Comment { get; set; }
         public DbSet<History> History { get; set; } 
 
         // ReSharper disable once InconsistentNaming
-        public DbSet<LinkedPosts> Linked_Posts { get; set; }
+        public DbSet<LinkedPosts> LinkedPosts { get; set; }
         public DbSet<Marking> Marking { get; set; } 
         public DbSet<Post> Post { get; set; }
 
@@ -33,8 +33,10 @@ namespace DataAccesLayer
         {
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.Entity<Post1>().ToTable("post");
-            //modelBuilder.Entity<Post1>().HasKey(x => x.post_id);
+
+            modelBuilder.Entity<Post1>().ToTable("post");
+            modelBuilder.Entity<Post1>().Property(x => x.PostId).HasColumnName("post_id");
+            modelBuilder.Entity<Post1>().HasKey(x => x.PostId);
 
             // Answers
             modelBuilder.Entity<Answers>().ToTable("answer");
@@ -49,7 +51,7 @@ namespace DataAccesLayer
             modelBuilder.Entity<Comment>().Property(x => x.PostId).HasColumnName("post_id");
             modelBuilder.Entity<Comment>().Property(x => x.CommentCreateDate).HasColumnName("comment_create_date");
 
-            //modelBuilder.Entity<Comment>().HasOne(c => c.Post).WithMany(p => p.Comments).HasForeignKey(c => c.PostId);
+            //modelBuilder.Entity<Post>().HasOne(c => c.LinkedPosts).WithMany(p => p.Post).HasForeignKey(c => c.PostId);
              
             //History
             modelBuilder.Entity<History>().Property(x => x.Userid).HasColumnName("user_id");

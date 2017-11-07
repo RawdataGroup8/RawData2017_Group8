@@ -2,6 +2,7 @@
 using System.Linq;
 using DataAccesLayer.DBObjects;
 using Microsoft.EntityFrameworkCore;
+using DAL.DBObjects;
 
 namespace DataAccesLayer
 {
@@ -45,10 +46,16 @@ namespace DataAccesLayer
             throw new System.NotImplementedException();
         }
 
-        public List<Post> LinkingToThisPost(int id)
+        public LinkedPosts LinkingToThisPost(int id)
         {
-            throw new System.NotImplementedException();
-        }
+            return _db.LinkedPosts.Include(c => c.Post).FirstOrDefault(p => p.LinkPostId == id);
+            //throw new System.NotImplementedException();
+            {
+            }
+        
+
+
+    }
 
         // ------------------------ HISTORY & BOOKMARKS ------------------------         
         public List<History> UserHistory(int id) => _db.History.Where(h => h.Userid == id).ToList();
@@ -59,15 +66,13 @@ namespace DataAccesLayer
         // A procedure that searches
         public bool Searching_usingtype_String()
         {          
-            // you can also use the string interpolation syntax
-            //var str = "What used for java";
-            //var id1 = 1;
-            var result = _db.Post.FromSql("call fulltext_search({0},{1})", "What used for java", 1);
+           
+            var result = _db.Post1.FromSql("call fulltext_search({0},{1})", "What used for java", 1);
 
             foreach (var text in result)
             {
-                if (text.PostId == 22944075) return true;
-                //Console.WriteLine($"{category.CategoryId}, {category.CategoryName}");
+                if (text.PostId == 25115395) return true;
+                
             }
             return false;
         }
