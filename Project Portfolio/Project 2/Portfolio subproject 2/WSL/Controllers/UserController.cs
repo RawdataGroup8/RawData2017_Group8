@@ -29,11 +29,11 @@ namespace WebServiceLayer.Controllers
             var totalPages = GetTotalPages(pageSize, total);
 
             var data = _ds.GetUsers(page, pageSize)
-                .Select(x => new UserDTO
-                {
-                    Url = Url.Link(nameof(GetUser), new {id = x.Userid}),
-                    Name = x.UserName
-                });
+                .Select(x => new BaseDTO
+                    {
+                        Url = Url.Link(nameof(GetUser), new {id = x.Userid}),
+                        Name = x.UserName
+                    });
 
             var result = new
             {
@@ -59,7 +59,8 @@ namespace WebServiceLayer.Controllers
                 Data = new UserDTO
                 {
                     Url = Url.Link(nameof(GetUser), new { id }),
-                    Name = _ds.GetUser(id).UserName
+                    Name = _ds.GetUser(id).UserName,
+                    NumberOfPosts = _ds.GetUser(id).Posts.Count
                 }
             };
             return Ok(result);
