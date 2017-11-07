@@ -35,14 +35,7 @@ namespace DataAccesLayer
         public List<Question> GetNewestQuestions(int limit, int page, int pageSize)
         {
             var posts = _db.Post.Where(p => p.TypeId == 1).OrderBy(q => q.CreationDate).Take(limit).Skip(page * pageSize).Take(pageSize).ToList();
-            var questions = new List<Question>();
-            foreach (var post in posts)
-            {
-                var tempQ = _db.Question.FirstOrDefault(q => q.PostId1 == post.PostId);
-                tempQ.SetPost(post);
-                questions.Add(tempQ);
-            }
-            return questions;
+            return posts.Select(post => GetQuestion(post.PostId)).ToList();
         }
 
         //return a full answer
