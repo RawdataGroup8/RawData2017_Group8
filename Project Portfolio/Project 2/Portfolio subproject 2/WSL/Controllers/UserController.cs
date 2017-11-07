@@ -53,7 +53,7 @@ namespace WebServiceLayer.Controllers
                     Url = Url.Link(nameof(GetUser), new { id }),
                     Name = _ds.GetUser(id).UserName,
                     NumberOfPosts = _ds.GetUser(id).Posts.Count,
-                    PostsByUser = Url.Link(nameof(GetUserPosts), new {id})
+                    PostsByUser = Url.Link(nameof(GetUserPosts), new { id })
                 }
             };
             return Ok(result);
