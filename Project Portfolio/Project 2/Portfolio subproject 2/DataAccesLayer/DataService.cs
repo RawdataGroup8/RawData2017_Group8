@@ -57,6 +57,8 @@ namespace DataAccesLayer
 
         public int AddMarking(int uid, int pid, string mark) => _db.Database.ExecuteSqlCommand("call add_marking({0},{1},{2})", uid, pid, mark);
 
+        public void AddQuestionToHistory(int PostID, int UserID) => _db.History.Add(new History { LinkPostId = PostID, Userid = UserID, DateTimeAdded = new System.DateTime() });
+        
         // ------------------------ PROCEDURES ------------------------         
         // A procedure that searches
         public bool Searching_usingtype_String()
@@ -85,7 +87,5 @@ namespace DataAccesLayer
             throw new System.NotImplementedException();
             //var result = _db.Question.FromSql($"call search_questions_by_tag({tag},{limit})");
         }
-
     }
-
 }
