@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO.Pipes;
 using System.Linq;
 using DataAccesLayer.DBObjects;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +19,7 @@ namespace DataAccesLayer
         public User GetUser(int id) => _db.User.Include(c => c.Posts).FirstOrDefault(p => p.Userid == id);
 
         // ------------------------ POSTS (QUESTIONS / ANSWERS) ------------------------         
-        //return a full post, including all comments and tags.
+        //return a full post, including all comments and tags. helper method
         public Post GetPost(int id) => _db.Post.Include(p1 => p1.Comments).Include(p1 => p1.PostTags).FirstOrDefault(p => p.PostId == id);
         //return a Post, including tags related to the post.
         public Post GetPosts_Tags(int id) => _db.Post.Include(c => c.PostTags).FirstOrDefault(p => p.PostId == id);
@@ -53,40 +52,31 @@ namespace DataAccesLayer
 
         public int AddMarking(int uid, int pid, string mark) => _db.Database.ExecuteSqlCommand("call add_marking({0},{1},{2})", uid, pid, mark);
 
+        public void DeleteMarking(int uid, int pid) => _db.Database.ExecuteSqlCommand("delete from marking where user_id = 1 and post_id = 2", uid, pid);
+
         public List<History> GetHistory() => _db.History.ToList();
 
-        public History GetHistoryItem(int PostID) => _db.History.FirstOrDefault(h => h.LinkPostId == PostID);
+        public History GetHistoryItem(int postId) => _db.History.FirstOrDefault(h => h.LinkPostId == postId);
 
-
-        public void AddQuestionToHistory(int PostID, int UserID)
+        public void AddQuestionToHistory(int postId, int userId)
         {
-            _db.History.Add(new History { LinkPostId = PostID, Userid = UserID, DateTimeAdded = new System.DateTime() });
+            _db.History.Add(new History { LinkPostId = postId, Userid = userId, DateTimeAdded = new System.DateTime() });
             _db.SaveChanges();
         }
 
-        public void DeleteMarking(int uid, int pid)
-        {
-            _db.Database.ExecuteSqlCommand("delete from marking where user_id = 1 and post_id = 2", uid, pid);
-        }
-        
         // ------------------------ PROCEDURES ------------------------         
         // A procedure that searches
-        public bool FulltextSearch()
+        public bool FulltextSearch() //We should "un"hardcode fulltextsearch and searchbytag and make it return a list :)
         {
-            // you can also use the string interpolation syntax
-            //var str = "What used for java";
-            //var id1 = 1;
             var result = _db.SimplePost.FromSql("call fulltext_search({0},{1})", "What used for java", 1);
 
             foreach (var text in result)
             {
                 if (text.PostId == 25115395) return true;
-                //Console.WriteLine($"{category.CategoryId}, {category.CategoryName}");
             }
             return false;
         }
        
-
         public List<SimpleQuestion> SearchQuestionsByTag() => _db.SimpleQuestion.FromSql($"call search_questions_by_tag({"java"},{5})").ToList();
     }
 }

@@ -58,8 +58,6 @@ namespace XUnitTestProject
         }
 
 
-        
-
         [Fact]
         public void InsertMarking_ValidID_InsertsMarking()
         {
@@ -80,9 +78,9 @@ namespace XUnitTestProject
             // Assert.NotEmpty(results);
          }
          */
-        //This test Shows the procedure is returning records, how ever needs further care
+
         [Fact]
-         public void Searching_using_type_Strings()
+         public void FulltextSearch_StringSentence_ReturnsRelevantPosts()
          {
              var ds = new DataService();
              var text = ds.FulltextSearch();

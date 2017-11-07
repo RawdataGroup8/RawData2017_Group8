@@ -12,8 +12,6 @@ namespace DataAccesLayer
         Answers GetAnswer(int id);
         User GetUser(int id);
         List<LinkedPosts> LinkingToThisPost(int id);
-
-
         List<LinkedPosts> LinkedFromThisPost(int id);
         void DeleteMarking(int uid, int pid);
         List<History> UserHistory(int id);
