@@ -50,6 +50,17 @@ namespace XUnitTestProject
         }
 
         [Fact]
+        public void Searching_usingtype_String()
+        {
+            var ds = new DataService();
+            var post = ds.Searching_usingtype_String();
+            Assert.Equal(true, post);
+        }
+
+
+        
+
+        [Fact]
         public void InsertMarking_ValidID_InsertsMarking()
         {
             var ds = new DataService();
