@@ -62,7 +62,16 @@ namespace DataAccesLayer
 
         public int AddMarking(int uid, int pid, string mark) => _db.Database.ExecuteSqlCommand("call add_marking({0},{1},{2})", uid, pid, mark);
 
-        public void AddQuestionToHistory(int PostID, int UserID) => _db.History.Add(new History { LinkPostId = PostID, Userid = UserID, DateTimeAdded = new System.DateTime() });
+        public List<History> GetHistory() => _db.History.ToList();
+
+        public History GetHistoryItem(int PostID) => _db.History.FirstOrDefault(h => h.LinkPostId == PostID);
+
+
+        public void AddQuestionToHistory(int PostID, int UserID)
+        {
+            _db.History.Add(new History { LinkPostId = PostID, Userid = UserID, DateTimeAdded = new System.DateTime() });
+            _db.SaveChanges();
+        }
         
         // ------------------------ PROCEDURES ------------------------         
         // A procedure that searches

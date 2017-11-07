@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using DataAccesLayer.DBObjects;
-using DAL.DBObjects;
 
 namespace DataAccesLayer
 {

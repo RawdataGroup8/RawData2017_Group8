@@ -83,7 +83,14 @@ namespace XUnitTestProject
              Assert.NotEqual(0, text.Count);
 
          }
-
+        [Fact]
+        public void AddPosttoHistory_Test()
+        {
+            var ds = new DataService();
+           ds.AddQuestionToHistory(19, 13);
+            Assert.True(ds.GetHistory().Contains(ds.GetHistoryItem(19)));
+        }
+        //Assert.NotEmpty(ds.GetHistory()); 
         /*[Fact]
         public void SearchQuestionsByTag_Tag_ReturnsFullQuestionsByTag()
         {
