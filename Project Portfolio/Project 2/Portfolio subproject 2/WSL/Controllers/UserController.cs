@@ -13,11 +13,9 @@ namespace WebServiceLayer.Controllers
     public class UserController : Controller
     {
         private readonly IDataService _ds;
-        //private readonly IMapper _mapper;
         public UserController(IDataService iDataService)
         {
             _ds = iDataService;
-            //_mapper = CreateMapper();
         }
 
         [HttpGet(Name = nameof(GetUsers))] 
@@ -60,24 +58,41 @@ namespace WebServiceLayer.Controllers
                 {
                     Url = Url.Link(nameof(GetUser), new { id }),
                     Name = _ds.GetUser(id).UserName,
-                    NumberOfPosts = _ds.GetUser(id).Posts.Count
+                    NumberOfPosts = _ds.GetUser(id).Posts.Count,
+                    PostsByUser = Url.Link(nameof(GetUserPosts), new {id})
                 }
             };
             return Ok(result);
         }
 
-        //Maybe generically like this: IMapper CreateMapper(Type BaseEntity, Type BaseDTO)
-        /*public IMapper CreateMapper() //Never used
+        [HttpGet("{id}/Posts", Name = nameof(GetUserPosts))]
+        public IActionResult GetUserPosts(int id, int page = 0, int pageSize = 10)
         {
-            var config = new MapperConfiguration(cfg =>
-            {
-                //BaseDTO test = new UserDTO();
-                cfg.CreateMap<User, UserDTO>()
-                    .ReverseMap();
-            });
+            CheckPageSize(ref pageSize);
 
-            return config.CreateMapper();
-        }*/
+            var total = _ds.GetUser(id).Posts.Count;
+            var totalPages = GetTotalPages(pageSize, total);
+
+            var data = _ds.GetUser(id).Posts
+                .Select(x => new ListingDTO
+                {
+                    Url = Url.Link(nameof(PostController.GetPost), new { id = x.PostId }),
+                    Name = x.Title
+                });
+
+            var result = new
+            {
+                Number_Of_Posts = total,
+                Number_Of_Pages = totalPages,
+                PageSize = pageSize,
+                Page = page,
+                Prev = Link(nameof(GetUserPosts), page, pageSize, -1, () => page > 0),
+                Next = Link(nameof(GetUserPosts), page, pageSize, +1, () => page < totalPages - 1),
+                Url = Link(nameof(GetUserPosts), page, pageSize),
+                Data = data
+            };
+            return Ok(result);
+        }
 
         private string Link(string route, int page, int pageSize, int pageInc = 0, Func<bool> f = null)
         {
@@ -88,7 +103,7 @@ namespace WebServiceLayer.Controllers
                 : null;
         }
 
-        private static int GetTotalPages(int pageSize, int total) => (int)Math.Ceiling(total / (double)pageSize);
+        private int GetTotalPages(int pageSize, int total) => (int)Math.Ceiling(total / (double)pageSize);
 
         private static void CheckPageSize(ref int pageSize)
         {

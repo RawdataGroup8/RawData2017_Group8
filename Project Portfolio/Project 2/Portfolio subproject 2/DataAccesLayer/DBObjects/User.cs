@@ -8,7 +8,6 @@ namespace DataAccesLayer.DBObjects
         public User()
         {
             Posts = new List<Post>();
-
         }
         public int Userid { get; set; }
         public string UserName { get; set; }

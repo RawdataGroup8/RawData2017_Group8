@@ -19,11 +19,6 @@ namespace DataAccesLayer
         //return a full user, including all posts.
         public User GetUser(int id) => _db.User.Include(c => c.Posts).FirstOrDefault(p => p.Userid == id);
 
-        public LinkedPosts LinkingToThisPost(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
         // ------------------------ POSTS (QUESTIONS / ANSWERS) ------------------------         
         //return a full post, including all comments and tags.
         public Post GetPost(int id) => _db.Post.Include(p1 => p1.Comments).Include(p1 => p1.PostTags).FirstOrDefault(p => p.PostId == id);
@@ -47,15 +42,9 @@ namespace DataAccesLayer
         }
         // ------------------------ LINKS ------------------------         
 
-        public List<Post> LinkedFromThisPost(int id)
-        {
-            throw new System.NotImplementedException();
-        }
+        public List<LinkedPosts> LinkedFromThisPost(int id) => _db.LinkedPosts.Where(lp => lp.PostId == id).ToList();
 
-        /*public List<Post> LinkingToThisPost(int id)
-        {
-            throw new System.NotImplementedException();
-        }*/
+        public List<LinkedPosts> LinkingToThisPost(int id) => _db.LinkedPosts.Where(lp => lp.PostId == id).ToList();
 
         // ------------------------ HISTORY & BOOKMARKS ------------------------         
         public List<History> UserHistory(int id) => _db.History.Where(h => h.Userid == id).ToList();
@@ -64,12 +53,21 @@ namespace DataAccesLayer
 
         public int AddMarking(int uid, int pid, string mark) => _db.Database.ExecuteSqlCommand("call add_marking({0},{1},{2})", uid, pid, mark);
 
+        public List<History> GetHistory() => _db.History.ToList();
+
+        public History GetHistoryItem(int PostID) => _db.History.FirstOrDefault(h => h.LinkPostId == PostID);
+
+
+        public void AddQuestionToHistory(int PostID, int UserID)
+        {
+            _db.History.Add(new History { LinkPostId = PostID, Userid = UserID, DateTimeAdded = new System.DateTime() });
+            _db.SaveChanges();
+        }
+
         public void DeleteMarking(int uid, int pid)
         {
             _db.Database.ExecuteSqlCommand("delete from marking where user_id = 1 and post_id = 2", uid, pid);
         }
-
-        public void AddQuestionToHistory(int PostID, int UserID) => _db.History.Add(new History { LinkPostId = PostID, Userid = UserID, DateTimeAdded = new System.DateTime() });
         
         // ------------------------ PROCEDURES ------------------------         
         // A procedure that searches

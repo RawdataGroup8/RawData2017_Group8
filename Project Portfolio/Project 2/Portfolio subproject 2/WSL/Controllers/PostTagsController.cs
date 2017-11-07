@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebServiceLayer.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Post_tags")]
-    public class Post_tagsController : Controller
+    [Route("api/PostTags")]
+    public class PostTagsController : Controller
     {
         private readonly IDataService _ds;
-        public Post_tagsController(IDataService iDataService)
+        public PostTagsController(IDataService iDataService)
         {
             _ds = iDataService;
         }
