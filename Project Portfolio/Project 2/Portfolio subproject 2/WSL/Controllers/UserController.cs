@@ -76,7 +76,7 @@ namespace WebServiceLayer.Controllers
             var data = _ds.GetUser(id).Posts
                 .Select(x => new ListingDTO
                 {
-                    Url = Url.Link(nameof(PostController.GetPost), new { id = x.User.Userid }),
+                    Url = Url.Link(nameof(PostController.GetPost), new { id = x.PostId }),
                     Name = x.Title
                 });
 
