@@ -6,7 +6,7 @@ namespace DataAccesLayer
     internal class StackoverflowContext : DbContext
     {
         //internal readonly object Post1;
-        public DbSet<Post1> Post1 { get; set; }
+        public DbSet<SimplePost> SimplePost { get; set; }
 
         public DbSet<Answers> Answer { get; set; }
         public DbSet<Comment> Comment { get; set; }
@@ -31,9 +31,9 @@ namespace DataAccesLayer
             base.OnModelCreating(modelBuilder);
 
 
-            modelBuilder.Entity<Post1>().ToTable("post");
-            modelBuilder.Entity<Post1>().Property(x => x.PostId).HasColumnName("post_id");
-            modelBuilder.Entity<Post1>().HasKey(x => x.PostId);
+            modelBuilder.Entity<SimplePost>().ToTable("post");
+            modelBuilder.Entity<SimplePost>().Property(x => x.PostId).HasColumnName("post_id");
+            modelBuilder.Entity<SimplePost>().HasKey(x => x.PostId);
 
             // Answers
             modelBuilder.Entity<Answers>().ToTable("answer");
