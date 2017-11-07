@@ -25,7 +25,7 @@ namespace DataAccesLayer.DBObjects
         public List<Comment> Comments { get; set; }
         public List<PostTags> PostTags { get; set; }
 
-        public LinkedPosts LinkedPosts { get; set; }
+        //public LinkedPosts LinkedPosts { get; set; }
     }
 
     public class Post1
