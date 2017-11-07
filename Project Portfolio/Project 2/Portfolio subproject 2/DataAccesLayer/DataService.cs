@@ -28,7 +28,7 @@ namespace DataAccesLayer
         public Question GetQuestion(int id)
         {
             var question = _db.Question.FirstOrDefault(q => q.PostId1 == id);
-            question.SetPost(GetPost(id));
+            question?.SetPost(GetPost(id));
             return question;
         }
 

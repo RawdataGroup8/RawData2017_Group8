@@ -1,8 +1,5 @@
-﻿using System;
-using System.Linq;
-using AutoMapper;
+﻿using System.Linq;
 using DataAccesLayer;
-using DataAccesLayer.DBObjects;
 using Microsoft.AspNetCore.Mvc;
 using WebServiceLayer.DataTransferObjects;
 
@@ -13,10 +10,7 @@ namespace WebServiceLayer.Controllers
     public class UserController : AbstractController
     {
         private readonly IDataService _ds;
-        public UserController(IDataService iDataService)
-        {
-            _ds = iDataService;
-        }
+        public UserController(IDataService iDataService) => _ds = iDataService;
 
         [HttpGet(Name = nameof(GetUsers))] 
         public IActionResult GetUsers(int page = 0, int pageSize = 10)

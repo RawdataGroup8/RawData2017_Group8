@@ -9,10 +9,7 @@ namespace WebServiceLayer.Controllers
     public class PostController : AbstractController
     {
         private readonly IDataService _ds;
-        public PostController(IDataService iDataService)
-        {
-            _ds = iDataService;
-        }
+        public PostController(IDataService iDataService) => _ds = iDataService;
 
         [HttpGet("{id}", Name = nameof(GetPost))]
         public IActionResult GetPost(int id)
