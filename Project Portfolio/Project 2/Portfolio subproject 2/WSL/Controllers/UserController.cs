@@ -76,7 +76,7 @@ namespace WebServiceLayer.Controllers
             var data = _ds.GetUser(id).Posts
                 .Select(x => new ListingDTO
                 {
-                    Url = Url.Link(nameof(GetUserPosts), new { id = x.User.Userid }),
+                    Url = Url.Link(nameof(PostController.GetPost), new { id = x.User.Userid }),
                     Name = x.Title
                 });
 
@@ -86,8 +86,8 @@ namespace WebServiceLayer.Controllers
                 Number_Of_Pages = totalPages,
                 PageSize = pageSize,
                 Page = page,
-                Prev = Link(nameof(GetUserPosts), page, pageSize, -1, () => page > 0), //should link to PostContrtoller
-                Next = Link(nameof(GetUserPosts), page, pageSize, +1, () => page < totalPages - 1),//should link to PostContrtoller
+                Prev = Link(nameof(GetUserPosts), page, pageSize, -1, () => page > 0),
+                Next = Link(nameof(GetUserPosts), page, pageSize, +1, () => page < totalPages - 1),
                 Url = Link(nameof(GetUserPosts), page, pageSize),
                 Data = data
             };

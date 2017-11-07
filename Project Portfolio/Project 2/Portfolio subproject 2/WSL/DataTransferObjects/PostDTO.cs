@@ -13,5 +13,7 @@ namespace WebServiceLayer.DataTransferObjects
         public DateTime CreationDate { get; set; }
         public int Score { get; set; }
         public string Body { get; set; }
+        public string Comments { get; set; }
+        public string PostTags { get; set; }
     }
 }
