@@ -11,11 +11,11 @@ namespace DataAccesLayer
         Question GetQuestion(int id);
         Answers GetAnswer(int id);
         User GetUser(int id);
-        LinkedPosts LinkingToThisPost(int id);
+        List<LinkedPosts> LinkingToThisPost(int id);
 
 
-        List<Post> LinkedFromThisPost(int id);
-        //List<Post> LinkingToThisPost(int id);
+        List<LinkedPosts> LinkedFromThisPost(int id);
+        void DeleteMarking(int uid, int pid);
         List<History> UserHistory(int id);
         List<Marking> UserBookmarks(int id);
         int AddMarking(int uid, int pid, string mark);

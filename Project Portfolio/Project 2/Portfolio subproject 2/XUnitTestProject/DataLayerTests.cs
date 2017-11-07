@@ -50,11 +50,43 @@ namespace XUnitTestProject
         }
 
         [Fact]
+        public void LinkedFromThisPost_ValidId_ReturnsLinkedPosts()
+        {
+            var ds = new DataService();
+            var post = ds.LinkedFromThisPost(9033);
+            Assert.True(post.Count > 0);
+            //Assert.Equal(5, post.PostTags.Count);
+        }
+
+        [Fact]
+        public void LinkingToThisPost_ValidId_ReturnsPostsLinkedFromThisPost()
+        {
+            var ds = new DataService();
+            var post = ds.LinkingToThisPost(9033);
+            Assert.True(post.Count > 0);
+            //Assert.Equal(5, post.PostTags.Count);
+        }
+
+        [Fact]
+        public void FulltextSearch_SearchString_ReturnsSearchResults()
+        {
+            var ds = new DataService();
+            var post = ds.FulltextSearch();
+            Assert.Equal(true, post);
+        }
+
+
+        
+
+        [Fact]
         public void InsertMarking_ValidID_InsertsMarking()
         {
             var ds = new DataService();
             var ret = ds.AddMarking(1, 2, "testing");
             Assert.Equal(1, ret);
+
+            //cleanup
+            ds.DeleteMarking(1, 2);
         }
 
         /*
@@ -71,7 +103,7 @@ namespace XUnitTestProject
          public void Searching_using_type_Strings()
          {
              var ds = new DataService();
-             var text = ds.Searching_usingtype_String();
+             var text = ds.FulltextSearch();
              Assert.Equal(true, text);
 
          }

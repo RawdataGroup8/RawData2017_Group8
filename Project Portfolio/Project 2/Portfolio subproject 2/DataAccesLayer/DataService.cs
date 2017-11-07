@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO.Pipes;
 using System.Linq;
 using DataAccesLayer.DBObjects;
 using Microsoft.EntityFrameworkCore;
@@ -62,6 +63,7 @@ namespace DataAccesLayer
 
         public int AddMarking(int uid, int pid, string mark) => _db.Database.ExecuteSqlCommand("call add_marking({0},{1},{2})", uid, pid, mark);
 
+<<<<<<< HEAD
         public List<History> GetHistory() => _db.History.ToList();
 
         public History GetHistoryItem(int PostID) => _db.History.FirstOrDefault(h => h.LinkPostId == PostID);
@@ -72,19 +74,27 @@ namespace DataAccesLayer
             _db.History.Add(new History { LinkPostId = PostID, Userid = UserID, DateTimeAdded = new System.DateTime() });
             _db.SaveChanges();
         }
+=======
+        public void DeleteMarking(int uid, int pid)
+        {
+            _db.Database.ExecuteSqlCommand("delete from marking where user_id = 1 and post_id = 2", uid, pid);
+        }
+
+        public void AddQuestionToHistory(int PostID, int UserID) => _db.History.Add(new History { LinkPostId = PostID, Userid = UserID, DateTimeAdded = new System.DateTime() });
+>>>>>>> 26522950fc7639ecb1087d7ae8939201730ef8dd
         
         // ------------------------ PROCEDURES ------------------------         
         // A procedure that searches
-        public bool Searching_usingtype_String()
+        public bool FulltextSearch()
         {
             // you can also use the string interpolation syntax
             //var str = "What used for java";
             //var id1 = 1;
-            var result = _db.Post.FromSql("call fulltext_search({0},{1})", "What used for java", 1);
+            var result = _db.SimplePost.FromSql("call fulltext_search({0},{1})", "What used for java", 1);
 
             foreach (var text in result)
             {
-                if (text.PostId == 22944075) return true;
+                if (text.PostId == 25115395) return true;
                 //Console.WriteLine($"{category.CategoryId}, {category.CategoryName}");
             }
             return false;

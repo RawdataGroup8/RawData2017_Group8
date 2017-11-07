@@ -6,19 +6,17 @@ namespace DataAccesLayer
     internal class StackoverflowContext : DbContext
     {
         //internal readonly object Post1;
-        public DbSet<Post1> Post1 { get; set; }
+        public DbSet<SimplePost> SimplePost { get; set; }
 
         public DbSet<Answers> Answer { get; set; }
         public DbSet<Comment> Comment { get; set; }
         public DbSet<History> History { get; set; } 
-
-        // ReSharper disable once InconsistentNaming
         public DbSet<LinkedPosts> LinkedPosts { get; set; }
         public DbSet<Marking> Marking { get; set; } 
         public DbSet<Post> Post { get; set; }
 
         // ReSharper disable once InconsistentNaming
-        public DbSet<PostTags> Post_Tags { get; set; }
+        public DbSet<PostTags> PostTags { get; set; }
         public DbSet<Question> Question { get; set; }
         public DbSet<User> User { get; set; }
 
@@ -33,9 +31,9 @@ namespace DataAccesLayer
             base.OnModelCreating(modelBuilder);
 
 
-            modelBuilder.Entity<Post1>().ToTable("post");
-            modelBuilder.Entity<Post1>().Property(x => x.PostId).HasColumnName("post_id");
-            modelBuilder.Entity<Post1>().HasKey(x => x.PostId);
+            modelBuilder.Entity<SimplePost>().ToTable("post");
+            modelBuilder.Entity<SimplePost>().Property(x => x.PostId).HasColumnName("post_id");
+            modelBuilder.Entity<SimplePost>().HasKey(x => x.PostId);
 
             // Answers
             modelBuilder.Entity<Answers>().ToTable("answer");
@@ -57,8 +55,9 @@ namespace DataAccesLayer
             modelBuilder.Entity<History>().Property(x => x.LinkPostId).HasColumnName("link_post_id");
             modelBuilder.Entity<History>().Property(x => x.DateTimeAdded).HasColumnName("datetime_added");
             modelBuilder.Entity<History>().HasKey(k => new { k.Userid, DateTime_aded = k.DateTimeAdded });
-            
+
             //LinkedPosts 
+            modelBuilder.Entity<LinkedPosts>().ToTable("linked_posts");
             modelBuilder.Entity<LinkedPosts>().Property(x => x.LinkPostId).HasColumnName("link_post_id");
             modelBuilder.Entity<LinkedPosts>().Property(x => x.PostId).HasColumnName("post_id");
             modelBuilder.Entity<LinkedPosts>().HasKey(k => new { k.LinkPostId, k.PostId});
@@ -82,6 +81,7 @@ namespace DataAccesLayer
             modelBuilder.Entity<Post>().HasOne(c => c.User).WithMany(p => p.Posts).HasForeignKey(c => c.OwnerUserId);
 
             //Posttags
+            modelBuilder.Entity<PostTags>().ToTable("post_tags");
             modelBuilder.Entity<PostTags>().Property(x => x.PostId).HasColumnName("post_id");
             modelBuilder.Entity<PostTags>().Property(x => x.TagName).HasColumnName("tag_name");
             modelBuilder.Entity<PostTags>().HasKey(k => new { k.PostId, k.TagName });
