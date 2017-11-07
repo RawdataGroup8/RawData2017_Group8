@@ -85,12 +85,7 @@ namespace DataAccesLayer
             }
             return false;
         }
-        public List<Answers> Retrieve_Answers_Procedure(string query)
-        {
-            // you can also use the string interpolation syntax
-            var type_id = 1;
-            return _db.Answer.FromSql($"call fulltext_search({query},{type_id})").ToList();
-        }
+       
 
         public List<SimpleQuestion> SearchQuestionsByTag() => _db.SimpleQuestion.FromSql($"call search_questions_by_tag({"java"},{5})").ToList();
     }

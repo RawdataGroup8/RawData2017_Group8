@@ -89,14 +89,7 @@ namespace XUnitTestProject
              Assert.Equal(true, text);
 
          }
-         [Fact]
-         public void Retrieve_Answers_Procedure()
-         {
-             var ds = new DataService();
-             var text = ds.Retrieve_Answers_Procedure("java constructor");
-             Assert.NotEqual(0, text.Count);
-
-         }
+     
 
         [Fact]
         public void SearchQuestionsByTag()
