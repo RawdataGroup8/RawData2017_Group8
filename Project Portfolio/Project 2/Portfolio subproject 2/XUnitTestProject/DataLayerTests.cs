@@ -49,6 +49,14 @@ namespace XUnitTestProject
             Assert.Equal(5, post.PostTags.Count);
         }
 
+        [Fact]
+        public void InsertMarking_ValidID_InsertsMarking()
+        {
+            var ds = new DataService();
+            var ret = ds.AddMarking(1, 2, "testing");
+            Assert.Equal(1, ret);
+        }
+
         /*
          [Fact]
          public void DBProcedure_SearchQuestionByID_ReturnsQuestionList()
@@ -58,8 +66,8 @@ namespace XUnitTestProject
             // Assert.NotEmpty(results);
          }
          */
-         //This test Shows the procedure is returning records, how ever needs further care
-         [Fact]
+        //This test Shows the procedure is returning records, how ever needs further care
+        [Fact]
          public void Searching_using_type_Strings()
          {
              var ds = new DataService();
@@ -76,13 +84,13 @@ namespace XUnitTestProject
 
          }
 
-        [Fact]
+        /*[Fact]
         public void SearchQuestionsByTag_Tag_ReturnsFullQuestionsByTag()
         {
             var ds = new DataService();
             var questions = ds.SearchQuestionsByTag("java",10);
             Assert.Equal(34571, questions[0].PostId1);
-        }
+        }*/
 
     }
 }

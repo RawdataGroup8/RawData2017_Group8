@@ -2,6 +2,8 @@
 {
     public class UserDTO : BaseDTO
     {
-        public string Description { get; set; }
+        public new string Url { get; set; }
+        public string Name { get; set; }
+        public int NumberOfPosts { get; set; }
     }
 }

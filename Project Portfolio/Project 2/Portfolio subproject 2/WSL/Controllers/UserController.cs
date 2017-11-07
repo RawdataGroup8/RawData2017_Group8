@@ -29,16 +29,17 @@ namespace WebServiceLayer.Controllers
             var totalPages = GetTotalPages(pageSize, total);
 
             var data = _ds.GetUsers(page, pageSize)
-                .Select(x => new BaseDTO
-                {
-                    Url = Url.Link(nameof(GetUser), new {id = x.Userid}),
-                    Name = x.UserName
-                });
+                .Select(x => new ListingDTO
+                    {
+                        Url = Url.Link(nameof(GetUser), new {id = x.Userid}),
+                        Name = x.UserName
+                    });
 
             var result = new
             {
-                Total = total,
-                Pages = totalPages,
+                Number_Of_Users = total,
+                Number_Of_Pages = totalPages,
+                PageSize = pageSize,
                 Page = page,
                 Prev = Link(nameof(GetUsers), page, pageSize, -1, () => page > 0),
                 Next = Link(nameof(GetUsers), page, pageSize, +1, () => page < totalPages - 1),
@@ -53,18 +54,20 @@ namespace WebServiceLayer.Controllers
         [HttpGet("{id}", Name = nameof(GetUser))]
         public IActionResult GetUser(int id)
         {
-//            var user = _ds.GetUser(id);
-//            if (user == null) return NotFound();
-//
-//            var model = mapper.Map<UserReturnModel>(User);
-//            model.Url = Url.Link(nameof(GetUser), new {id = user.Userid});
-//
-//            return Ok(model);
-            return Ok(_ds.GetUser(id));
+            var result = new
+            {
+                Data = new UserDTO
+                {
+                    Url = Url.Link(nameof(GetUser), new { id }),
+                    Name = _ds.GetUser(id).UserName,
+                    NumberOfPosts = _ds.GetUser(id).Posts.Count
+                }
+            };
+            return Ok(result);
         }
 
         //Maybe generically like this: IMapper CreateMapper(Type BaseEntity, Type BaseDTO)
-        public IMapper CreateMapper() //Never used
+        /*public IMapper CreateMapper() //Never used
         {
             var config = new MapperConfiguration(cfg =>
             {
@@ -74,7 +77,7 @@ namespace WebServiceLayer.Controllers
             });
 
             return config.CreateMapper();
-        }
+        }*/
 
         private string Link(string route, int page, int pageSize, int pageInc = 0, Func<bool> f = null)
         {
@@ -89,7 +92,7 @@ namespace WebServiceLayer.Controllers
 
         private static void CheckPageSize(ref int pageSize)
         {
-            pageSize = pageSize > 50 ? 50 : pageSize; //What is 50 all about? :P 
+            pageSize = pageSize > 50 ? 50 : pageSize; //Q: What is 50 all about? :P A: it's just the upperlimet of the pagesize 
         }
     }
 }

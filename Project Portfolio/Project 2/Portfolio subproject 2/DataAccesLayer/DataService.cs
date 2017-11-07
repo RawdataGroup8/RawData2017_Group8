@@ -2,7 +2,6 @@
 using System.Linq;
 using DataAccesLayer.DBObjects;
 using Microsoft.EntityFrameworkCore;
-using DAL.DBObjects;
 
 namespace DataAccesLayer
 {
@@ -14,16 +13,16 @@ namespace DataAccesLayer
 
         // ------------------------ USERS  ------------------------  
         //public List<User> GetUsers() => _db.User.ToList();
-        public List<User> GetUsers(int page, int pageSize) => _db.User.OrderBy(x => x.Userid).Skip(page*pageSize).Take(pageSize).ToList();
+        public List<User> GetUsers(int page, int pageSize) => _db.User.OrderBy(x => x.Userid).Skip(page * pageSize).Take(pageSize).ToList();
         //return a full user, including all posts.
         public User GetUser(int id) => _db.User.Include(c => c.Posts).FirstOrDefault(p => p.Userid == id);
 
         // ------------------------ POSTS (QUESTIONS / ANSWERS) ------------------------         
         //return a full post, including all comments and tags.
-        public Post GetPost(int id) => _db.Post.Include(p1 => p1.Comments).Include(p1 => p1.PostTags).FirstOrDefault(p => p.PostId == id);       
+        public Post GetPost(int id) => _db.Post.Include(p1 => p1.Comments).Include(p1 => p1.PostTags).FirstOrDefault(p => p.PostId == id);
         //return a Post, including tags related to the post.
         public Post GetPosts_Tags(int id) => _db.Post.Include(c => c.PostTags).FirstOrDefault(p => p.PostId == id);
-        
+
         //return a full question
         public Question GetQuestion(int id)
         {
@@ -46,33 +45,33 @@ namespace DataAccesLayer
             throw new System.NotImplementedException();
         }
 
-        public LinkedPosts LinkingToThisPost(int id)
+        public List<Post> LinkingToThisPost(int id)
         {
-            return _db.LinkedPosts.Include(c => c.Post).FirstOrDefault(p => p.LinkPostId == id);
-            //throw new System.NotImplementedException();
-            {
-            }
-        
-
-
-    }
+            throw new System.NotImplementedException();
+        }
 
         // ------------------------ HISTORY & BOOKMARKS ------------------------         
         public List<History> UserHistory(int id) => _db.History.Where(h => h.Userid == id).ToList();
 
         public List<Marking> UserBookmarks(int id) => _db.Marking.Where(m => m.Postid == id).ToList();
 
+        public int AddMarking(int uid, int pid, string mark) => _db.Database.ExecuteSqlCommand("call add_marking({0},{1},{2})", uid, pid, mark);
+
+        public void AddQuestionToHistory(int PostID, int UserID) => _db.History.Add(new History { LinkPostId = PostID, Userid = UserID, DateTimeAdded = new System.DateTime() });
+        
         // ------------------------ PROCEDURES ------------------------         
         // A procedure that searches
         public bool Searching_usingtype_String()
-        {          
-           
-            var result = _db.Post1.FromSql("call fulltext_search({0},{1})", "What used for java", 1);
+        {
+            // you can also use the string interpolation syntax
+            //var str = "What used for java";
+            //var id1 = 1;
+            var result = _db.Post.FromSql("call fulltext_search({0},{1})", "What used for java", 1);
 
             foreach (var text in result)
             {
-                if (text.PostId == 25115395) return true;
-                
+                if (text.PostId == 22944075) return true;
+                //Console.WriteLine($"{category.CategoryId}, {category.CategoryName}");
             }
             return false;
         }
@@ -88,10 +87,5 @@ namespace DataAccesLayer
             throw new System.NotImplementedException();
             //var result = _db.Question.FromSql($"call search_questions_by_tag({tag},{limit})");
         }
-        public bool AddMarking(int userId, int postId, string text)
-        {
-            throw new System.NotImplementedException();
-        }
     }
-
-}   
+}
