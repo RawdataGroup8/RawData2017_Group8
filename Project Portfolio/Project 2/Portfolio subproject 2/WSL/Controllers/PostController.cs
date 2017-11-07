@@ -1,5 +1,6 @@
 ﻿using DataAccesLayer;
 using Microsoft.AspNetCore.Mvc;
+using WebServiceLayer.DataTransferObjects;
 
 namespace WebServiceLayer.Controllers
 {
@@ -13,20 +14,25 @@ namespace WebServiceLayer.Controllers
             _ds = iDataService;
         }
 
-        [HttpGet("id", Name = nameof(GetPost))]
+        [HttpGet("{id}", Name = nameof(GetPost))]
         public IActionResult GetPost(int id)
         {
-            var data = new
+            var result = new
             {
-
+                Data = new PostDTO
+                {
+                    Url = Url.Link(nameof(GetPost), new { id }),
+                    Title = _ds.GetPost(id).Title,
+                    Author = _ds.GetPost(id).User.UserName,
+                    AuthorUrl = Url.Link(nameof(UserController.GetUser), new { id =_ds.GetPost(id).OwnerUserId }),
+                    CreationDate = _ds.GetPost(id).CreationDate,
+                    Score = _ds.GetPost(id).Score,
+                    Body = _ds.GetPost(id).Body,
+                    Comments = _ds.GetPost(id).Comments,
+                    PostTags = _ds.GetPost(id).PostTags
+                }
             };
-
-            var resultat = new
-            {
-                Warning= "not implementet yet"
-            };
-
-            return Ok(resultat);
+            return Ok(result);
         }
     }
 }
