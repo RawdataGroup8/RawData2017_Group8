@@ -7,7 +7,7 @@ namespace DataAccesLayer.DBObjects
     {
         [Key]
         public int PostId1 { get; set; }
-        public int AcceptedAnswerId { get; set; }
+        public int? AcceptedAnswerId { get; set; }
         public DateTime? ClosedDate { get; set; }
 
         private Post _post;

@@ -1,6 +1,7 @@
-﻿using DataAccesLayer;
+﻿using System.Collections.Generic;
+using System.Linq;
+using DataAccesLayer;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using WebServiceLayer.DataTransferObjects;
 
 namespace WebServiceLayer.Controllers
@@ -12,11 +13,21 @@ namespace WebServiceLayer.Controllers
         private readonly IDataService _ds;
         public QuestionController(IDataService iDataService) => _ds = iDataService;
 
-        [HttpGet("{id}", Name = "GetQuestion")] // GET: api/questions/5
+        // GET: api/questions/5
+        [HttpGet("{id}", Name = nameof(GetQuestion))]
         public IActionResult GetQuestion(int id)
         {
-            var question = new QuestionDTO(_ds.GetQuestion(id), Url.Link(nameof(GetQuestion), id));
-            return question.Body != null ? (IActionResult)Ok(new { question }) : NotFound(question);
+            var data = new QuestionDTO(_ds.GetQuestion(id), Url.Link(nameof(GetQuestion), new{id}));
+            return data.Body != null ? (IActionResult)Ok(new { data }) : NotFound(data);
+        }
+
+        // GET: api/questions
+        [HttpGet(Name = nameof(GetNewestQuestions))]
+        public IActionResult GetNewestQuestions()
+        {
+            var questions = _ds.GetNewestQuestions(20, 1, 10);
+            var output = questions.Select(question => new QuestionDTO(question, Url.Link(nameof(GetNewestQuestions), new{question.PostId1}))).ToList();
+            return Ok(output);
         }
     }
 }
