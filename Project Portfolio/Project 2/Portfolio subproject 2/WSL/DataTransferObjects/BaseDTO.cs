@@ -1,6 +1,6 @@
 ﻿namespace WebServiceLayer.DataTransferObjects
 {
-    public class BaseDTO
+    public abstract class BaseDTO
     {
         public string Url { get; set; }
     }
