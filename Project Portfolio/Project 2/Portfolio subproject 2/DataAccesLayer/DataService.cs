@@ -3,6 +3,7 @@ using System.IO.Pipes;
 using System.Linq;
 using DataAccesLayer.DBObjects;
 using Microsoft.EntityFrameworkCore;
+using DataAccesLayer.DBObjects.SimpleObjects;
 
 namespace DataAccesLayer
 {
@@ -93,10 +94,6 @@ namespace DataAccesLayer
             return _db.Answer.FromSql($"call fulltext_search({query},{type_id})").ToList();
         }
 
-        public List<Question> SearchQuestionsByTag(string tag, int limit)
-        {
-            throw new System.NotImplementedException();
-            //var result = _db.Question.FromSql($"call search_questions_by_tag({tag},{limit})");
-        }
+        public List<SimpleQuestion> SearchQuestionsByTag() => _db.SimpleQuestion.FromSql($"call search_questions_by_tag({"java"},{5})").ToList();
     }
 }

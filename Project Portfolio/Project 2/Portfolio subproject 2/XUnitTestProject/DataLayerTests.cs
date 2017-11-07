@@ -98,13 +98,14 @@ namespace XUnitTestProject
 
          }
 
-        /*[Fact]
-        public void SearchQuestionsByTag_Tag_ReturnsFullQuestionsByTag()
+        [Fact]
+        public void SearchQuestionsByTag()
         {
             var ds = new DataService();
-            var questions = ds.SearchQuestionsByTag("java",10);
-            Assert.Equal(34571, questions[0].PostId1);
-        }*/
+            var text = ds.SearchQuestionsByTag();
+            Assert.Equal(5, text.Count);
+
+        }
 
     }
 }
