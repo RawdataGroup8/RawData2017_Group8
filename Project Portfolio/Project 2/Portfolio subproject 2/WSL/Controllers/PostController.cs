@@ -5,7 +5,7 @@ namespace WebServiceLayer.Controllers
 {
     [Produces("application/json")]
     [Route("api/Post")]
-    public class PostController : Controller
+    public class PostController : AbstractController
     {
         private readonly IDataService _ds;
         public PostController(IDataService iDataService)

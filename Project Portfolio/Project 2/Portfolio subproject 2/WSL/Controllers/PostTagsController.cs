@@ -5,7 +5,7 @@ namespace WebServiceLayer.Controllers
 {
     [Produces("application/json")]
     [Route("api/PostTags")]
-    public class PostTagsController : Controller
+    public class PostTagsController : AbstractController
     {
         private readonly IDataService _ds;
         public PostTagsController(IDataService iDataService)
