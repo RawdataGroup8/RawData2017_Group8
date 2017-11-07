@@ -15,7 +15,7 @@ namespace DataAccesLayer
 
 
         List<Post> LinkedFromThisPost(int id);
-        //List<Post> LinkingToThisPost(int id);
+        void DeleteMarking(int uid, int pid);
         List<History> UserHistory(int id);
         List<Marking> UserBookmarks(int id);
         int AddMarking(int uid, int pid, string mark);

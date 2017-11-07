@@ -50,10 +50,10 @@ namespace XUnitTestProject
         }
 
         [Fact]
-        public void Searching_usingtype_String()
+        public void FulltextSearch_SearchString_ReturnsSearchResults()
         {
             var ds = new DataService();
-            var post = ds.Searching_usingtype_String();
+            var post = ds.FulltextSearch();
             Assert.Equal(true, post);
         }
 
@@ -66,6 +66,9 @@ namespace XUnitTestProject
             var ds = new DataService();
             var ret = ds.AddMarking(1, 2, "testing");
             Assert.Equal(1, ret);
+
+            //cleanup
+            ds.DeleteMarking(1, 2);
         }
 
         /*
@@ -82,7 +85,7 @@ namespace XUnitTestProject
          public void Searching_using_type_Strings()
          {
              var ds = new DataService();
-             var text = ds.Searching_usingtype_String();
+             var text = ds.FulltextSearch();
              Assert.Equal(true, text);
 
          }
