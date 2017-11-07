@@ -1,5 +1,4 @@
 ﻿using DataAccesLayer.DBObjects;
-using DAL.DBObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccesLayer

@@ -55,6 +55,9 @@ namespace XUnitTestProject
             var ds = new DataService();
             var ret = ds.AddMarking(1, 2, "testing");
             Assert.Equal(1, ret);
+
+            //cleanup
+            ds.DeleteMarking(1, 2);
         }
 
         /*

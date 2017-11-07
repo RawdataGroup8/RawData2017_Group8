@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO.Pipes;
 using System.Linq;
 using DataAccesLayer.DBObjects;
 using Microsoft.EntityFrameworkCore;
@@ -61,6 +62,11 @@ namespace DataAccesLayer
         public List<Marking> UserBookmarks(int id) => _db.Marking.Where(m => m.Postid == id).ToList();
 
         public int AddMarking(int uid, int pid, string mark) => _db.Database.ExecuteSqlCommand("call add_marking({0},{1},{2})", uid, pid, mark);
+
+        public void DeleteMarking(int uid, int pid)
+        {
+            _db.Database.ExecuteSqlCommand("delete from marking where user_id = 1 and post_id = 2", uid, pid);
+        }
 
         public void AddQuestionToHistory(int PostID, int UserID) => _db.History.Add(new History { LinkPostId = PostID, Userid = UserID, DateTimeAdded = new System.DateTime() });
         
