@@ -5,7 +5,7 @@ namespace WebServiceLayer.Controllers
 {
     [Produces("application/json")]
     [Route("api/LinkedPosts")]
-    public class LinkedPostsController : Controller
+    public class LinkedPostsController : AbstractController
     {
         private readonly IDataService _ds;
         public LinkedPostsController(IDataService iDataService)

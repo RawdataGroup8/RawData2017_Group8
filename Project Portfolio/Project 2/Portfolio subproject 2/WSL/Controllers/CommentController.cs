@@ -5,7 +5,7 @@ namespace WebServiceLayer.Controllers
 {
     [Produces("application/json")]
     [Route("api/Comment")]
-    public class CommentController : Controller
+    public class CommentController : AbstractController
     {
         private readonly IDataService _ds;
         public CommentController(IDataService iDataService)
