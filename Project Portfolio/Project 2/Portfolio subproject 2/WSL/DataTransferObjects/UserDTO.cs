@@ -2,6 +2,6 @@
 {
     public class UserDTO : BaseDTO
     {
-        public string Description { get; set; }
+        public string Name { get; set; }
     }
 }
