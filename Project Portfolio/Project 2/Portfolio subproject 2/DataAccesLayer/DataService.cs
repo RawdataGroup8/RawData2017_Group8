@@ -72,7 +72,7 @@ namespace DataAccesLayer
         
         // ------------------------ PROCEDURES ------------------------         
         // A procedure that searches
-        public bool Searching_usingtype_String()
+        public bool FulltextSearch()
         {
             // you can also use the string interpolation syntax
             //var str = "What used for java";
