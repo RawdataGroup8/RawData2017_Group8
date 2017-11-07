@@ -29,7 +29,7 @@ namespace WebServiceLayer.Controllers
             var totalPages = GetTotalPages(pageSize, total);
 
             var data = _ds.GetUsers(page, pageSize)
-                .Select(x => new BaseDTO
+                .Select(x => new ListingDTO
                     {
                         Url = Url.Link(nameof(GetUser), new {id = x.Userid}),
                         Name = x.UserName
