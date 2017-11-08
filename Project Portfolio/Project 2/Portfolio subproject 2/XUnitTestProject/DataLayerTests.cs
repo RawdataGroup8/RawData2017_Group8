@@ -1,3 +1,4 @@
+using System.Linq;
 using DataAccesLayer;
 using DataAccesLayer.DBObjects;
 using Xunit;
@@ -99,12 +100,12 @@ namespace XUnitTestProject
 
 
         [Fact]
-         public void FulltextSearchQuestion_StringSentence_ReturnsRelevantPosts()
+         public void FulltextSearch_StringSentence_ReturnsRelevantPosts()
          {
              var ds = new DataService();
-             var text = ds.FulltextSearchQuestion("can i learn to do java like a jedi");
-             Assert.Equal(true, text);
-
+             var text = ds.FulltextSearch("java like a jedi", 1);
+             Assert.Equal(text.First().PostId, 25115395);
+             Assert.True(text != null);
          }
      
 

@@ -78,18 +78,8 @@ namespace DataAccesLayer
         }
         // ------------------------ PROCEDURES ------------------------         
         // A procedure that searches
-        public bool FulltextSearchQuestion(string text) //We should "un"hardcode fulltextsearch and searchbytag and make it return a list :)
-        {
-            var result = _db.Post.FromSql("call fulltext_search({0},{1})", text, 1);
+        public List<Post> FulltextSearch(string text, int postType) => _db.Post.FromSql("call fulltext_search({0},{1})", text, postType).ToList();
 
-            foreach (var simplePost in result)
-            {
-                if (simplePost.PostId == 25115395) return true;
-            }
-            return false;
-            //return result.ToList();
-        }
-       
         public List<SimpleQuestion> SearchQuestionsByTag(string tag, int limit) => _db.SimpleQuestion.FromSql("call search_questions_by_tag({0},{1})", tag, limit).ToList();
     }
 }
