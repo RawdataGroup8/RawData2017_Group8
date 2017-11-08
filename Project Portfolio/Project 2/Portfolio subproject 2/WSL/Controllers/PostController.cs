@@ -37,7 +37,7 @@ namespace WebServiceLayer.Controllers
                 data = new PostDTO
                 {
                     Url = Url.Link(nameof(GetPost), new { id }),
-                    Title = "This is an answer to the question: " + _ds.GetPost(_ds.GetAnswer(id).Parentid).Title, //maybe we should include a link to it
+                    Title = "This is an answer to the question: " + _ds.GetPost(_ds.GetAnswer(id).Parentid).Title, //maybe we should include a link to it, or just use the answer controller I guess
                     Author =
                         _ds.GetUser(_ds.GetPost(id).OwnerUserId)
                             .UserName, // becaus _ds.GetPost(id).User.UserName dosent work... for some reason
@@ -52,7 +52,6 @@ namespace WebServiceLayer.Controllers
 
             var result = new
             {
-                //maybe add an if statement so it only runes this code if the post has a title
                 Data = data
             };
             return Ok(result);
