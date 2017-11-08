@@ -7,18 +7,12 @@ namespace DataAccesLayer.DBObjects
     {
         [Key]
         public int PostId1 { get; set; }
-        public int AcceptedAnswerId { get; set; }
+        public int? AcceptedAnswerId { get; set; }
         public DateTime? ClosedDate { get; set; }
 
         private Post _post;
-        public Post GetPost()
-        {
-            return _post;
-        }
+        public Post GetPost() => _post;
 
-        public void SetPost(Post value)
-        {
-            _post = value;
-        }
+        public void SetPost(Post value) => _post = value;
     }
 }

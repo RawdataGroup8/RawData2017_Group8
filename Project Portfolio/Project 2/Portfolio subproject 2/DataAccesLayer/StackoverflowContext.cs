@@ -16,8 +16,6 @@ namespace DataAccesLayer
         public DbSet<LinkedPosts> LinkedPosts { get; set; }
         public DbSet<Marking> Marking { get; set; } 
         public DbSet<Post> Post { get; set; }
-
-        // ReSharper disable once InconsistentNaming
         public DbSet<PostTags> PostTags { get; set; }
         public DbSet<Question> Question { get; set; }
         public DbSet<User> User { get; set; }
