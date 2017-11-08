@@ -80,6 +80,6 @@ namespace DataAccesLayer
         // A procedure that searches
         public List<Post> FulltextSearch(string text, int postType) => _db.Post.FromSql("call fulltext_search({0},{1})", text, postType).ToList();
 
-        public List<SimpleQuestion> SearchQuestionsByTag(string tag, int limit) => _db.SimpleQuestion.FromSql("call search_questions_by_tag({0},{1})", tag, limit).ToList();
+        public List<Question> SearchQuestionsByTag(string tag, int limit) => _db.Question.FromSql("call search_questions_by_tag({0},{1})", tag, limit).ToList();
     }
 }

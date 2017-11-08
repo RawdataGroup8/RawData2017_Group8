@@ -180,11 +180,11 @@ CREATE TABLE marking (
 -- ---------------- FUNCTIONALITY / API -------------------
 
 -- search_questions_by_tag(tag, lim) /* Basic tag search query. Returns relevant data about questions that contains the <tag>, ordered by score, limited to <lim> */
--- drop procedure if exists search_questions_by_tag;
+drop procedure if exists search_questions_by_tag;
 DELIMITER //
 CREATE PROCEDURE search_questions_by_tag (IN tag varchar(200), lim int)
 BEGIN
-	select post.post_id, title, body, score, creation_date, closed_date 
+	select post.post_id, title, body, score, creation_date, closed_date, accepted_answer_id 
     from post, question, post_tags
     where post.post_id = question.post_id and post.post_id = post_tags.post_id and post_tags.tag_name = tag
     order by post.score desc limit lim;

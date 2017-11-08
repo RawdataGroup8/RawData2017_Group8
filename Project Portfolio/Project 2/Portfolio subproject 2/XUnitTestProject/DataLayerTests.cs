@@ -88,24 +88,12 @@ namespace XUnitTestProject
             Assert.NotEmpty(ds.LinkingToThisPost(9033));
         }
 
-        /*
-         [Fact]
-         public void DBProcedure_SearchQuestionByID_ReturnsQuestionList()
-         {
-             var ds = new DataService();
-            // var results = ds.SeachQuestionsByTag("YourMum", 10);
-            // Assert.NotEmpty(results);
-         }
-         */
-
-
         [Fact]
          public void FulltextSearch_StringSentence_ReturnsRelevantPosts()
          {
              var ds = new DataService();
-             var text = ds.FulltextSearch("java like a jedi", 1);
-             Assert.Equal(text.First().PostId, 25115395);
-             Assert.True(text != null);
+             var posts = ds.FulltextSearch("java like a jedi", 1);
+             Assert.Equal(posts.First().PostId, 25115395);
          }
      
 
@@ -113,8 +101,8 @@ namespace XUnitTestProject
         public void SearchQuestionsByTag()
         {
             var ds = new DataService();
-            var text = ds.SearchQuestionsByTag("java", 10);
-            Assert.Equal(10, text.Count);
+            var simpleQuestions = ds.SearchQuestionsByTag("java", 10);
+            Assert.Equal(10, simpleQuestions.Count);
 
         }
     }
