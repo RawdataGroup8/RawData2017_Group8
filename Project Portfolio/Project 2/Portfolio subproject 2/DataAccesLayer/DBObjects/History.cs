@@ -2,7 +2,7 @@
 
 namespace DataAccesLayer.DBObjects
 {
-    public class History //PRIMARY KEY USERID+DATE TIME
+    public class History
     {
         public int Userid { set; get; }
         
@@ -10,10 +10,7 @@ namespace DataAccesLayer.DBObjects
 
         public int LinkPostId { set; get; }
 
-        public History()
-        {
-            
-        }
+        public History(){} //empty ctor for needed by EF
         public History(int userId, int linkPostId)
         {
             Userid = userId;

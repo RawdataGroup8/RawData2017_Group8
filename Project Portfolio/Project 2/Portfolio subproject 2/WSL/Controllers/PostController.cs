@@ -15,46 +15,56 @@ namespace WebServiceLayer.Controllers
         public IActionResult GetPost(int id)
         {
             PostDTO data;
-            if (_ds.GetPost(id).PostId == 1)
+            try
             {
-                data = new PostDTO
+                if (_ds.GetPost(id).PostId == 1)
                 {
-                    Url = Url.Link(nameof(GetPost), new {id}),
-                    Title = _ds.GetPost(id).Title,
-                    Author =
-                        _ds.GetUser(_ds.GetPost(id).OwnerUserId)
-                            .UserName, // becaus _ds.GetPost(id).User.UserName dosent work... for some reason
-                    AuthorUrl = Url.Link(nameof(UserController.GetUser), new {id = _ds.GetPost(id).OwnerUserId}),
-                    CreationDate = _ds.GetPost(id).CreationDate,
-                    Score = _ds.GetPost(id).Score,
-                    Body = _ds.GetPost(id).Body,
-                    Comments = _ds.GetPost(id).Comments,
-                    PostTags = _ds.GetPost(id).PostTags
-                };
-            }
-            else
-            {
-                data = new PostDTO
+                    data = new PostDTO
+                    {
+                        Url = Url.Link(nameof(GetPost), new {id}),
+                        Title = _ds.GetPost(id).Title,
+                        Author =
+                            _ds.GetUser(_ds.GetPost(id).OwnerUserId)
+                                .UserName, // becaus _ds.GetPost(id).User.UserName dosent work... for some reason
+                        AuthorUrl = Url.Link(nameof(UserController.GetUser), new {id = _ds.GetPost(id).OwnerUserId}),
+                        CreationDate = _ds.GetPost(id).CreationDate,
+                        Score = _ds.GetPost(id).Score,
+                        Body = _ds.GetPost(id).Body,
+                        Comments = _ds.GetPost(id).Comments,
+                        PostTags = _ds.GetPost(id).PostTags
+                    };
+                }
+                else
                 {
-                    Url = Url.Link(nameof(GetPost), new { id }),
-                    Title = "This is an answer to the question: " + _ds.GetPost(_ds.GetAnswer(id).Parentid).Title, //maybe we should include a link to it, or just use the answer controller I guess
-                    Author =
-                        _ds.GetUser(_ds.GetPost(id).OwnerUserId)
-                            .UserName, // becaus _ds.GetPost(id).User.UserName dosent work... for some reason
-                    AuthorUrl = Url.Link(nameof(UserController.GetUser), new { id = _ds.GetPost(id).OwnerUserId }),
-                    CreationDate = _ds.GetPost(id).CreationDate,
-                    Score = _ds.GetPost(id).Score,
-                    Body = _ds.GetPost(id).Body,
-                    Comments = _ds.GetPost(id).Comments,
-                    PostTags = _ds.GetPost(id).PostTags
-                };
-            }
+                    data = new PostDTO
+                    {
+                        Url = Url.Link(nameof(GetPost), new {id}),
+                        Title =
+                            "This is an answer to the question: " +
+                            _ds.GetPost(_ds.GetAnswer(id).Parentid)
+                                .Title, //maybe we should include a link to it, or just use the answer controller I guess
+                        Author =
+                            _ds.GetUser(_ds.GetPost(id).OwnerUserId)
+                                .UserName, // becaus _ds.GetPost(id).User.UserName dosent work... for some reason
+                        AuthorUrl = Url.Link(nameof(UserController.GetUser), new {id = _ds.GetPost(id).OwnerUserId}),
+                        CreationDate = _ds.GetPost(id).CreationDate,
+                        Score = _ds.GetPost(id).Score,
+                        Body = _ds.GetPost(id).Body,
+                        Comments = _ds.GetPost(id).Comments,
+                        PostTags = _ds.GetPost(id).PostTags
+                    };
+                }
 
-            var result = new
+                var result = new
+                {
+                    Data = data
+                };
+                return Ok(result);
+            }
+            catch
             {
-                Data = data
-            };
-            return Ok(result);
+                return NotFound();
+            }
         }
     }
 }
