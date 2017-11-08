@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using DataAccesLayer;
 using Microsoft.AspNetCore.Mvc;
 using WebServiceLayer.DataTransferObjects;
