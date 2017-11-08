@@ -209,8 +209,8 @@ drop procedure if exists fulltext_search;
 DELIMITER //
 CREATE PROCEDURE fulltext_search (in search_str varchar(400), post_type int)
 BEGIN
-	SELECT post_id, title, body, match (title,body) AGAINST
-	(search_str IN NATURAL LANGUAGE MODE)  AS score
+	SELECT post_id, title, body, creation_date, owner_user_id, score, type_id, match (title,body) AGAINST
+	(search_str IN NATURAL LANGUAGE MODE)  AS search_score
     FROM post WHERE post.type_id = post_type and MATCH (title,body) AGAINST
     (search_str IN NATURAL LANGUAGE MODE);
 END //

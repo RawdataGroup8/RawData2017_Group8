@@ -50,14 +50,6 @@ namespace XUnitTestProject
             Assert.Equal(5, post.PostTags.Count);
         }
 
-        [Fact]
-        public void FulltextSearch_SearchString_ReturnsSearchResults()
-        {
-            var ds = new DataService();
-            var post = ds.FulltextSearch();
-            Assert.Equal(true, post);
-        }
-
 
         [Fact]
         public void InsertMarking_ValidID_InsertsMarking()
@@ -107,10 +99,10 @@ namespace XUnitTestProject
 
 
         [Fact]
-         public void FulltextSearch_StringSentence_ReturnsRelevantPosts()
+         public void FulltextSearchQuestion_StringSentence_ReturnsRelevantPosts()
          {
              var ds = new DataService();
-             var text = ds.FulltextSearch();
+             var text = ds.FulltextSearchQuestion("can i learn to do java like a jedi");
              Assert.Equal(true, text);
 
          }
