@@ -14,10 +14,10 @@ namespace WebServiceLayer.Controllers
         [HttpGet("{id}", Name = nameof(GetPost))]
         public IActionResult GetPost(int id)
         {
-            PostDTO data;
             try
             {
-                if (_ds.GetPost(id).PostId == 1)
+                PostDTO data;
+                if (_ds.GetPost(id).PostId == 1) //This should be typeid right?
                 {
                     data = new PostDTO
                     {

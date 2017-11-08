@@ -6,7 +6,7 @@ using WebServiceLayer.DataTransferObjects;
 namespace WebServiceLayer.Controllers
 {
     [Produces("application/json")]
-    [Route("api/User")]
+    [Route("api/user")]
     public class UserController : AbstractController
     {
         private readonly IDataService _ds;
@@ -53,24 +53,25 @@ namespace WebServiceLayer.Controllers
         [HttpGet("{id}", Name = nameof(GetUser))]
         public IActionResult GetUser(int id)
         {
-            try
-            {
-                var result = new
+            //try
+            //{
+
+                /*var data = new UserDTO
                 {
-                    Data = new UserDTO
-                    {
-                        Url = Url.Link(nameof(GetUser), new {id}),
-                        Name = _ds.GetUser(id).UserName,
-                        NumberOfPosts = _ds.GetUser(id).Posts.Count,
-                        PostsByUser = Url.Link(nameof(GetUserPosts), new {id})
-                    }
-                };
-                return Ok(result);
-            }
-            catch
-            {
-                return NotFound();
-            }
+                    Url = Url.Link(nameof(GetUser), new {id}),
+                    Name = _ds.GetUser(id).UserName,
+                    NumberOfPosts = _ds.GetUser(id).Posts.Count,
+                    PostsByUser = Url.Link(nameof(GetUserPosts), new {id})
+                };*/
+                var data = new UserDTO(_ds.GetUser(id), 
+                    Url.Link(nameof(GetUser), new {id}),
+                    Url.Link(nameof(GetUserPosts), new {id}));
+                return data.Name != null ? (IActionResult) Ok(data) : NotFound();
+            //}
+            //catch
+            //{
+            //    return NotFound();
+            //}
         }
 
         [HttpGet("{id}/Posts", Name = nameof(GetUserPosts))]
