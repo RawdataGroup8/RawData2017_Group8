@@ -37,11 +37,11 @@ namespace WebServiceLayer.Controllers
                     Page = page,
                     Prev = Link(nameof(GetUsers), page, pageSize, -1, () => page > 0),
                     Next = Link(nameof(GetUsers), page, pageSize, +1, () => page < totalPages - 1),
-                    Url = Link(nameof(GetUsers), page, pageSize),
-                    Data = data
+                    Url = Link(nameof(GetUsers), page, pageSize)
+                    //Data = data
                 };
 
-                return Ok(result);
+                return Ok(new{result, data});
             }
             catch
             {

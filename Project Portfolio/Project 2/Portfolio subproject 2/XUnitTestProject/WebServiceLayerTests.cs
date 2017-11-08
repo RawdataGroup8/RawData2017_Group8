@@ -58,7 +58,7 @@ namespace XUnitTestProject
             var (user, statusCode) = GetObject($"{UsersApi}/1");
             Assert.Equal(HttpStatusCode.OK, statusCode);
             Assert.Equal("Jeff Atwood", user["name"]);
-            Assert.Equal(2, user["numberOfPosts"]);
+            Assert.Equal(10, user["numberOfPosts"]);
         }
 
         [Fact]
@@ -79,11 +79,11 @@ namespace XUnitTestProject
         [Fact]
         public void ApiUser_GetWithNoArguments_OkAndListOfUsers()
         {
-            var (user, statusCode) = GetArray(UsersApi);
+            var (user, statusCode) = GetObject(UsersApi);
             Assert.Equal(HttpStatusCode.OK, statusCode);
-            Assert.Equal(10, user.Count);
-            //Assert.Equal("Jeff Atwood", user.First["name"]);
-            //Assert.Equal("denny", user.Last["name"]);
+            Assert.Equal(10, user["data"].Count());
+            Assert.Equal("Jeff Atwood", user["data"].First["name"]);
+            Assert.Equal("denny", user["data"].Last["name"]);
         }
 
 
