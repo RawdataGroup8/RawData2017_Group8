@@ -31,7 +31,11 @@ namespace XUnitTestProject
         [Fact]
         public void ApiQuestion_ValidId_OkAndQuestion()
         {
-            Assert.True(false);
+            var (question, statusCode) = GetObject($"{QuestionsApi}/28905111");
+
+            Assert.Equal(HttpStatusCode.OK, statusCode);
+            Assert.Equal(question["score"],0);
+            Assert.Equal("How to update the ng-repeat model of controller from another controller?", question["title"]); 
         }
 
         [Fact]
@@ -61,6 +65,14 @@ namespace XUnitTestProject
             var response = client.GetAsync(url).Result;
             var data = response.Content.ReadAsStringAsync().Result;
             return ((JArray)JsonConvert.DeserializeObject(data), response.StatusCode);
+        }
+
+        private (JObject, HttpStatusCode) GetObject(string url)
+        {
+            var client = new HttpClient();
+            var response = client.GetAsync(url).Result;
+            var data = response.Content.ReadAsStringAsync().Result;
+            return ((JObject)JsonConvert.DeserializeObject(data), response.StatusCode);
         }
     }
 }
