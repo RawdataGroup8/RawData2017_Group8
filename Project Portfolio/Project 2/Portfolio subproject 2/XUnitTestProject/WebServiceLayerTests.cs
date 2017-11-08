@@ -1,9 +1,10 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xunit;
-using System.Text;
 
 
 namespace XUnitTestProject
@@ -20,8 +21,9 @@ namespace XUnitTestProject
 
             Assert.Equal(HttpStatusCode.OK, statusCode);
             Assert.Equal(10, data.Count);
-            //Assert.Equal("Beverages", data.First()["name"]);
-            //Assert.Equal("Seafood", data.Last()["name"]);
+            Assert.Equal(3344591, data.First()["ownerUserId"]);
+            Assert.Equal(158026, data.Last()["ownerUserId"]);
+            Assert.Equal("Display CP437 characters on Linux console from Python", data.Last()["title"]);
         }
 
         // Helpers
