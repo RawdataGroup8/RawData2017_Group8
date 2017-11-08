@@ -49,7 +49,16 @@ namespace XUnitTestProject
         [Fact]
         public void ApiPost_ValidId_OkAndPost()
         {
-            Assert.True(false);
+            var (post, statusCode) = GetObject($"{PostsApi}/13486");
+            Assert.Equal(HttpStatusCode.OK, statusCode);
+            Assert.Equal("This is an answer to the question: Purpose of {1} in this regular expression to match url protocols", post["name"]);
+        }
+
+        [Fact]
+        public void ApiPost_InvalidId_NotFound()
+        {
+            var (post, statudCode) = GetObject($"{PostsApi}/0");
+            Assert.Equal(HttpStatusCode.NotFound, statudCode);
         }
 
         [Fact]
