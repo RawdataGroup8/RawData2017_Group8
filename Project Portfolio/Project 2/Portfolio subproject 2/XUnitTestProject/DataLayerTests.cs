@@ -71,13 +71,15 @@ namespace XUnitTestProject
         }
 
         [Fact]
-        public void History_AddAndRemoveQuestionsFromHistory()
+        public void History_ValidPostAndUserId_InsertQuestionToHistory()
         {
+
             var ds = new DataService();
-            ds.AddQuestionToHistory(19, 13);
-            Assert.True(ds.GetHistory().Count.Equals(1));
-            ds.RemoveQuestionFromHistory(19);
-            Assert.Empty(ds.GetHistory());
+            ds.AddQuestionToHistory(1234, 4321);
+            Assert.True(ds.GetHistoryItem(1234,4321).LinkPostId==4321);
+
+            ds.RemoveQuestionFromHistory(1234,4321);
+            //Assert.Empty(ds.GetHistory());
         }
 
 

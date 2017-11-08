@@ -39,6 +39,13 @@ namespace XUnitTestProject
         }
 
         [Fact]
+        public void ApiQuestion_InvalidId_NotFound()
+        {
+            var (question, statusCode) = GetObject($"{QuestionsApi}/0");
+            Assert.Equal(HttpStatusCode.NotFound, statusCode);
+        }
+
+        [Fact]
         public void ApiPost_ValidId_OkAndPost()
         {
             Assert.True(false);
@@ -67,7 +74,7 @@ namespace XUnitTestProject
             return ((JArray)JsonConvert.DeserializeObject(data), response.StatusCode);
         }
 
-        private (JObject, HttpStatusCode) GetObject(string url)
+        private static (JObject, HttpStatusCode) GetObject(string url)
         {
             var client = new HttpClient();
             var response = client.GetAsync(url).Result;
