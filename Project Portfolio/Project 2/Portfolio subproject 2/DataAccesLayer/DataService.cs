@@ -51,6 +51,7 @@ namespace DataAccesLayer
 
         public List<LinkedPosts> LinkingToThisPost(int id) => _db.LinkedPosts.Where(lp => lp.PostId == id).ToList();
 
+
         // ------------------------ HISTORY & BOOKMARKS ------------------------         
         public List<History> UserHistory(int id) => _db.History.Where(h => h.Userid == id).ToList();
 
