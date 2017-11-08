@@ -10,5 +10,16 @@ namespace DataAccesLayer.DBObjects
 
         public int LinkPostId { set; get; }
 
+        public History()
+        {
+            
+        }
+        public History(int userId, int linkPostId)
+        {
+            Userid = userId;
+            LinkPostId = linkPostId;
+            DateTimeAdded = DateTime.Now;
+        }
+
     }
 }

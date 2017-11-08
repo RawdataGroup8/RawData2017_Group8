@@ -23,9 +23,13 @@ namespace WebServiceLayer.DataTransferObjects
         public QuestionDTO(Question q, string path)
         {
             Url = path;
-            var p = q.GetPost();
+            if(q == null) return;
+
             AcceptedAnswerId = q.AcceptedAnswerId;
             ClosedDate = q.ClosedDate;
+            if (q.GetPost() == null) return;
+
+            var p = q.GetPost();
             CreationDate = p.CreationDate;
             Score = p.Score;
             Body = p.Body;

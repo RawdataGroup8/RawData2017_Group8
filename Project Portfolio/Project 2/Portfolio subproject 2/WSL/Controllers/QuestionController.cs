@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using DataAccesLayer;
 using Microsoft.AspNetCore.Mvc;
 using WebServiceLayer.DataTransferObjects;
@@ -18,7 +17,7 @@ namespace WebServiceLayer.Controllers
         public IActionResult GetQuestion(int id)
         {
             var data = new QuestionDTO(_ds.GetQuestion(id), Url.Link(nameof(GetQuestion), new{id}));
-            return data.Body != null ? (IActionResult)Ok(new { data }) : NotFound(data);
+            return data.Body != null ? (IActionResult)Ok(data) : NotFound(data);
         }
 
         // GET: api/questions

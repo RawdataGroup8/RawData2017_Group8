@@ -58,21 +58,21 @@ namespace DataAccesLayer
 
         public int AddMarking(int uid, int pid, string mark) => _db.Database.ExecuteSqlCommand("call add_marking({0},{1},{2})", uid, pid, mark);
 
-        public void DeleteMarking(int uid, int pid) => _db.Database.ExecuteSqlCommand("delete from marking where user_id = 1 and post_id = 2", uid, pid);
+        public void DeleteMarking(int uid, int pid) => _db.Database.ExecuteSqlCommand("delete from marking where user_id = {0} and post_id = {1}", uid, pid);
 
         public List<History> GetHistory() => _db.History.ToList();
 
-        public History GetHistoryItem(int postId) => _db.History.FirstOrDefault(h => h.LinkPostId == postId);
+        public History GetHistoryItem(int userId, int linkPostId) => _db.History.FirstOrDefault(h => h.Userid == userId && h.LinkPostId == linkPostId);
 
-        public void AddQuestionToHistory(int postId, int userId)
+        public void AddQuestionToHistory(int userId, int postId)
         {
-            _db.History.Add(new History { LinkPostId = postId, Userid = userId, DateTimeAdded = new System.DateTime() });
+            _db.History.Add(new History(userId, postId));
             _db.SaveChanges();
         }
 
-        public void RemoveQuestionFromHistory(int postId)
+        public void RemoveQuestionFromHistory(int userId, int linkPostId)
         {
-            _db.History.Remove(GetHistoryItem(postId));
+            _db.History.Remove(GetHistoryItem(userId, linkPostId));
             _db.SaveChanges();
         }
         // ------------------------ PROCEDURES ------------------------         
@@ -88,8 +88,6 @@ namespace DataAccesLayer
             return false;
         }
        
-        public List<SimpleQuestion> SearchQuestionsByTag() => _db.SimpleQuestion.FromSql($"call search_questions_by_tag({"java"},{5})").ToList();
-        
-        
+        public List<SimpleQuestion> SearchQuestionsByTag(string tag, int limit) => _db.SimpleQuestion.FromSql("call search_questions_by_tag({0},{1})", tag, limit).ToList();
     }
 }
