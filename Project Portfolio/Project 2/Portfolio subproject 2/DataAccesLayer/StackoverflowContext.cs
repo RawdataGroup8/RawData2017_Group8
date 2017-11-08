@@ -1,5 +1,4 @@
 ﻿using DataAccesLayer.DBObjects;
-using DataAccesLayer.DBObjects.SimpleObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccesLayer
@@ -7,8 +6,8 @@ namespace DataAccesLayer
     internal class StackoverflowContext : DbContext
     {
         //internal readonly object Post1;
-        public DbSet<SimplePost> SimplePost { get; set; }
-        public DbSet<SimpleQuestion> SimpleQuestion { get; set; }
+       // public DbSet<SimplePost> SimplePost { get; set; }
+       // public DbSet<SimpleQuestion> SimpleQuestion { get; set; }
 
         public DbSet<Answers> Answer { get; set; }
         public DbSet<Comment> Comment { get; set; }
@@ -32,7 +31,7 @@ namespace DataAccesLayer
 
 
             //modelBuilder.Entity<SimplePost>().ToTable("post");
-            modelBuilder.Entity<SimplePost>().Property(x => x.PostId).HasColumnName("post_id");
+            /*modelBuilder.Entity<SimplePost>().Property(x => x.PostId).HasColumnName("post_id");
             
             modelBuilder.Entity<SimplePost>().HasKey(x => x.PostId);
 
@@ -43,7 +42,7 @@ namespace DataAccesLayer
             modelBuilder.Entity<SimpleQuestion>().Property(x => x.Score).HasColumnName("score");
             modelBuilder.Entity<SimpleQuestion>().Property(x => x.CreationDate).HasColumnName("creation_date");
             modelBuilder.Entity<SimpleQuestion>().Property(x => x.ClosedDate).HasColumnName("closed_date");
-            modelBuilder.Entity<SimpleQuestion>().HasKey(x => x.PostId);
+            modelBuilder.Entity<SimpleQuestion>().HasKey(x => x.PostId);*/
 
             // Answers
             modelBuilder.Entity<Answers>().ToTable("answer");

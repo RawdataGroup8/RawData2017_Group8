@@ -2,7 +2,6 @@
 using System.Linq;
 using DataAccesLayer.DBObjects;
 using Microsoft.EntityFrameworkCore;
-using DataAccesLayer.DBObjects.SimpleObjects;
 
 namespace DataAccesLayer
 {
