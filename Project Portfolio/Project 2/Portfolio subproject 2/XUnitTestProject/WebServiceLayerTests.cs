@@ -54,13 +54,27 @@ namespace XUnitTestProject
         [Fact]
         public void ApiUser_ValidId_OkAndUser()
         {
-            Assert.True(false);
+            var (user, statusCode) = GetObject($"{UsersApi}/1");
+            Assert.Equal(HttpStatusCode.OK, statusCode);
+            Assert.Equal("Jeff Atwood", user["name"]);
+            Assert.Equal(2, user["numberOfPosts"]);
+        }
+
+        [Fact]
+        public void ApiUser_InbalidId_NotFound()
+        {
+            var (user, statusCode) = GetObject($"{UsersApi}/0");
+            Assert.Equal(HttpStatusCode.NotFound, statusCode);
         }
 
         [Fact]
         public void ApiUser_GetWithNoArguments_OkAndListOfUsers()
         {
-            Assert.True(false);
+            var (user, statusCode) = GetArray(UsersApi);
+            Assert.Equal(HttpStatusCode.OK, statusCode);
+            Assert.Equal(10, user.Count);
+            Assert.Equal("Jeff Atwood", user.First["name"]);
+            Assert.Equal("denny", user.Last["name"]);
         }
 
 
