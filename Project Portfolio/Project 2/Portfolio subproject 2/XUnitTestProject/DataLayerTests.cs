@@ -70,6 +70,30 @@ namespace XUnitTestProject
             ds.DeleteMarking(1, 2);
         }
 
+        [Fact]
+        public void History_AddAndRemoveQuestionsFromHistory()
+        {
+            var ds = new DataService();
+            ds.AddQuestionToHistory(19, 13);
+            Assert.True(ds.GetHistory().Count.Equals(1));
+            ds.RemoveQuestionFromHistory(19);
+            Assert.Empty(ds.GetHistory());
+        }
+
+
+        [Fact]
+        public void GetLinkedPosts_returnsPostList()
+        {
+            DataService ds = new DataService();
+            Assert.NotEmpty(ds.LinkedFromThisPost(9033));
+        }
+
+        public void GetLinkedPosts_reverse_returnsPostList()
+        {
+            DataService ds = new DataService();
+            Assert.NotEmpty(ds.LinkingToThisPost(9033));
+        }
+
         /*
          [Fact]
          public void DBProcedure_SearchQuestionByID_ReturnsQuestionList()
@@ -79,6 +103,7 @@ namespace XUnitTestProject
             // Assert.NotEmpty(results);
          }
          */
+
 
         [Fact]
          public void FulltextSearch_StringSentence_ReturnsRelevantPosts()
@@ -98,18 +123,5 @@ namespace XUnitTestProject
             Assert.Equal(5, text.Count);
 
         }
-
-//        [Fact]
-//        public void AddandReveQuestionsFromHistory()
-//        {
-//            var ds = new DataService();
-//            ds.AddQuestionToHistory(19, 13);
-//            Assert.NotEmpty(ds.GetHistory());
-//            Assert.True(ds.GetHistory().Count == 1);
-//            
-//            ds.RemoveQuestionFromHistory(19);
-//            Assert.Empty(ds.GetHistory());
-//        }
-
     }
 }
