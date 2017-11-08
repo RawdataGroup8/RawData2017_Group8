@@ -23,10 +23,11 @@ namespace WebServiceLayer.Controllers
 
         // GET: api/questions
         [HttpGet(Name = nameof(GetNewestQuestions))]
-        public IActionResult GetNewestQuestions()
+        public IActionResult GetNewestQuestions(int limit = 50, int page = 0, int pageSize = 10)
         {
-            var questions = _ds.GetNewestQuestions(20, 1, 10);
-            var output = questions.Select(question => new QuestionDTO(question, Url.Link(nameof(GetNewestQuestions), new{question.PostId1}))).ToList();
+            var questions = _ds.GetNewestQuestions(limit, page, pageSize);
+            var output = questions.Select(question => new QuestionDTO(question, 
+                Url.Link(nameof(GetNewestQuestions), new{question.PostId1})));
             return Ok(output);
         }
     }

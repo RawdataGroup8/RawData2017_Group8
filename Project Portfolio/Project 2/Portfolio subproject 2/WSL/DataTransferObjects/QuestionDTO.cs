@@ -16,6 +16,10 @@ namespace WebServiceLayer.DataTransferObjects
         public int OwnerUserId { get; set; }
         public List<PostTagsDTO> PostTags { get; set; }
 
+        //public string next { get; set; }
+        //public string prev { get; set; }
+
+
         public QuestionDTO(Question q, string path)
         {
             Url = path;
@@ -30,5 +34,21 @@ namespace WebServiceLayer.DataTransferObjects
             var tags = p.PostTags.Select(pt => new PostTagsDTO(pt)).ToList();
             PostTags = tags;
         }
+        /*public QuestionDTO(Question q, string path, string next, string prev)
+        {
+            Url = path;
+            this.next = next;
+            this.prev = prev;
+            var p = q.GetPost();
+            AcceptedAnswerId = q.AcceptedAnswerId;
+            ClosedDate = q.ClosedDate;
+            CreationDate = p.CreationDate;
+            Score = p.Score;
+            Body = p.Body;
+            Title = p.Title;
+            OwnerUserId = p.OwnerUserId;
+            var tags = p.PostTags.Select(pt => new PostTagsDTO(pt)).ToList();
+            PostTags = tags;
+        }*/
     }
 }
