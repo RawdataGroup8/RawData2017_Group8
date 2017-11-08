@@ -88,6 +88,6 @@ namespace DataAccesLayer
             return false;
         }
        
-        public List<SimpleQuestion> SearchQuestionsByTag() => _db.SimpleQuestion.FromSql($"call search_questions_by_tag({"java"},{5})").ToList();
+        public List<SimpleQuestion> SearchQuestionsByTag(string tag, int limit) => _db.SimpleQuestion.FromSql("call search_questions_by_tag({0},{1})", tag, limit).ToList();
     }
 }

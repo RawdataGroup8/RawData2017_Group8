@@ -75,24 +75,23 @@ namespace XUnitTestProject
         {
 
             var ds = new DataService();
-            ds.AddQuestionToHistory(1234, 4321);
-            Assert.True(ds.GetHistoryItem(1234,4321).LinkPostId==4321);
+            ds.AddQuestionToHistory(19, 13);
+            Assert.True(ds.GetHistoryItem(19,13).LinkPostId==13);
 
-            ds.RemoveQuestionFromHistory(1234,4321);
-            //Assert.Empty(ds.GetHistory());
+            ds.RemoveQuestionFromHistory(19,13);
         }
 
 
         [Fact]
         public void GetLinkedPosts_returnsPostList()
         {
-            DataService ds = new DataService();
+            var ds = new DataService();
             Assert.NotEmpty(ds.LinkedFromThisPost(9033));
         }
 
         public void GetLinkedPosts_reverse_returnsPostList()
         {
-            DataService ds = new DataService();
+            var ds = new DataService();
             Assert.NotEmpty(ds.LinkingToThisPost(9033));
         }
 
@@ -121,8 +120,8 @@ namespace XUnitTestProject
         public void SearchQuestionsByTag()
         {
             var ds = new DataService();
-            var text = ds.SearchQuestionsByTag();
-            Assert.Equal(5, text.Count);
+            var text = ds.SearchQuestionsByTag("java", 10);
+            Assert.Equal(10, text.Count);
 
         }
     }
