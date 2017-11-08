@@ -12,7 +12,6 @@ namespace DataAccesLayer.DBObjects
 
         private Post _post;
         public Post GetPost() => _post;
-
         public void SetPost(Post value) => _post = value;
     }
 }
