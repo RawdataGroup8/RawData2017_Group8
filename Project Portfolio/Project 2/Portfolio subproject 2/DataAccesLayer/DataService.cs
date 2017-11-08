@@ -70,6 +70,11 @@ namespace DataAccesLayer
             _db.SaveChanges();
         }
 
+        public void RemoveQuestionFromHistory(int postId)
+        {
+            _db.History.Remove(GetHistoryItem(postId));
+            _db.SaveChanges();
+        }
         // ------------------------ PROCEDURES ------------------------         
         // A procedure that searches
         public bool FulltextSearch() //We should "un"hardcode fulltextsearch and searchbytag and make it return a list :)

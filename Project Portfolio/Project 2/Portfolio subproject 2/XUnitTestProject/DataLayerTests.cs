@@ -1,4 +1,5 @@
 using DataAccesLayer;
+using DataAccesLayer.DBObjects;
 using Xunit;
 
 namespace XUnitTestProject
@@ -97,6 +98,18 @@ namespace XUnitTestProject
             Assert.Equal(5, text.Count);
 
         }
+
+//        [Fact]
+//        public void AddandReveQuestionsFromHistory()
+//        {
+//            var ds = new DataService();
+//            ds.AddQuestionToHistory(19, 13);
+//            Assert.NotEmpty(ds.GetHistory());
+//            Assert.True(ds.GetHistory().Count == 1);
+//            
+//            ds.RemoveQuestionFromHistory(19);
+//            Assert.Empty(ds.GetHistory());
+//        }
 
     }
 }

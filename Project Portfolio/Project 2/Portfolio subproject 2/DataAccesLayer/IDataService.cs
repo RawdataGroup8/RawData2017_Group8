@@ -19,5 +19,6 @@ namespace DataAccesLayer
         List<Marking> UserBookmarks(int id);
         int AddMarking(int uid, int pid, string mark);
         void AddQuestionToHistory(int PostID, int UserID);
+        void RemoveQuestionFromHistory(int PostID);
     }
 }
