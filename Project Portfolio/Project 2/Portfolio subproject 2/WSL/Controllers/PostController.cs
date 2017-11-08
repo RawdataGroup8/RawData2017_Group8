@@ -16,11 +16,12 @@ namespace WebServiceLayer.Controllers
         {
             var result = new
             {
+                //maybe add an if statement so it only runes this code if the post has a title
                 Data = new PostDTO
                 {
                     Url = Url.Link(nameof(GetPost), new { id }),
                     Title = _ds.GetPost(id).Title,
-                    Author = _ds.GetPost(id).User.UserName,
+                    Author = _ds.GetUser(_ds.GetPost(id).OwnerUserId).UserName, // becaus _ds.GetPost(id).User.UserName dosent work... for some reason
                     AuthorUrl = Url.Link(nameof(UserController.GetUser), new { id =_ds.GetPost(id).OwnerUserId }),
                     CreationDate = _ds.GetPost(id).CreationDate,
                     Score = _ds.GetPost(id).Score,
