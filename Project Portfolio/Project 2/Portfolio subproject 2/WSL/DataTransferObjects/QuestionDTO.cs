@@ -9,12 +9,7 @@ namespace WebServiceLayer.DataTransferObjects
     {
         public int? AcceptedAnswerId { get; set; }
         public DateTime? ClosedDate { get; set; }
-        /*public DateTime CreationDate { get; set; }
-        public int Score { get; set; }
-        public string Body { get; set; }
-        public string Title { get; set; }
-        public int OwnerUserId { get; set; }
-        public List<PostTagsDTO> PostTags { get; set; }*/
+       
 
         public QuestionDTO(Question q, string path)
         {

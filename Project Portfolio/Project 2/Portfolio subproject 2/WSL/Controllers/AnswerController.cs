@@ -19,13 +19,7 @@ namespace WebServiceLayer.Controllers
             return data.Body != null ? (IActionResult)Ok(data) : NotFound(data);
         }
 
-        // GET: api/questions/5
-        [HttpGet("{id}", Name = nameof(GetAnswer))]
-        public IActionResult GetAnswer(int id)
-        {
-            var data = new AnswerDTO(_ds.GetAnswer(id), Url.Link(nameof(GetAnswer), new { id }));
-            return data.Body != null ? (IActionResult)Ok(data) : NotFound(data);
-        }
+     
     }
 }
 
