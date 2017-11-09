@@ -18,7 +18,8 @@ namespace WebServiceLayer.Controllers
         {
             CheckPageSize(ref pageSize);
 
-            var total = _ds.GetUsers().Count;
+            //var total = _ds.GetUsers().Count;
+            var total = _ds.GetUserCount();
             var totalPages = GetTotalPages(pageSize, total);
 
             var data = _ds.GetUsers(page, pageSize)

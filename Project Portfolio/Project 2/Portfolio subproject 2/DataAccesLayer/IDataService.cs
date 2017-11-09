@@ -6,6 +6,7 @@ namespace DataAccesLayer
     public interface IDataService
     {
         List<User> GetUsers(int page = 0, int pageSize = 10);
+        int GetUserCount();
         Post GetPost(int id);
         Post GetPosts_Tags(int id);
         Question GetQuestion(int id);
