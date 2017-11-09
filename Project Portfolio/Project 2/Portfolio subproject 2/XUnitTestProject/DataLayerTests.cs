@@ -30,7 +30,7 @@ namespace XUnitTestProject
         {
             var ds = new DataService();
             var question = ds.GetQuestion(19);
-            Assert.True(question.GetPost().Title.Contains("the fastest way to get the value of"));
+            Assert.True(question.Post.Title.Contains("the fastest way to get the value of"));
             Assert.Equal(531, question.AcceptedAnswerId);
         }
 
