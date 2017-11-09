@@ -8,9 +8,6 @@ namespace WebServiceLayer.Controllers
     public class HistoryController : AbstractController
     {
         private readonly IDataService _ds;
-        public HistoryController(IDataService iDataService)
-        {
-            _ds = iDataService;
-        }
+        public HistoryController(IDataService iDataService) => _ds = iDataService;
     }
 }

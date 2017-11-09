@@ -8,9 +8,6 @@ namespace WebServiceLayer.Controllers
     public class CommentController : AbstractController
     {
         private readonly IDataService _ds;
-        public CommentController(IDataService iDataService)
-        {
-            _ds = iDataService;
-        }
+        public CommentController(IDataService iDataService) => _ds = iDataService;
     }
 }
