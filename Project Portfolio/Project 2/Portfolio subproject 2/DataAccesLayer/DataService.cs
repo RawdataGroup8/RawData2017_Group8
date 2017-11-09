@@ -14,6 +14,8 @@ namespace DataAccesLayer
         // ------------------------ USERS  ------------------------  
         //public List<User> GetUsers() => _db.User.ToList();
         public List<User> GetUsers(int page, int pageSize) => _db.User.OrderBy(x => x.Userid).Skip(page * pageSize).Take(pageSize).ToList();
+        //return count of numbers
+        public int GetUserCount() => _db.User.Count();
         //return a full user, including all posts.
         public User GetUser(int id) => _db.User.Include(c => c.Posts).FirstOrDefault(p => p.Userid == id);
 
