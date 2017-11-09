@@ -15,7 +15,9 @@ namespace XUnitTestProject
         private const string UsersApi = "http://localhost:49457/api/user";
         private const string PostsApi = "http://localhost:49457/api/post";
         private const string QuestionsApi = "http://localhost:49457/api/questions";
+        private const string AnswersApi = "http://localhost:49457/api/answers";
 
+        /* ---------------------- Questions ---------------------- */
         [Fact]
         public void ApiQuestion_GetWithNoArguments_OkAndNewestQuestions()
         {
@@ -45,28 +47,66 @@ namespace XUnitTestProject
             var (question, statusCode) = GetObject($"{QuestionsApi}/0");
             Assert.Equal(HttpStatusCode.NotFound, statusCode);
         }
+        /* ---------------------- Answers ---------------------- */
+        [Fact]
+        public void ApiAnswer_ValidId_OkAndAnswer()
+        {
+            var (question, statusCode) = GetObject($"{AnswersApi}/1713");
+
+            Assert.Equal(HttpStatusCode.OK, statusCode);
+            Assert.Equal(question["score"], 1749);
+            Assert.Equal(question["ownerUserId"], 92);
+        }
+
+        [Fact]
+        public void ApiAnswer_InvalidId_NotFound()
+        {
+            var (question, statusCode) = GetObject($"{AnswersApi}/0");
+            Assert.Equal(HttpStatusCode.NotFound, statusCode);
+        }
+
+        /* ---------------------- Posts ---------------------- */
+        [Fact]
+        public void ApiPost_ValidId_OkAndPost1()
+        {
+            var (post, statusCode) = GetObject($"{PostsApi}/19");
+
+            Assert.Equal(HttpStatusCode.OK, statusCode);
+            Assert.Equal(post["score"], 0);
+            Assert.Equal("How to update the ng-repeat model of controller from another controller?", post["title"]);
+        }
 
         [Fact]
         public void ApiPost_ValidId_OkAndPost()
         {
-            Assert.True(false);
+            var (post, statusCode) = GetObject($"{PostsApi}/13486");
+            Assert.Equal(HttpStatusCode.OK, statusCode);
+            Assert.Equal("This is an answer to the question: Purpose of {1} in this regular expression to match url protocols", post["name"]);
         }
 
+        [Fact]
+        public void ApiPost_InvalidId_NotFound()
+        {
+            var (post, statudCode) = GetObject($"{PostsApi}/0");
+            Assert.Equal(HttpStatusCode.NotFound, statudCode);
+        }
+
+        /* ---------------------- Users ---------------------- */
         [Fact]
         public void ApiUser_ValidId_OkAndUser()
         {
             var (user, statusCode) = GetObject($"{UsersApi}/1");
             Assert.Equal(HttpStatusCode.OK, statusCode);
             Assert.Equal("Jeff Atwood", user["name"]);
-            Assert.Equal(10, user["numberOfPosts"]);
+            Assert.Equal(2, user["numberOfPosts"]);
         }
 
         [Fact]
         public void ApiUser_UserPosts_OkAndListOfPosts()
         {
-            var (posts, statusCode) = GetArray($"{PostsApi}/1/posts");
+            var (posts, statusCode) = GetObject($"{UsersApi}/1/posts");
             Assert.Equal(HttpStatusCode.OK, statusCode);
-            Assert.Equal(2, posts["number_Of_Posts"]);
+            Assert.Equal(2, posts["result"]["number_Of_Posts"]);
         }
 
         [Fact]

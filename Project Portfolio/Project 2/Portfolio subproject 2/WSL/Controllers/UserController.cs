@@ -100,9 +100,9 @@ namespace WebServiceLayer.Controllers
                     Prev = Link(nameof(GetUserPosts), page, pageSize, -1, () => page > 0),
                     Next = Link(nameof(GetUserPosts), page, pageSize, +1, () => page < totalPages - 1),
                     Url = Link(nameof(GetUserPosts), page, pageSize),
-                    Data = data
+                    //Data = data
                 };
-                return Ok(result);
+                return Ok(new{result, data});
             }
             catch
             {

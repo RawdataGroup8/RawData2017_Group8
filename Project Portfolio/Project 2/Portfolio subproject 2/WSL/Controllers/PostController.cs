@@ -30,8 +30,8 @@ namespace WebServiceLayer.Controllers
                         CreationDate = _ds.GetPost(id).CreationDate,
                         Score = _ds.GetPost(id).Score,
                         Body = _ds.GetPost(id).Body,
-                        Comments = _ds.GetPost(id).Comments,
-                        PostTags = _ds.GetPost(id).PostTags
+                        //Comments = _ds.GetPost(id).Comments, //needs dto
+                        //PostTags = _ds.GetPost(id).PostTags  //needs dto
                     };
                 }
                 else
@@ -50,8 +50,8 @@ namespace WebServiceLayer.Controllers
                         CreationDate = _ds.GetPost(id).CreationDate,
                         Score = _ds.GetPost(id).Score,
                         Body = _ds.GetPost(id).Body,
-                        Comments = _ds.GetPost(id).Comments,
-                        PostTags = _ds.GetPost(id).PostTags
+                        //Comments = _ds.GetPost(id).Comments, //needs dto
+                        //PostTags = _ds.GetPost(id).PostTags  //needs dto
                     };
                 }
 
