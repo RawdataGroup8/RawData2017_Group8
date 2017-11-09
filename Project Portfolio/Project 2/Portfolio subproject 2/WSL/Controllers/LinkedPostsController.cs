@@ -8,9 +8,6 @@ namespace WebServiceLayer.Controllers
     public class LinkedPostsController : AbstractController
     {
         private readonly IDataService _ds;
-        public LinkedPostsController(IDataService iDataService)
-        {
-            _ds = iDataService;
-        }
+        public LinkedPostsController(IDataService iDataService) => _ds = iDataService;
     }
 }

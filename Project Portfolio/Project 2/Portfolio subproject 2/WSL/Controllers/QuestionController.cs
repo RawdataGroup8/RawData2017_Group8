@@ -10,10 +10,7 @@ namespace WebServiceLayer.Controllers
     public class QuestionController : AbstractController
     {
         private readonly IDataService _ds;
-        public QuestionController(IDataService iDataService)
-        {
-            _ds = iDataService;
-        }
+        public QuestionController(IDataService iDataService) => _ds = iDataService;
 
         // GET: api/questions/5
         [HttpGet("{id}", Name = nameof(GetQuestion))]
