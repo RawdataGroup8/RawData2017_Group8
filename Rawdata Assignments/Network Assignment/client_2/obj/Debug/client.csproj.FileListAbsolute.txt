@@ -1,0 +1,9 @@
+c:\users\senay\source\repos\client\bin\Debug\client.exe.config
+c:\users\senay\source\repos\client\bin\Debug\client.exe
+c:\users\senay\source\repos\client\bin\Debug\client.pdb
+c:\users\senay\source\repos\client\obj\Debug\client.csproj.CoreCompileInputs.cache
+c:\users\senay\source\repos\client\obj\Debug\client.exe
+c:\users\senay\source\repos\client\obj\Debug\client.pdb
+c:\users\senay\source\repos\client\bin\Debug\Newtonsoft.Json.dll
+c:\users\senay\source\repos\client\bin\Debug\Newtonsoft.Json.xml
+c:\users\senay\source\repos\client\obj\Debug\client.csprojResolveAssemblyReference.cache
