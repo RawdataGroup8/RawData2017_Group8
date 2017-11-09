@@ -1,0 +1,13 @@
+diff a/Project Portfolio/Project 2/Portfolio subproject 2/WSL/Controllers/PostController.cs b/Project Portfolio/Project 2/Portfolio subproject 2/WSL/Controllers/PostController.cs	(rejected hunks)
+@@ -9,7 +9,10 @@
+     public class PostController : AbstractController
+     {
+         private readonly IDataService _ds;
+-        public PostController(IDataService iDataService) => _ds = iDataService;
++        public PostController(IDataService iDataService)
++        {
++            _ds = iDataService;
++        }
+ 
+         [HttpGet("{id}", Name = nameof(GetPost))]
+         public IActionResult GetPost(int id)

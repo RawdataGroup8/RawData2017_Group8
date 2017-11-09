@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using DataAccesLayer;
+using DataAccesLayer.DBObjects;
 using Microsoft.AspNetCore.Mvc;
 using WebServiceLayer.DataTransferObjects;
 
@@ -15,8 +16,8 @@ namespace WebServiceLayer.Controllers
         [HttpGet(Name = nameof(GetUsers))] 
         public IActionResult GetUsers(int page = 0, int pageSize = 10)
         {
-            try
-            {
+            //try
+            //{
                 CheckPageSize(ref pageSize);
 
                 var total = _ds.GetUsers().Count;
@@ -42,11 +43,11 @@ namespace WebServiceLayer.Controllers
                 };
 
                 return Ok(new{result, data});
-            }
-            catch
+            //}
+            /*catch
             {
                 return NotFound();
-            }
+            }*/
         }
 
         //like: "api/User/1"
@@ -84,10 +85,11 @@ namespace WebServiceLayer.Controllers
                 var total = _ds.GetUser(id).Posts.Count;
                 var totalPages = GetTotalPages(pageSize, total);
 
+
                 var data = _ds.GetUser(id).Posts
                     .Select(x => new ListingDTO
                     {
-                        Url = Url.Link(nameof(PostController.GetPost), new {id = x.PostId}),
+                        Url = Url.Link(GetNameOfMethod(x), new {id = x.PostId}), 
                         Name = x.Title
                     });
 
@@ -109,6 +111,7 @@ namespace WebServiceLayer.Controllers
                 return NotFound();
             }
         }
-        
+
+        private string GetNameOfMethod(Post post) => post.TypeId == 1 ? nameof(QuestionController.GetQuestion) : nameof(AnswerController.GetAnswer);
     }
 }
