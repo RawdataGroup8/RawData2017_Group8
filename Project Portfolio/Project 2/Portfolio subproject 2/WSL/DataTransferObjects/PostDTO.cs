@@ -15,7 +15,9 @@ namespace WebServiceLayer.DataTransferObjects
         public DateTime CreationDate { get; set; }
         public int Score { get; set; }
         public string Body { get; set; }
-        public List<Comment> Comments { get; set; }
-        public List<PostTags> PostTags { get; set; }
+        public List<CommentDTO> Comments { get; set; }
+        public List<PostTagsDTO> PostTags { get; set; }
+        public int OwnerUserId { get; set; }
+
     }
 }

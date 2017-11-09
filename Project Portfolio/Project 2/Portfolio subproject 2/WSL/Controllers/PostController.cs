@@ -17,10 +17,10 @@ namespace WebServiceLayer.Controllers
         [HttpGet("{id}", Name = nameof(GetPost))]
         public IActionResult GetPost(int id)
         {
-            PostDTO data;
             try
             {
-                if (_ds.GetPost(id).PostId == 1)
+                PostDTO data;
+                if (_ds.GetPost(id).PostId == 1) //This should be typeid right?
                 {
                     data = new PostDTO
                     {
@@ -33,8 +33,8 @@ namespace WebServiceLayer.Controllers
                         CreationDate = _ds.GetPost(id).CreationDate,
                         Score = _ds.GetPost(id).Score,
                         Body = _ds.GetPost(id).Body,
-                        Comments = _ds.GetPost(id).Comments,
-                        PostTags = _ds.GetPost(id).PostTags
+                        //Comments = _ds.GetPost(id).Comments, //needs dto
+                        //PostTags = _ds.GetPost(id).PostTags  //needs dto
                     };
                 }
                 else
@@ -53,8 +53,8 @@ namespace WebServiceLayer.Controllers
                         CreationDate = _ds.GetPost(id).CreationDate,
                         Score = _ds.GetPost(id).Score,
                         Body = _ds.GetPost(id).Body,
-                        Comments = _ds.GetPost(id).Comments,
-                        PostTags = _ds.GetPost(id).PostTags
+                        //Comments = _ds.GetPost(id).Comments, //needs dto
+                        //PostTags = _ds.GetPost(id).PostTags  //needs dto
                     };
                 }
 
