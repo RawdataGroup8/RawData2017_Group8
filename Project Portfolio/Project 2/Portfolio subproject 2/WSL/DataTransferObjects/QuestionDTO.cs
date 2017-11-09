@@ -27,9 +27,9 @@ namespace WebServiceLayer.DataTransferObjects
 
             AcceptedAnswerId = q.AcceptedAnswerId;
             ClosedDate = q.ClosedDate;
-            if (q.GetPost() == null) return;
+            if (q.Post== null) return;
 
-            var p = q.GetPost();
+            var p = q.Post;
             CreationDate = p.CreationDate;
             Score = p.Score;
             Body = p.Body;
