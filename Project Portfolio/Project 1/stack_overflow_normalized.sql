@@ -146,8 +146,12 @@ begin
 	close tags_cur;
 end;//
 delimiter ;
-
 call split_insert_into_tags();
+
+-- drop functions/procedures used for creation
+drop function string_at_delimited_pos;
+drop function num_values_in_delimited_str;
+drop procedure split_insert_into_tags;
 
 -- linked_posts(LINK_POST_ID, POST_ID)
 CREATE TABLE linked_posts (
