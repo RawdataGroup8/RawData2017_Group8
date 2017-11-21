@@ -271,3 +271,64 @@ delimiter ;
 
 -- Search by %word% in title
 -- Search by tag in body
+
+-- %%%%%%%%%%%%%%%%%%%%%%%% IR additions
+
+drop table if exists mwi;
+create table mwi as
+select distinct id, idx, word from words.words
+where word regexp '^[A-Za-z][A-Za-z]{1,}$'
+and tablename = 'posts' and what='title';
+CREATE INDEX indexTitle
+ON mwi (id, word);
+
+drop table if exists mwib;
+create table mwib as
+select distinct id, idx, word, sen from words.words
+where word regexp '^[A-Za-z][A-Za-z]{1,}$'
+and tablename = 'posts' and what='body';
+CREATE INDEX indexBody
+ON mwib (word);
+
+/* The following is the sql part of the answer to question 9 a) and b). */
+drop procedure if exists bestmatch;
+delimiter //
+create procedure bestmatch (in _wlist varchar(5000))
+begin 
+	DECLARE _next TEXT DEFAULT NULL;
+	DECLARE _nextlen INT DEFAULT NULL;
+    DECLARE result TEXT DEFAULT NULL;
+    DECLARE firstIter BOOL DEFAULT TRUE;
+    
+    set result = 'select words.id, sum(score) rank, word from words.words, (';
+    iterator:
+	LOOP
+		IF LENGTH(TRIM(_wlist)) = 0 OR _wlist IS NULL THEN
+			LEAVE iterator;
+		END IF;
+        
+        /* Dont add ' union all ' on the first iteration */
+		IF firstIter = false THEN
+			set result = CONCAT(result, ' union all ');
+		END IF;        
+		set firstIter = false;
+        
+        /*get everything before first occurence of ','*/
+        SET _next = SUBSTRING_INDEX(_wlist,',',1); 
+        /*store length of _next'*/
+        SET _nextlen = LENGTH(_next); 
+        /*add a line to the sql query*/
+        SET result = CONCAT(result, 'select distinct id, 1 score from mwib where word = ', "'",trim(_next),"'");
+        /*remove the processed word from the input string*/
+        SET _wlist = INSERT(_wlist,1,_nextlen + 1,'');
+    END LOOP;
+    
+    /*close the query string*/
+	set @res = concat(result, ') t where t.id=words.id group by t.id order by rank desc limit 15'); 
+    
+    /*prepare and execute the string with the sql query*/
+    PREPARE stmt FROM @res;
+    execute stmt;
+end//
+delimiter ;
+call bestmatch('mysql, procedures');
