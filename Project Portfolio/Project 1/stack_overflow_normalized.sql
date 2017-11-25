@@ -332,3 +332,47 @@ begin
 end//
 delimiter ;
 call bestmatch('mysql, procedures');
+
+ -- Solution for B-5 it can get any size of Query and retuns frequency weigtedwords------ 
+drop procedure if exists Frequencyweighted;
+delimiter //
+create procedure Frequencyweighted (in _wlist varchar(5000))
+begin 
+	DECLARE _next TEXT DEFAULT NULL;
+	DECLARE _nextlen INT DEFAULT NULL;
+    DECLARE result TEXT DEFAULT NULL;
+    DECLARE firstIter BOOL DEFAULT TRUE;
+    
+    set result = 'select word, sum(rank) r from wi, (select id, sum(score) rank from(';
+    iterator:
+	LOOP
+		IF LENGTH(TRIM(_wlist)) = 0 OR _wlist IS NULL THEN
+			LEAVE iterator;
+		END IF;
+        
+        /* Dont add ' union all ' on the first iteration */
+		IF firstIter = false THEN
+			set result = CONCAT(result, ' union all ');
+		END IF;        
+		set firstIter = false;
+        
+        /*get everything before first occurence of ','*/
+        SET _next = SUBSTRING_INDEX(_wlist,',',1); 
+        /*store length of _next'*/
+        SET _nextlen = LENGTH(_next); 
+        /*add a line to the sql query*/
+        SET result = CONCAT(result, 'select distinct id, 1 score from wi where word = ', "'",trim(_next),"'");
+        /*remove the processed word from the input string*/
+        SET _wlist = INSERT(_wlist,1,_nextlen + 1,'');
+    END LOOP;
+    
+    /*close the query string*/
+	set @res = concat(result, ') t1 group by id) t2 where wi.id=t2.id and word not in (select * from stopwords) group by word order by r desc limit 10'); 
+    
+    /*prepare and execute the string with the sql query*/
+    PREPARE stmt FROM @res;
+    execute stmt;
+end//
+delimiter ;
+
+call Frequencyweighted('mysql, procedures, java, javascript');
