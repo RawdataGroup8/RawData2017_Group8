@@ -79,7 +79,11 @@ namespace DataAccesLayer
         }
         // ------------------------ PROCEDURES ------------------------         
         // A procedure that searches
-        public List<Post> FulltextSearch(string text, int postType) => _db.Post.FromSql("call fulltext_search({0},{1})", text, postType).ToList();
+        //public List<Post> FulltextSearch(string text, int postType) => _db.Post.FromSql("call fulltext_search({0},{1})", text, postType).ToList();
+
+
+        public List<Post> BestMatch(string text) => _db.Post.FromSql("call bestmatch({0})").ToList(); // the words in the text needs to be coma seperated and the string needs to be max 5000 in length for this  to work
+
 
         public List<Question> SearchQuestionsByTag(string tag, int limit) => _db.Question.FromSql("call search_questions_by_tag({0},{1})", tag, limit).ToList();
     }
