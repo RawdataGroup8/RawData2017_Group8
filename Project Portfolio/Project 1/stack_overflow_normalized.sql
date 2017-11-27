@@ -1,7 +1,7 @@
-DROP DATABASE if exists stack_overflow_normalized;
-CREATE DATABASE stack_overflow_normalized;
-USE stack_overflow_normalized;
-
+DROP DATABASE if exists raw8;
+CREATE DATABASE raw8;
+USE raw8;
+ALTER DATABASE raw8 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 -- ---------------- DATABASE CREATION AND DATA INSERTION -------------------
 
 -- user (user_id(PK), user_name, user_creation_date, user_location, user_age) 
@@ -12,6 +12,12 @@ CREATE TABLE user (
     user_location VARCHAR(200),
     user_age INT UNSIGNED
 );
+/*alter table `user`
+	modify column `user_name` VARCHAR(30)
+	CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL ;
+alter table `user`
+	modify column `user_location` VARCHAR(200)
+	CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL ;*/
 
 insert into user (user_id, user_name, user_creation_date, user_location, user_age)
 select distinct owneruserid, owneruserdisplayname, ownerusercreationdate, owneruserlocation, owneruserage
@@ -38,7 +44,10 @@ CREATE TABLE post (
     FULLTEXT (body), -- used by: Searching_Questions
 	FULLTEXT (title)-- used by: Searching_Questions
 );
-
+#alter table `user`
+#	modify column `body` VARCHAR(30)
+#	CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL ;
+    
 insert into post (post_id, creation_date, score, body, title, owner_user_id, type_id)
 select distinct id, creationdate, score, body, title, owneruserid, posttypeid
 from stackoverflow_sample_universal.posts;
@@ -269,110 +278,3 @@ end;//
 delimiter ;
 
 
--- Search by %word% in title
--- Search by tag in body
-
--- %%%%%%%%%%%%%%%%%%%%%%%% IR additions
-
-drop table if exists mwi;
-create table mwi as
-select distinct id, idx, word from words.words
-where word regexp '^[A-Za-z][A-Za-z]{1,}$'
-and tablename = 'posts' and what='title';
-CREATE INDEX indexTitle
-ON mwi (id, word);
-
-drop table if exists mwib;
-create table mwib as
-select distinct id, idx, word, sen from words.words
-where word regexp '^[A-Za-z][A-Za-z]{1,}$'
-and tablename = 'posts' and what='body';
-CREATE INDEX indexBody
-ON mwib (word);
-
-/* The following is the sql part of the answer to question 9 a) and b). */
-drop procedure if exists bestmatch;
-delimiter //
-create procedure bestmatch (in _wlist varchar(5000))
-begin 
-	DECLARE _next TEXT DEFAULT NULL;
-	DECLARE _nextlen INT DEFAULT NULL;
-    DECLARE result TEXT DEFAULT NULL;
-    DECLARE firstIter BOOL DEFAULT TRUE;
-    
-    set result = 'select words.id, sum(score) rank, word from words.words, (';
-    iterator:
-	LOOP
-		IF LENGTH(TRIM(_wlist)) = 0 OR _wlist IS NULL THEN
-			LEAVE iterator;
-		END IF;
-        
-        /* Dont add ' union all ' on the first iteration */
-		IF firstIter = false THEN
-			set result = CONCAT(result, ' union all ');
-		END IF;        
-		set firstIter = false;
-        
-        /*get everything before first occurence of ','*/
-        SET _next = SUBSTRING_INDEX(_wlist,',',1); 
-        /*store length of _next'*/
-        SET _nextlen = LENGTH(_next); 
-        /*add a line to the sql query*/
-        SET result = CONCAT(result, 'select distinct id, 1 score from mwib where word = ', "'",trim(_next),"'");
-        /*remove the processed word from the input string*/
-        SET _wlist = INSERT(_wlist,1,_nextlen + 1,'');
-    END LOOP;
-    
-    /*close the query string*/
-	set @res = concat(result, ') t where t.id=words.id group by t.id order by rank desc limit 15'); 
-    
-    /*prepare and execute the string with the sql query*/
-    PREPARE stmt FROM @res;
-    execute stmt;
-end//
-delimiter ;
-call bestmatch('mysql, procedures');
-
- -- Solution for B-5 it can get any size of Query and retuns frequency weigtedwords------ 
-drop procedure if exists Frequencyweighted;
-delimiter //
-create procedure Frequencyweighted (in _wlist varchar(5000))
-begin 
-	DECLARE _next TEXT DEFAULT NULL;
-	DECLARE _nextlen INT DEFAULT NULL;
-    DECLARE result TEXT DEFAULT NULL;
-    DECLARE firstIter BOOL DEFAULT TRUE;
-    
-    set result = 'select word, sum(rank) r from wi, (select id, sum(score) rank from(';
-    iterator:
-	LOOP
-		IF LENGTH(TRIM(_wlist)) = 0 OR _wlist IS NULL THEN
-			LEAVE iterator;
-		END IF;
-        
-        /* Dont add ' union all ' on the first iteration */
-		IF firstIter = false THEN
-			set result = CONCAT(result, ' union all ');
-		END IF;        
-		set firstIter = false;
-        
-        /*get everything before first occurence of ','*/
-        SET _next = SUBSTRING_INDEX(_wlist,',',1); 
-        /*store length of _next'*/
-        SET _nextlen = LENGTH(_next); 
-        /*add a line to the sql query*/
-        SET result = CONCAT(result, 'select distinct id, 1 score from wi where word = ', "'",trim(_next),"'");
-        /*remove the processed word from the input string*/
-        SET _wlist = INSERT(_wlist,1,_nextlen + 1,'');
-    END LOOP;
-    
-    /*close the query string*/
-	set @res = concat(result, ') t1 group by id) t2 where wi.id=t2.id and word not in (select * from stopwords) group by word order by r desc limit 10'); 
-    
-    /*prepare and execute the string with the sql query*/
-    PREPARE stmt FROM @res;
-    execute stmt;
-end//
-delimiter ;
-
-call Frequencyweighted('mysql, procedures, java, javascript');
