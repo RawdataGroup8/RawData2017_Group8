@@ -105,7 +105,7 @@ create index ntIndex on nt(word);
 
 drop table if exists wi;
 create table wi as 
-select id, word, /*ndt_, nd_, nt_,*/ log2(1+(ndt_/nd_)) as tf, (1.0/nt_) as idf, log2(1+(ndt_/nd_))/nt_ as tf_idf 
+select id, word, nt_,/*ndt_, nd_, nt_,*/ log2(1+(ndt_/nd_)) as tf, (1.0/nt_) as idf, log2(1+(ndt_/nd_))/nt_ as tf_idf 
 from words.words natural join ndt natural join nd natural join nt;
 create index wiIndex on wi(id, word);
 
@@ -168,7 +168,8 @@ begin
     DECLARE firstIter BOOL DEFAULT TRUE;
     
     -- select word, sum(rank) r from wi, (select id, sum(score) rank 
-    -- from(select distinct id, 1 score from wi where word = '
+    -- from(select distinct id, 1 score from wi where word = '<word>') t1
+    -- group by id) t2 where wi.id=t2.id and word not in (select * from stopwords) group by word order by r desc limit 10'
     set result = 'select word, sum(rank) r from wi, (select id, sum(score) rank from(';
     iterator:
 	LOOP
@@ -240,7 +241,7 @@ begin
 	set @res = concat(result, ') t where t.id=wi.id group by t.id order by sum(score)'); 
 
     
-	/*join with wi in order to get ranked words*/
+	/*join with wi in order to get ranked words instead of posts*/
 	set @res = concat('select word, sum(tf*idf) as rank from wi, (', @res, ') as t where wi.id = t.id group by word order by rank desc'); 
     
     /*prepare and execute the string with the sql query*/
@@ -249,3 +250,13 @@ begin
 end//
 delimiter ;
 call ranked_words('injection');
+
+/* B.8. */
+drop table if exists cooccuring;
+create table cooccuring as 
+select w1.word as wo1,w2.word as wos2,count(*) grade from wi w1,wi w2
+where w1.id=w2.id and w1.word<w2.word
+and w1.tf_idf>0.0002 and w2.tf_idf>0.0002 and w1.nt_>20 and w2.nt_>20
+group by w1.word,w2.word order by count(*) desc;
+
+
