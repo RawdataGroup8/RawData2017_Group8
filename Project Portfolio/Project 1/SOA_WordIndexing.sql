@@ -254,9 +254,38 @@ call ranked_words('injection');
 /* B.8. */
 drop table if exists cooccuring;
 create table cooccuring as 
-select w1.word as wo1,w2.word as wos2,count(*) grade from wi w1,wi w2
+select w1.word as word1, w2.word as word2,count(*) grade from wi w1,wi w2
 where w1.id=w2.id and w1.word<w2.word
 and w1.tf_idf>0.0002 and w2.tf_idf>0.0002 and w1.nt_>20 and w2.nt_>20
 group by w1.word,w2.word order by count(*) desc;
 
+/*B.9*/
+drop procedure if exists term_network;
+delimiter //
+create procedure term_network(in w varchar(100))
+begin
+  set@rank=-1;
+  create table nodes as select @rank:=@rank+1 num, word2 word from cooccuring where word1=w and grade>1;
+  create index ix_nodex_word on nodes(word);
+  select 'var graph = '
+  union
+  select '{"nodes":['
+  union
+  select ''
+  union
+  select concat('{"name":"',word,'"},') line from nodes
+  union
+  select '],'
+  union
+  select '"links":['
+  union
+  select concat('{"source":	',n1.num,'	,"target":	', n2.num,'	,"value":',grade,'},') line from cooccuring,nodes n1,nodes n2 
+  where n1.word=word1 and n2.word=word2
+  and word1 in (select word from nodes) and  word2 in (select word from nodes)
+  union
+  select ']}';
+  drop table if exists nodes;
+end//
+delimiter ;
+call term_network('xml');
 
