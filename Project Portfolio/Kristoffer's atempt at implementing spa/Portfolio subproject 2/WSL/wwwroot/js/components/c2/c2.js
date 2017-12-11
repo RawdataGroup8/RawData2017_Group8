@@ -1,6 +1,6 @@
 ﻿define(['knockout', 'jquery', 'jqcloud'], function(ko, $) {
     return function (params) {
-        var title = ko.observable("Component 2");
+        var title = ko.observable("Primitive wordcloud");
         var words = [
             { text: "Lorem", weight: 13 },
             { text: "Ipsum", weight: 10.5 },

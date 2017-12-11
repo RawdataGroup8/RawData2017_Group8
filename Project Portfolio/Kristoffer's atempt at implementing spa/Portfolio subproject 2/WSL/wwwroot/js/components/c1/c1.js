@@ -1,6 +1,6 @@
 ﻿define(['knockout'], function(ko) {
     return function (params) {
-        var title = ko.observable("Component 1");
+        var title = ko.observable("Wordcloud");
         
         var words = ko.observableArray([
             {text: "Lorem", weight: 13},
