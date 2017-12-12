@@ -34,14 +34,14 @@ require(['knockout', 'postman'], function(ko, postman) {
     var vm = (function() {
         var currentView = ko.observable('post');
         var currentParams = ko.observable({});
-        var switchComponent = function() {
+        /*var switchComponent = function() {
             if (currentView() === "mylist") {
                 currentView("my-element");
             } else {
                 currentView("post");
             }
 
-        }
+        }*/
 
         postman.subscribe(postman.events.changeView,
             viewName => {
@@ -51,8 +51,8 @@ require(['knockout', 'postman'], function(ko, postman) {
         
         return {
             currentView,
-            currentParams,
-            switchComponent
+            currentParams
+            //switchComponent
         }
     })();
 
