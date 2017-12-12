@@ -1,4 +1,4 @@
-﻿define([], function() {
+﻿define([], function () {
 
     var subscribers = [];
 
@@ -6,24 +6,23 @@
         var subscriber = { event, callback };
         subscribers.push(subscriber);
 
-        return function() {
+        return function () {
             var index = subscribers.indexOf(subscriber);
             subscribers.slice(index, 1);
         };
 
     };
 
-    var publish = (event, payload) => 
-    {
+    var publish = (event, payload) => {
         subscribers.forEach(s => {
             if (s.event === event) s.callback(payload);
         });
     }
 
     var events =
-    {
-        changeView: "changeView"
-    };
+        {
+            changeView: "changeView"
+        };
 
     return {
         subscribe,
