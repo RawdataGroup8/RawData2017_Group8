@@ -22,6 +22,8 @@ namespace DataAccesLayer
         void AddQuestionToHistory(int userId, int postId);
         void RemoveQuestionFromHistory(int userId, int linkedPostId);
         List<Post> BestMatch(string text);
-
+        int NumberOfQuestions();
+        List<Post> GetPosts(int page, int pageSize);
+        List<Answers> GetAnswers(int id);
     }
 }

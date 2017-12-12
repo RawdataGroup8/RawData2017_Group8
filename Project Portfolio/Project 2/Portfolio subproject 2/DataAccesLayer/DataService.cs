@@ -19,8 +19,33 @@ namespace DataAccesLayer
         //return a full user, including all posts.
         public User GetUser(int id) => _db.User.Include(c => c.Posts).FirstOrDefault(p => p.Userid == id);
 
-        // ------------------------ POSTS (QUESTIONS / ANSWERS) ------------------------         
-        //return a full post, including all comments and tags. helper method
+        // ------------------------ POSTS (QUESTIONS / ANSWERS) ------------------------   
+
+        public List<Post> GetPosts(int page, int pageSize)
+        {
+            return _db.Post
+                .Where(x => x.TypeId == 1)
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .ToList();
+        }
+
+        public List<Answers> GetAnswers(int id)
+        {
+            var answers = _db.Answer.Where(x => x.Parentid == id).ToList();
+            foreach (var answer in answers)
+            {
+                answer.SetPost(_db.Post.FirstOrDefault(p => p.PostId == answer.PostId));
+            }
+            return answers;
+        }
+
+        public int NumberOfQuestions()
+        {
+            return _db.Post.Count(x => x.TypeId == 1);
+        }
+
+        //return a full post, including all comments and tags. 
         public Post GetPost(int id) => _db.Post.Include(p1 => p1.Comments).Include(p1 => p1.PostTags).FirstOrDefault(p => p.PostId == id);
         //return a Post, including tags related to the post.
         public Post GetPosts_Tags(int id) => _db.Post.Include(c => c.PostTags).FirstOrDefault(p => p.PostId == id);
