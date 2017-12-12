@@ -5,7 +5,7 @@
 *.patch
 /*.html
 .DS_Store
-.bower.json
+#.bower.json
 .sizecache.json
 
 npm-debug.log*
