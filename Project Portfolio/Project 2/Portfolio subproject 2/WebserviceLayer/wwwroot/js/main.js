@@ -5,7 +5,7 @@ require.config({
     baseUrl: "js",
 
     paths: {
-        jquery: '../lib/jQuery/dist/jquery.min',
+        jquery: '../lib/jquery.min',
         knockout: '../lib/knockout/dist/knockout',
         text: '../lib/text/text',
         postman: 'services/postman'
