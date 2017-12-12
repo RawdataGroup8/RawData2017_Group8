@@ -18,7 +18,7 @@ namespace WebLayer.Controllers
         {
             var posts = _ds.GetPosts(page, pageSize)
                 .Select(x => new {
-                    Link = x.PostId,//Url.Link(nameof(GetPost), new { x.PostId }),
+                    Link = Url.Link(nameof(GetPost), new { x.PostId }),
                     x.Title
                 });
             var total = _ds.NumberOfQuestions();
