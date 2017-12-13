@@ -18,8 +18,33 @@ namespace WebLayer.Controllers
         {
             var posts = _ds.GetPosts(page, pageSize)
                 .Select(x => new {
-                    Link = x.PostId,//Url.Link(nameof(GetPost), new { x.PostId }),
+                    Link = Url.Link(nameof(GetPost), new { x.PostId }),
                     x.Title
+                });
+            var total = _ds.NumberOfQuestions();
+            var pages = Math.Ceiling(total / (double)pageSize);
+            var prev = page > 0 ? Url.Link(nameof(GetPosts), new { page = page - 1, pageSize }) : null;
+            var next = page < pages - 1 ? Url.Link(nameof(GetPosts), new { page = page + 1, pageSize }) : null;
+
+            var result = new
+            {
+                total,
+                pages,
+                prev,
+                next,
+                items = posts
+            };
+
+            return Ok(result);
+        }
+
+        [HttpGet("q", Name = nameof(GetNewestQuestions))]
+        public IActionResult GetNewestQuestions(int page = 0, int pageSize = 10)
+        {
+            var posts = _ds.GetNewestQuestions(page, pageSize)
+                .Select(x => new {
+                    Link = Url.Link(nameof(GetPost), new { x.Post.PostId }),
+                    x.Post.Title
                 });
             var total = _ds.NumberOfQuestions();
             var pages = Math.Ceiling(total / (double)pageSize);
@@ -41,8 +66,9 @@ namespace WebLayer.Controllers
         [HttpGet("{id}", Name = nameof(GetPost))]
         public IActionResult GetPost(int id)
         {
-            var post = _ds.GetPost(id);
 
+            var post = _ds.GetPost(id);
+            if (post == null) return NotFound();
             if (post.TypeId == 1)
             {
                 

@@ -24,7 +24,6 @@ namespace DataAccesLayer
         public List<Post> GetPosts(int page, int pageSize)
         {
             return _db.Post
-                .Where(x => x.TypeId == 1)
                 .Skip(page * pageSize)
                 .Take(pageSize)
                 .ToList();
@@ -58,9 +57,9 @@ namespace DataAccesLayer
             return question;
         }
 
-        public List<Question> GetNewestQuestions(int limit, int page, int pageSize)
+        public List<Question> GetNewestQuestions(int page, int pageSize)
         {
-            var posts = _db.Post.Where(p => p.TypeId == 1).OrderByDescending(q => q.CreationDate).Take(limit).Skip(page * pageSize).Take(pageSize).ToList();
+            var posts = _db.Post.Where(p => p.TypeId == 1).OrderByDescending(q => q.CreationDate).Skip(page * pageSize).Take(pageSize).ToList();
             return posts.Select(post => GetQuestion(post.PostId)).ToList();
         }
 

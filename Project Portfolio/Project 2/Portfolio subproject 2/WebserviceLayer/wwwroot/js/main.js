@@ -24,15 +24,15 @@ require(['knockout'], function (ko) {
         template: { require: "text!components/element/element_view.html" }
     });
 
-    ko.components.register("post", {
-        viewModel: { require: "components/post/post" },
-        template: { require: "text!components/post/post_view.html" }
+    ko.components.register("new_quest", {
+        viewModel: { require: "components/NewestQuestions/NewestQuestions" },
+        template: { require: "text!components/NewestQuestions/NewestQuestions_view.html" }
     });
 });
 
 require(['knockout', 'postman'], function(ko, postman) {
     var vm = (function() {
-        var currentView = ko.observable('post');
+        var currentView = ko.observable('new_quest');
         var currentParams = ko.observable({});
         var switchComponent = function() {
             if (currentView() === "mylist") {
