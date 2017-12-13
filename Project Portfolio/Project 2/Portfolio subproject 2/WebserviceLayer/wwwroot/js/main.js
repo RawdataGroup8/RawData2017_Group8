@@ -8,7 +8,13 @@ require.config({
         jquery: '../lib/jquery.min',
         knockout: '../lib/knockout/dist/knockout',
         text: '../lib/text/text',
-        postman: 'services/postman'
+        postman: 'services/postman',
+        jqcloud: '../lib/jqcloud2/dist/jqcloud.min'
+    },
+    shim: {
+        jqcloud: {
+            deps: ['jquery']
+        }
     }
 });
 
@@ -28,6 +34,11 @@ require(['knockout'], function (ko) {
         viewModel: { require: "components/NewestQuestions/NewestQuestions" },
         template: { require: "text!components/NewestQuestions/NewestQuestions_view.html" }
     });
+
+    ko.components.register("wordcloud", {
+        viewModel: { require: "components/wordcloud/wordcloud" },
+        template: { require: "text!components/wordcloud/wordcloud.html" }
+    });
 });
 
 require(['knockout', 'postman'], function(ko, postman) {
@@ -37,8 +48,11 @@ require(['knockout', 'postman'], function(ko, postman) {
         var switchComponent = function() {
             if (currentView() === "mylist") {
                 currentView("my-element");
+            } else if (currentView() === "wordcloud") {
+                currentView("mylist");
             } else {
-                currentView("post");
+                //currentView("post"); //comented out for testing of the wordcloud
+                currentView("wordcloud");
             }
 
         }
@@ -57,4 +71,26 @@ require(['knockout', 'postman'], function(ko, postman) {
     })();
 
     ko.applyBindings(vm);
+});
+
+require(['knockout', 'jquery', 'jqcloud'], function (ko, $) {
+    ko.bindingHandlers.cloud = {
+        init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+            // This will be called when the binding is first applied to an element
+            // Set up any initial state, event handlers, etc. here
+            var words = allBindings.get('cloud').words;
+            if (words && ko.isObservable(words)) {
+                words.subscribe(function () {
+                    $(element).jQCloud('update', ko.unwrap(words));
+                });
+            }
+        },
+        update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+            // This will be called once when the binding is first applied to an element,
+            // and again whenever any observables/computeds that are accessed change
+            // Update the DOM element based on the supplied values here.
+            var words = ko.unwrap(allBindings.get('cloud').words) || [];
+            $(element).jQCloud(words);
+        }
+    };
 });
