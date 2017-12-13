@@ -44,7 +44,8 @@ namespace WebLayer.Controllers
             var posts = _ds.GetNewestQuestions(page, pageSize)
                 .Select(x => new {
                     Link = Url.Link(nameof(GetPost), new { x.Post.PostId }),
-                    x.Post.Title
+                    x.Post.Title,
+                    x.Post.Score
                 });
 
             var total = _ds.NumberOfQuestions();

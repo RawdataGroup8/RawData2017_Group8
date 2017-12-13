@@ -1,12 +1,13 @@
 ﻿
 <h1 data-bind="text: heading"></h1>
+<ul class="list-group" data-bind="foreach: posts">
+    <li class="list-group-item">       
+            <span class="label label-success" data-bind="text: score"></span>
+            <a href="#" data-bind="text: title"></a>
+    </li>
+</ul>
 
-<div data-bind="foreach: posts">
-    <div>
-          <a href="#" data-bind="text: title"></a>
-    </div>
-</div>
 <div class="btn-group">
-    <button data-bind="click: prev, enable: canPrev">Prev</button>
-    <button data-bind="click: next, enable: canNext">Next</button>
+    <button class="btn btn-primary" data-bind="click: prev, enable: canPrev">Prev</button>
+    <button class="btn btn-primary" data-bind="click: next, enable: canNext">Next</button>
 </div>
