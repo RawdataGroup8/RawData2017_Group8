@@ -43,9 +43,10 @@ namespace WebLayer.Controllers
         {
             var posts = _ds.GetNewestQuestions(page, pageSize)
                 .Select(x => new {
-                    Link = Url.Link(nameof(GetPost), new { x.PostId1 }),
+                    Link = Url.Link(nameof(GetPost), new { x.Post.PostId }),
                     x.Post.Title
                 });
+
             var total = _ds.NumberOfQuestions();
             var pages = Math.Ceiling(total / (double)pageSize);
             var prev = page > 0 ? Url.Link(nameof(GetNewestQuestions), new { page = page - 1, pageSize }) : null;
@@ -63,11 +64,11 @@ namespace WebLayer.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id}", Name = nameof(GetPost))]
-        public IActionResult GetPost(int id)
+        [HttpGet("{PostId}", Name = nameof(GetPost))]
+        public IActionResult GetPost(int postId)
         {
 
-            var post = _ds.GetPost(id);
+            var post = _ds.GetPost(postId);
             if (post == null) return NotFound();
             if (post.TypeId == 1)
             {
@@ -87,7 +88,7 @@ namespace WebLayer.Controllers
 
             else
             {
-                var answer = _ds.GetAnswer(id);
+                var answer = _ds.GetAnswer(postId);
                 var result = new
                 {
                     Link = Url.Link(nameof(GetPost), new { post.PostId }),
