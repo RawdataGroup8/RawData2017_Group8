@@ -2,53 +2,16 @@
 <html>
 <head>
     <title>index</title>
-    <link href="css/page.css" rel="stylesheet" />
 </head>
 <body>
 
-    <h1 data-bind="text: title"></h1>
+    <div data-bind="component: {name: currentView, params: currentParams}"></div>
+    <div data-bind="text: post"></div>
+    <button data-bind="click: switchComponent">Switch motherfucker</button>
 
-    <div data-bind="template: {name: currentView}"></div>
+    <!--<mylist params="value: 1234"></mylist>
 
-    <script type="text/html" id="postlist">
-        <div data-bind="foreach: posts">
-            <div>
-                <a href="#" data-bind="click: $parent.showPost"><span data-bind="text: title"></span></a>
-            </div>
-        </div>
-        <div class="btn-group">
-            <button data-bind="click: prev, enable: canPrev">Prev</button>
-            <button data-bind="click: next, enable: canNext">Next</button>
-        </div>
-    </script>
-
-    <script type="text/html" id="postview">
-        <div>
-            <button data-bind="click: home">Back</button>
-        </div>
-        <div data-bind="with: currentPost">
-            <h2 data-bind="text: title"></h2>
-            <h3>
-                Creation Date: <span data-bind="text: creationDate"></span>
-            </h3>
-            <h3>
-                Score: <span data-bind="text: score"></span>
-            </h3>
-            <div data-bind="html: body"></div>
-
-            <hr />
-
-            <div data-bind="foreach: answers">
-                <div data-bind="html: body"></div>
-                <hr />
-                <div>
-                    <button data-bind="click: $parents[1].home">Back</button>
-                </div>
-            </div>
-
-        </div>
-
-    </script>
+    <my-element></my-element>-->
 
     <script data-main="js/main" src="lib/requirejs/require.js"></script>
 </body>

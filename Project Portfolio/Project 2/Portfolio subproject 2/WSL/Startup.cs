@@ -30,7 +30,7 @@ namespace WebServiceLayer
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseFileServer();
             app.UseMvc();
         }
     }
