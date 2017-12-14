@@ -59,8 +59,12 @@ namespace DataAccesLayer
 
         public List<Question> GetNewestQuestions(int page, int pageSize)
         {
-            var posts = _db.Post.Where(p => p.TypeId == 1).OrderByDescending(q => q.CreationDate).Skip(page * pageSize).Take(pageSize).ToList();
-            return posts.Select(post => GetQuestion(post.PostId)).ToList();
+            using (var db = new StackoverflowContext())
+            {
+                var posts = db.Post.Where(p => p.TypeId == 1).OrderByDescending(q => q.CreationDate)
+                    .Skip(page * pageSize).Take(pageSize).ToList();
+                return posts.Select(post => GetQuestion(post.PostId)).ToList();
+            }
         }
 
         //return a full answer

@@ -35,6 +35,11 @@ require(['knockout'], function (ko) {
         template: { require: "text!components/NewestQuestions/NewestQuestions_view.html" }
     });
 
+    ko.components.register("show_quest", {
+        viewModel: { require: "components/Question/Question" },
+        template: { require: "text!components/Question/Question_view.html" }
+    });
+
     ko.components.register("wordcloud", {
         viewModel: { require: "components/wordcloud/wordcloud" },
         template: { require: "text!components/wordcloud/wordcloud.html" }
