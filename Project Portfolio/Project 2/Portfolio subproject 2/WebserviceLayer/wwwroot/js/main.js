@@ -49,8 +49,8 @@ require(['knockout'], function (ko) {
 require(['knockout', 'postman'], function(ko, postman) {
     var vm = (function() {
         var currentView = ko.observable('new_quest');
-        var currentParams = ko.observable({});
-        var switchComponent = function() {
+        //var currentParams = ko.observable({});
+        /*var switchComponent = function() {
             if (currentView() === "mylist") {
                 currentView("my-element");
             } else if (currentView() === "wordcloud") {
@@ -60,7 +60,7 @@ require(['knockout', 'postman'], function(ko, postman) {
                 currentView("wordcloud");
             }
 
-        }
+        }*/
 
         var WordcloudView = function() {
             if (currentView() !== "wordcloud") {
@@ -68,15 +68,14 @@ require(['knockout', 'postman'], function(ko, postman) {
             }
         }
 
-        postman.subscribe(postman.events.changeView,
+        /*postman.subscribe(postman.events.changeView,
             viewName => {
                 currentParams({ name: "hello"});
                 currentView(viewName);
             });
-        
+        */
         return {
             currentView,
-            currentParams,
             switchComponent,
             WordcloudView
         }
