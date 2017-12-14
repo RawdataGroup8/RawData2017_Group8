@@ -62,6 +62,12 @@ require(['knockout', 'postman'], function(ko, postman) {
 
         }
 
+        var WordcloudView = function() {
+            if (currentView() !== "wordcloud") {
+                currentView("wordcloud");
+            }
+        }
+
         postman.subscribe(postman.events.changeView,
             viewName => {
                 currentParams({ name: "hello"});
@@ -71,7 +77,8 @@ require(['knockout', 'postman'], function(ko, postman) {
         return {
             currentView,
             currentParams,
-            switchComponent
+            switchComponent,
+            WordcloudView
         }
     })();
 
