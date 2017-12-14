@@ -19,7 +19,7 @@ namespace WebLayer.Controllers
 
 
             //var total = _ds.GetUsers().Count;
-            var total = _ds.GetUserCount();
+            var total = _ds.GetUserCount(); //
             var totalPages = (int)Math.Ceiling(total / (double)total);
 
             var data = _ds.GetUsers(page, pageSize)
