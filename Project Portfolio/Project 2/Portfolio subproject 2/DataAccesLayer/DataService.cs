@@ -43,7 +43,7 @@ namespace DataAccesLayer
         {
             using (var db = new StackoverflowContext())
             {
-                return _db.Post.Count(x => x.TypeId == 1);
+                return db.Post.Count(x => x.TypeId == 1);
             }
         }
 
