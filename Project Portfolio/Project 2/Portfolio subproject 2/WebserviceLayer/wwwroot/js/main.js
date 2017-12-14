@@ -9,7 +9,10 @@ require.config({
         knockout: '../lib/knockout/dist/knockout',
         text: '../lib/text/text',
         postman: 'services/postman',
-        jqcloud: '../lib/jqcloud2/dist/jqcloud.min'
+        jqcloud: '../lib/jqcloud2/dist/jqcloud.min',
+        dataservice: 'services/dataservice',
+        store: 'services/store',
+        redux: '../lib/redux'
     },
     shim: {
         jqcloud: {
@@ -31,13 +34,13 @@ require(['knockout'], function (ko) {
     });
 
     ko.components.register("new_quest", {
-        viewModel: { require: "components/NewestQuestions/NewestQuestions" },
-        template: { require: "text!components/NewestQuestions/NewestQuestions_view.html" }
+        viewModel: { require: "components/newest_questions/newest_questions" },
+        template: { require: "text!components/newest_questions/newest_questions_view.html" }
     });
 
     ko.components.register("show_quest", {
-        viewModel: { require: "components/Question/Question" },
-        template: { require: "text!components/Question/Question_view.html" }
+        viewModel: { require: "components/question/question" },
+        template: { require: "text!components/question/question_view.html" }
     });
 
     ko.components.register("wordcloud", {
@@ -76,7 +79,7 @@ require(['knockout', 'postman'], function(ko, postman) {
         */
         return {
             currentView,
-            switchComponent,
+            //switchComponent,
             WordcloudView
         }
     })();

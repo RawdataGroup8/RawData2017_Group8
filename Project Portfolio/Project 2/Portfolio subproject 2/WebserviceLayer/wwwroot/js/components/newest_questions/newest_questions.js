@@ -1,49 +1,51 @@
-﻿define(['jquery','knockout'], function ($,ko) {
+﻿define(['knockout', 'dataservice', 'store'], (ko, dataservice, store) => {
     return function (params) {
         var title = ko.observable("Newest Questions");
-        var heading = ko.observable("New Questions");
         var posts = ko.observableArray([]);
         var nextLink = ko.observable();
         var prevLink = ko.observable();
 
-        var next = () => {
-            $.getJSON(nextLink(), data => {
+        var getPosts = function (url) {
+            dataservice.getPosts(url, data => {
                 posts(data.items);
                 nextLink(data.next);
                 prevLink(data.prev);
             });
+        };
+
+        var next = () => {
+            getPosts(nextLink());
         };
         var canNext = ko.computed(() => {
             return nextLink() !== null;
         });
 
         var prev = () => {
-            $.getJSON(prevLink(), data => {
-                posts(data.items);
-                nextLink(data.next);
-                prevLink(data.prev);
-            });
+            getPosts(prevLink());
         };
 
         var canPrev = ko.computed(() => {
             return prevLink() !== null;
         });
 
-        $.getJSON("api/posts/q", data => {
-            posts(data.items);
-            nextLink(data.next);
-            prevLink(data.prev);
-        });
+        var showPost = (data) => {
+            dataservice.getPost(data.link, post => {
+                store.dispatch(store.actions.selectPost(post));
+                store.dispatch(store.actions.changeView("post"));
+            });
+        };
+
+        getPosts();
 
         return {
-            title,
-            heading,
+            posts,
             next,
             canNext,
             prev,
             canPrev,
-            posts
+            showPost,
+            title
         };
-
     }
 });
+
