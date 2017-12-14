@@ -41,20 +41,34 @@ namespace DataAccesLayer
 
         public int NumberOfQuestions()
         {
-            return _db.Post.Count(x => x.TypeId == 1);
+            using (var db = new StackoverflowContext())
+            {
+                return _db.Post.Count(x => x.TypeId == 1);
+            }
         }
 
         //return a full post, including all comments and tags. 
-        public Post GetPost(int id) => _db.Post.Include(p1 => p1.Comments).Include(p1 => p1.PostTags).FirstOrDefault(p => p.PostId == id);
+        public Post GetPost(int id)
+        {
+            using (var db = new StackoverflowContext())
+            {
+                return db.Post.Include(p1 => p1.Comments).Include(p1 => p1.PostTags)
+                    .FirstOrDefault(p => p.PostId == id);
+            }
+        }
+
         //return a Post, including tags related to the post.
         public Post GetPosts_Tags(int id) => _db.Post.Include(c => c.PostTags).FirstOrDefault(p => p.PostId == id);
 
         //return a full question
         public Question GetQuestion(int id)
         {
-            var question = _db.Question.FirstOrDefault(q => q.PostId1 == id);
-            question?.SetPost(GetPost(id));
-            return question;
+            using (var db = new StackoverflowContext())
+            {
+                var question = db.Question.FirstOrDefault(q => q.PostId1 == id);
+                question?.SetPost(GetPost(id));
+                return question;
+            }
         }
 
         public List<Question> GetNewestQuestions(int page, int pageSize)
