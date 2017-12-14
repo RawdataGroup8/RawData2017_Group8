@@ -18,9 +18,9 @@ namespace WebLayer.Controllers
         {
 
 
-            var total = _ds.GetUsers().Count;
-            //var total = _ds.GetUserCount();
-            var totalPages = (int)Math.Ceiling(total / (double)pageSize);
+            //var total = _ds.GetUsers().Count;
+            var total = _ds.GetUserCount();
+            var totalPages = (int)Math.Ceiling(total / (double)total);
 
             var data = _ds.GetUsers(page, pageSize)
                 .Select(x => new
@@ -79,7 +79,7 @@ namespace WebLayer.Controllers
             {
 
                 var total = _ds.GetUser(id).Posts.Count;
-                var totalPages = Math.Ceiling(total / (double)pageSize);
+                var totalPages = Math.Ceiling(total / (double)total);
                 var pages = Math.Ceiling(total / (double)pageSize); // check it
 
                 var data = _ds.GetUser(id).Posts
@@ -93,7 +93,7 @@ namespace WebLayer.Controllers
                 {
                     Number_Of_Posts = total,
                     Number_Of_Pages = totalPages,
-                    PageSize = pageSize,
+                    PageSize = pages,
                     Page = page,
                     prev = page > 0 ? Url.Link(nameof(GetUserPosts), new { page = page - 1, pageSize }) : null,
                     next = page < pages - 1 ? Url.Link(nameof(GetUserPosts), new { page = page + 1, pageSize }) : null,
