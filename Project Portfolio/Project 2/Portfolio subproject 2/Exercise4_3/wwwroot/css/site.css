@@ -1,0 +1,19 @@
+﻿body {
+    margin-left: 20px;
+}
+
+.btn-group {
+    margin: 20px;
+}
+
+a {
+    font-size: 1.2em;
+}
+
+a:link {
+    color: blue;
+}
+
+a:visited {
+    color: blue;
+}
