@@ -106,7 +106,7 @@ namespace WebLayer.Controllers
 
         }
 
-        [HttpGet("{id}/answers", Name = nameof(GetAnswers))]
+        [HttpGet("{postid}/answers", Name = nameof(GetAnswers))]
         public IActionResult GetAnswers(int id)
         {
             var posts = _ds.GetAnswers(id)

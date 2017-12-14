@@ -1,7 +1,12 @@
-DROP DATABASE if exists raw8;
-CREATE DATABASE raw8;
-USE raw8;
-ALTER DATABASE raw8 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+#DROP DATABASE if exists raw8;
+#CREATE DATABASE raw8;
+#USE raw8;
+#ALTER DATABASE raw8 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+DROP DATABASE if exists stack_overflow_normalized;
+CREATE DATABASE stack_overflow_normalized;
+USE stack_overflow_normalized;
+ALTER DATABASE stack_overflow_normalized CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 -- ---------------- DATABASE CREATION AND DATA INSERTION -------------------
 
 -- user (user_id(PK), user_name, user_creation_date, user_location, user_age) 
@@ -39,11 +44,13 @@ CREATE TABLE post (
     body TEXT,
     title VARCHAR(300),
     owner_user_id INT UNSIGNED NOT NULL REFERENCES user (user_id),
-    type_id INT UNSIGNED,
-    FULLTEXT (title,body), -- used by: fulltext_search
-    FULLTEXT (body), -- used by: Searching_Questions
-	FULLTEXT (title)-- used by: Searching_Questions
+    type_id INT UNSIGNED
+    #FULLTEXT (title,body), -- used by: fulltext_search
+    #FULLTEXT (body), -- used by: Searching_Questions
+	#FULLTEXT (title)-- used by: Searching_Questions
 );
+CREATE INDEX index_post
+ON post (post_id, creation_date);
 #alter table `user`
 #	modify column `body` VARCHAR(30)
 #	CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL ;
@@ -58,6 +65,8 @@ CREATE TABLE question (
     accepted_answer_id INT REFERENCES post (post_id),
     closed_date DATETIME
 );
+CREATE INDEX index_question
+ON question (post_id);
 
 insert into question (post_id, accepted_answer_id, closed_date) 
 select distinct id, acceptedanswerid, closeddate
@@ -69,6 +78,8 @@ CREATE TABLE answer (
     post_id INT PRIMARY KEY REFERENCES post (post_id),
     parent_id INT
 );
+CREATE INDEX index_answer
+ON answer (post_id);
 
 insert into answer (post_id, parent_id) 
 select distinct id, parentid
@@ -218,7 +229,7 @@ DELIMITER ;
 -- call retrieve_answers(9033, 50);
 
 -- fulltext_search(search_str) /* Procedure that finds questions using mysql's built in fulltext search (ignoring useless words, using multiword strings), searching in both title and body */
-drop procedure if exists fulltext_search;
+/*drop procedure if exists fulltext_search;
 DELIMITER //
 CREATE PROCEDURE fulltext_search (in search_str varchar(400), post_type int)
 BEGIN
@@ -234,7 +245,7 @@ DELIMITER ;
 -- call fulltext_search('machine learning',1);
 -- call fulltext_search('how to python good',1);
 -- call fulltext_search('Hi database teach me to be the bestest at searching thank you bye bye',1);
-
+*/
 -- add_marking(user_id, post_id, marking_label) /* Inserts a marking to at given post <post_id>, for a given user <user_id>, with a given folder name <marking_label> and a <now()> timestamp*/
 -- drop procedure if exists add_marking;
 DELIMITER //
@@ -247,7 +258,7 @@ DELIMITER ; /* todo: handle the user inserting multiple identical marks. gives d
 -- select * from marking;
 
 -- Searching_Questions /* Finds questions that matches the last meaningful word of the input string, where that word must be in the title. */
-drop procedure if exists Searching_Questions;
+/*drop procedure if exists Searching_Questions;
 delimiter //
 create procedure Searching_Questions( in inpute char (200))
 begin
@@ -275,6 +286,6 @@ begin
 	order by post.score desc;
 	
 end;//
-delimiter ;
+delimiter ;*/
 
 
