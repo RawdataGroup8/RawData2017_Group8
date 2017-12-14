@@ -20,17 +20,17 @@
                 });
             });
             title("Post");
-            currentView('postview');
+            //currentView('postview');
         };
 
         var home = () => {
             title("Show Posts");
-            currentView('postlist');
+            //currentView('postlist');
         };
 
         return {
             title,
-            currentView,
+            //currentView,
             showPost,
             currentPost,
             home

@@ -9,7 +9,9 @@ require.config({
         knockout: '../lib/knockout/dist/knockout',
         text: '../lib/text/text',
         postman: 'services/postman',
-        jqcloud: '../lib/jqcloud2/dist/jqcloud.min'
+        jqcloud: '../lib/jqcloud2/dist/jqcloud.min',
+        store: 'services/store',
+        redux: '../lib/redux'
     },
     shim: {
         jqcloud: {
@@ -46,11 +48,20 @@ require(['knockout'], function (ko) {
     });
 });
 
-require(['knockout', 'postman'], function(ko, postman) {
-    var vm = (function() {
-        var currentView = ko.observable('new_quest');
-        var currentParams = ko.observable({});
-        var switchComponent = function() {
+require(['knockout', 'store'], function(ko, store) {
+
+    // show the state everytime it is updated
+    store.subscribe(() => {
+        console.log(store.getState());
+    });
+
+    var vm = (function () {
+
+        var currentView = ko.observable();
+        var title = ko.observable();
+
+        //var currentParams = ko.observable({});
+        /*var switchComponent = function() {
             if (currentView() === "mylist") {
                 currentView("my-element");
             } else if (currentView() === "wordcloud") {
@@ -60,9 +71,23 @@ require(['knockout', 'postman'], function(ko, postman) {
                 currentView("wordcloud");
             }
 
-        }
+        }*/
 
-        postman.subscribe(postman.events.changeView,
+        store.subscribe(() => {
+            title(store.getState().title);
+            currentView(store.getState().view);
+        });
+
+        store.dispatch(store.actions.pageListTitle());
+        store.dispatch(store.actions.pageListView());
+
+
+        return {
+            title,
+            currentView
+        };
+
+        /*postman.subscribe(postman.events.changeView,
             viewName => {
                 currentParams({ name: "hello"});
                 currentView(viewName);
@@ -72,7 +97,7 @@ require(['knockout', 'postman'], function(ko, postman) {
             currentView,
             currentParams,
             switchComponent
-        }
+        }*/
     })();
 
     ko.applyBindings(vm);

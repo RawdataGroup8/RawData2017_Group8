@@ -29,26 +29,6 @@
             return prevLink() !== null;
         });
 
-        var currentPost = ko.observable();
-
-        var showPost = (data) => {
-            $.getJSON(data.link, postData => {
-                var post = {
-                    title: postData.title,
-                    score: postData.score,
-                    creationDate: postData.creationDate,
-                    body: postData.body
-                }
-
-                $.getJSON(postData.answers, ans => {
-                    post.answers = ko.observableArray(ans);
-                    currentPost(post);
-                });
-            });
-            title("Post");
-            //$parent.currentView('show_quest');
-        };
-
         $.getJSON("api/posts/q", data => {
             posts(data.items);
             nextLink(data.next);
@@ -62,9 +42,7 @@
             canNext,
             prev,
             canPrev,
-            posts,
-            showPost,
-            currentPost
+            posts
         };
 
     }
