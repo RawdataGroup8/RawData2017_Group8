@@ -1,6 +1,6 @@
 ﻿define(['knockout', 'dataservice', 'store'], (ko, dataservice, store) => {
     return function (params) {
-        var title = ko.observable("Newest Questions");
+        //var title = ko.observable("Newest Questions");
         var posts = ko.observableArray([]);
         var nextLink = ko.observable();
         var prevLink = ko.observable();
@@ -31,7 +31,7 @@
         var showPost = (data) => {
             dataservice.getPost(data.link, post => {
                 store.dispatch(store.actions.selectPost(post));
-                store.dispatch(store.actions.changeView("post"));
+                store.dispatch(store.actions.changeView("show_quest"));
             });
         };
 
@@ -43,8 +43,8 @@
             canNext,
             prev,
             canPrev,
-            showPost,
-            title
+            showPost
+            //title
         };
     }
 });

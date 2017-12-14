@@ -35,7 +35,7 @@ define(['redux'], function (redux) {
                 return state;
         }
     };
-
+    
     // here we change the state by calling the reducer
     // and the notify all subscribers
     var dispatch = function (action) {
@@ -57,7 +57,7 @@ define(['redux'], function (redux) {
 
     // get the current state
     var getState = () => currentState;
-
+    
     // this is just helpers that create the actions we need
     var actions = {
         changeTitle: function (title) {
@@ -102,12 +102,12 @@ define(['redux'], function (redux) {
 
     // uncomment above return
     // and use this instead to use the real Redux :-)
-    //var reduxstore = redux.createStore(reducer);
+    /*var reduxstore = redux.createStore(reducer);
 
-    //return {
-    //    getState: reduxstore.getState,
-    //    dispatch: reduxstore.dispatch,
-    //    subscribe: reduxstore.subscribe,
-    //    actions
-    //};
+    return {
+        getState: reduxstore.getState,
+        dispatch: reduxstore.dispatch,
+        subscribe: reduxstore.subscribe,
+        actions
+    };*/
 });

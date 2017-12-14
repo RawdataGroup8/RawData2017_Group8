@@ -3,7 +3,6 @@
 require.config({
 
     baseUrl: "js",
-
     paths: {
         jquery: '../lib/jquery.min',
         knockout: '../lib/knockout/dist/knockout',
@@ -23,7 +22,7 @@ require.config({
 
 require(['knockout'], function (ko) {
 
-    ko.components.register("mylist", {
+    /*ko.components.register("mylist", {
         viewModel: { require: "components/mylist/mylist" },
         template: { require: "text!components/mylist/mylist_view.html"}
     });
@@ -31,7 +30,7 @@ require(['knockout'], function (ko) {
     ko.components.register("my-element", {
         viewModel: { require: "components/element/element" },
         template: { require: "text!components/element/element_view.html" }
-    });
+    });*/
 
     ko.components.register("new_quest", {
         viewModel: { require: "components/newest_questions/newest_questions" },
@@ -49,10 +48,19 @@ require(['knockout'], function (ko) {
     });
 });
 
-require(['knockout', 'postman'], function(ko, postman) {
+require(['knockout', 'store'], function(ko, store) {
     var vm = (function() {
-        var currentView = ko.observable('new_quest');
-        //var currentParams = ko.observable({});
+        var title = ko.observable();
+        var currentView = ko.observable();
+
+        store.subscribe(() => {
+            title(store.getState().title);
+            currentView(store.getState().view);
+        });
+
+        store.dispatch(store.actions.pageListTitle());
+        store.dispatch(store.actions.pageListView());
+
         /*var switchComponent = function() {
             if (currentView() === "mylist") {
                 currentView("my-element");
@@ -78,6 +86,7 @@ require(['knockout', 'postman'], function(ko, postman) {
             });
         */
         return {
+            title,
             currentView,
             //switchComponent,
             WordcloudView
