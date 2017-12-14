@@ -3,7 +3,7 @@
 <ul class="list-group" data-bind="foreach: posts">
     <li class="list-group-item">       
             <span class="label label-success" data-bind="text: score"></span>
-            <a href="#" data-bind="text: title"></a>
+        <a href="#" data-bind="click: $parent.showPost"><span data-bind="text: title"></span></a>
     </li>
 </ul>
 
