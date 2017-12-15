@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DataAccesLayer.DBObjects;
 using Microsoft.EntityFrameworkCore;
@@ -236,6 +237,18 @@ namespace DataAccesLayer
             using (var db = new StackoverflowContext())
             {
                 return db.Question.FromSql("call search_questions_by_tag({0},{1})", tag, limit).ToList();
+            }
+        }
+
+        //----- For the wordcloud -----//
+        public List<WordIndex> GetTfOfWordsInAPost(int id)
+        {
+            using (var db = new StackoverflowContext())
+            {
+                return db.WordIndex.Where(i => i.Id == id)
+                    .GroupBy(test => test.Word)
+                    .Select(grp => grp.First())
+                    .ToList();
             }
         }
     }

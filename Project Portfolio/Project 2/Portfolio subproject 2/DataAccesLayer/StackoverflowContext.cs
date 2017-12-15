@@ -18,6 +18,7 @@ namespace DataAccesLayer
         public DbSet<PostTags> PostTags { get; set; }
         public DbSet<Question> Question { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<WordIndex> WordIndex { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -109,6 +110,13 @@ namespace DataAccesLayer
             modelBuilder.Entity<User>().Property(x => x.UserCreationDate).HasColumnName("user_creation_date");
             modelBuilder.Entity<User>().Property(x => x.Userage).HasColumnName("user_age");
             //modelBuilder.Entity<User>().HasMany(Comment).WithOne();
+
+            //WordIndex
+            modelBuilder.Entity<WordIndex>().ToTable("wi");
+            modelBuilder.Entity<WordIndex>().Property(x => x.Id).HasColumnName("id");
+            modelBuilder.Entity<WordIndex>().Property(x => x.Word).HasColumnName("word");
+            modelBuilder.Entity<WordIndex>().Property(x => x.TermFrequency).HasColumnName("tf");
+            modelBuilder.Entity<WordIndex>().HasKey(k => new { k.Id, k.Word, k.TermFrequency});
         }
 
     }
