@@ -128,7 +128,7 @@ namespace WebLayer.Controllers
         public IActionResult AddQuestion(int id, string body, string title)
         {
             var succes = _ds.AddQuestion(id, body, title);
-            return succes == 1 ? (IActionResult) Ok("succesfully added") : BadRequest();
+            return succes == 1 ? (IActionResult) Ok("Succesfully added") : BadRequest();
         }
     }
 }

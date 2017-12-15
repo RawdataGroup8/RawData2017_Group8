@@ -1,18 +1,26 @@
 ﻿<div class="container">
     <h2>Post a question</h2>
-    <form > <!--data-bind="submit: addQuestion"-->
+    <!--<p>User ID: <input data-bind="value: id" /></p>
+    <p>Title: <input data-bind="value: title" /></p>
+    <p>Body: <textarea data-bind="value: body"></textarea></p>
+        <button data-bind="click: addQuestion" class="btn btn-default">Submit</button>
+    -->
+    <!-- <form > data-bind="submit: addQuestion"-->
         <div class="form-group">
-            <label for="id">User id:</label>
-            <input type="number" class="form-control" id="id" placeholder="666" name="uid" value="666">
+            <!--<label for="id">User id:</label>-->
+            <p>User ID: <input class="form-control" data-bind="value: id" /></p>
+            <!--<input type="number" class="form-control" id="id" placeholder="666" name="id">-->
         </div>
         <div class="form-group">
-            <label for="title">Title:</label>
-            <input type="text" class="form-control" id="title" placeholder="Enter title" name="title">
+            <!--<label for="title">Title:</label>-->
+            <p>Title: <input class="form-control" placeholder="Title" data-bind="value: title" /></p>
+        <!--<input type="text" class="form-control" id="title" placeholder="Enter title" name="title">-->
         </div>
         <div class="form-group">
-            <label for="body">Question:</label>
-            <input type="text" class="form-control" id="body" placeholder="Write your question here" name="body">
+            <!--<label for="body">Question:</label>-->
+            <!--<input type="text" class="form-control" id="body" placeholder="Write your question here" name="body"">-->
+            <p>Body: <textarea class="form-control" data-bind="value: body" placeholder="Write your question here"></textarea></p>
         </div>
-        <button type="submit" data-bind="click: addQuestion" class="btn btn-default">Submit</button>
-    </form>
+        <button data-bind="click: addQuestion"type="submit" class="btn btn-default">Submit</button>
+   <!-- </form>-->
 </div>

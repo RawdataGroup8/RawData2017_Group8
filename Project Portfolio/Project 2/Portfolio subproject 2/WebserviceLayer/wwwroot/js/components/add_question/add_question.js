@@ -1,36 +1,31 @@
 ﻿define(['knockout'], function (ko) {
     return function (params) {
-        var viewModel = {
-            doSomething: function (formElement) {
-                // ... now do something
-            }
-        };
-        var doSomething = (formElement) => {
-            
-        }
-        var showPost = (data) => {
-            dataservice.getPost(data.link, post => {
-                store.dispatch(store.actions.selectPost(post));
-                store.dispatch(store.actions.changeView("show_quest"));
-            });
-        };
+        var id = ko.observable(666);
+        var body = ko.observable("");
+        var title = ko.observable("");
 
-        var addQuestion = function (formElement) {
-            //var data = ko.toJSON(this);
+
+        var addQuestion = function () {
+            var data = new FormData();
+            data.append("id", id());
+            data.append("body", body());
+            data.append("title", title());
+            console.log(data.entries());
+
             $.ajax({
-                url: "/api/posts/add",
-                type: "POST",
-                data: formElement,
-                datatype: "json",
+                url: '/api/posts/add',
+                data: data,
                 processData: false,
-                contentType: "application/json; charset=utf-8",
-                success: function (result) {
-                    alert(result);
-                }
+                contentType: false,
+                type: 'POST'
+            }).done(function (retdata) {
+                alert(retdata);
+                //todo: select and show created post
             });
         };
 
         return {
+            id, body, title,
             addQuestion
         };
 
