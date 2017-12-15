@@ -50,7 +50,7 @@ CREATE TABLE post (
 	#FULLTEXT (title)-- used by: Searching_Questions
 );
 CREATE INDEX index_post
-ON post (post_id, title, type_id, creation_date);
+ON post (post_id, title);
 #alter table `user`
 #	modify column `body` VARCHAR(30)
 #	CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL ;

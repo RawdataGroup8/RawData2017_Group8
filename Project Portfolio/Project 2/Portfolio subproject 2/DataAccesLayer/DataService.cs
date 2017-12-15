@@ -167,6 +167,14 @@ namespace DataAccesLayer
             }
         }
 
+        public int AddQuestion(int uid, string body, string title)
+        {
+            using (var db = new StackoverflowContext())
+            {
+                return db.Database.ExecuteSqlCommand("call add_question({0},{1},{2})", uid, body, title);
+            }
+        }
+
         public void DeleteMarking(int uid, int pid)
         {
             using (var db = new StackoverflowContext())

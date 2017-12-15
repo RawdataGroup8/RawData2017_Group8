@@ -17,14 +17,15 @@ namespace WebLayer.Controllers
         public IActionResult GetPosts(int page = 0, int pageSize = 10)
         {
             var posts = _ds.GetPosts(page, pageSize)
-                .Select(x => new {
-                    Link = Url.Link(nameof(GetPost), new { x.PostId }),
+                .Select(x => new
+                {
+                    Link = Url.Link(nameof(GetPost), new {x.PostId}),
                     x.Title
                 });
             var total = _ds.NumberOfQuestions();
-            var pages = Math.Ceiling(total / (double)pageSize);
-            var prev = page > 0 ? Url.Link(nameof(GetPosts), new { page = page - 1, pageSize }) : null;
-            var next = page < pages - 1 ? Url.Link(nameof(GetPosts), new { page = page + 1, pageSize }) : null;
+            var pages = Math.Ceiling(total / (double) pageSize);
+            var prev = page > 0 ? Url.Link(nameof(GetPosts), new {page = page - 1, pageSize}) : null;
+            var next = page < pages - 1 ? Url.Link(nameof(GetPosts), new {page = page + 1, pageSize}) : null;
 
             var result = new
             {
@@ -42,16 +43,17 @@ namespace WebLayer.Controllers
         public IActionResult GetNewestQuestions(int page = 0, int pageSize = 10)
         {
             var posts = _ds.GetNewestQuestions(page, pageSize)
-                .Select(x => new {
-                    Link = Url.Link(nameof(GetPost), new { x.Post.PostId }),
+                .Select(x => new
+                {
+                    Link = Url.Link(nameof(GetPost), new {x.Post.PostId}),
                     x.Post.Title,
                     x.Post.Score
                 });
 
             var total = _ds.NumberOfQuestions();
-            var pages = Math.Ceiling(total / (double)pageSize);
-            var prev = page > 0 ? Url.Link(nameof(GetNewestQuestions), new { page = page - 1, pageSize }) : null;
-            var next = page < pages - 1 ? Url.Link(nameof(GetNewestQuestions), new { page = page + 1, pageSize }) : null;
+            var pages = Math.Ceiling(total / (double) pageSize);
+            var prev = page > 0 ? Url.Link(nameof(GetNewestQuestions), new {page = page - 1, pageSize}) : null;
+            var next = page < pages - 1 ? Url.Link(nameof(GetNewestQuestions), new {page = page + 1, pageSize}) : null;
 
             var result = new
             {
@@ -73,15 +75,15 @@ namespace WebLayer.Controllers
             if (post == null) return NotFound();
             if (post.TypeId == 1)
             {
-                
+
                 var result = new
                 {
-                    Link = Url.Link(nameof(GetPost), new { post.PostId }),
+                    Link = Url.Link(nameof(GetPost), new {post.PostId}),
                     post.Title,
                     post.CreationDate,
                     post.Score,
                     post.Body,
-                    Answers = Url.Link(nameof(GetAnswers), new { post.PostId })
+                    Answers = Url.Link(nameof(GetAnswers), new {post.PostId})
                 };
 
                 return Ok(result);
@@ -92,12 +94,12 @@ namespace WebLayer.Controllers
                 var answer = _ds.GetAnswer(postId);
                 var result = new
                 {
-                    Link = Url.Link(nameof(GetPost), new { post.PostId }),
+                    Link = Url.Link(nameof(GetPost), new {post.PostId}),
                     post.Title,
                     post.CreationDate,
                     post.Score,
                     post.Body,
-                    Parent = Url.Link(nameof(GetPost), new { id = answer.Parentid }),
+                    Parent = Url.Link(nameof(GetPost), new {id = answer.Parentid}),
                 };
 
                 return Ok(result);
@@ -112,8 +114,8 @@ namespace WebLayer.Controllers
             var posts = _ds.GetAnswers(id)
                 .Select(x => new
                 {
-                    Link = Url.Link(nameof(GetPost), new { x.PostId }),
-                    Parent = Url.Link(nameof(GetPost), new { id }),
+                    Link = Url.Link(nameof(GetPost), new {x.PostId}),
+                    Parent = Url.Link(nameof(GetPost), new {id}),
                     x.GetPost().Body,
                     x.GetPost().CreationDate,
                     x.GetPost().Score
@@ -122,5 +124,11 @@ namespace WebLayer.Controllers
             return Ok(posts);
         }
 
+        [HttpPost("add", Name = nameof(AddQuestion))]
+        public IActionResult AddQuestion(int id, string body, string title)
+        {
+            var succes = _ds.AddQuestion(id, body, title);
+            return succes == 1 ? (IActionResult) Ok("succesfully added") : BadRequest();
+        }
     }
 }

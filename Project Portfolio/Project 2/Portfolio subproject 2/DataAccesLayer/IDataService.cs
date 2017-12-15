@@ -19,6 +19,7 @@ namespace DataAccesLayer
         List<History> UserHistory(int id);
         List<Marking> UserBookmarks(int id);
         int AddMarking(int uid, int pid, string mark);
+        int AddQuestion(int uid, string body, string title);
         void AddQuestionToHistory(int userId, int postId);
         void RemoveQuestionFromHistory(int userId, int linkedPostId);
         List<Post> BestMatch(string text);
