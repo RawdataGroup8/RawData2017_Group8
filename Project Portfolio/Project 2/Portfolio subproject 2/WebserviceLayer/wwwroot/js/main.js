@@ -46,6 +46,11 @@ require(['knockout'], function (ko) {
         viewModel: { require: "components/wordcloud/wordcloud" },
         template: { require: "text!components/wordcloud/wordcloud.html" }
     });
+
+    ko.components.register("add_quest", {
+        viewModel: { require: "components/add_question/add_question" },
+        template: { require: "text!components/add_question/add_question_view.html" }
+    });
 });
 
 require(['knockout', 'store'], function (ko, store) {
@@ -84,6 +89,11 @@ require(['knockout', 'store'], function (ko, store) {
                 currentView("wordcloud");
             }
         }
+        var add_question = function () {
+            if (currentView() !== "add_quest") {
+                currentView("add_quest");
+            }
+        }
 
         /*postman.subscribe(postman.events.changeView,
             viewName => {
@@ -95,7 +105,8 @@ require(['knockout', 'store'], function (ko, store) {
             title,
             currentView,
             //switchComponent,
-            WordcloudView
+            WordcloudView,
+            add_question
         }
     })();
 
