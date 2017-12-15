@@ -18,6 +18,8 @@ namespace DataAccesLayer
         public DbSet<PostTags> PostTags { get; set; }
         public DbSet<Question> Question { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<RankedQuestions> RankedQuestions { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -109,6 +111,11 @@ namespace DataAccesLayer
             modelBuilder.Entity<User>().Property(x => x.UserCreationDate).HasColumnName("user_creation_date");
             modelBuilder.Entity<User>().Property(x => x.Userage).HasColumnName("user_age");
             //modelBuilder.Entity<User>().HasMany(Comment).WithOne();
+
+            //Search
+            modelBuilder.Entity<RankedQuestions>().Property(x => x.Id).HasColumnName("id");
+            modelBuilder.Entity<RankedQuestions>().Property(x => x.Rank).HasColumnName("rank");
+            modelBuilder.Entity<RankedQuestions>().Property(x => x.Title).HasColumnName("title");
         }
 
     }
