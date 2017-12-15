@@ -15,8 +15,8 @@ namespace WebLayer.Controllers
         public SearchController(IDataService iDataService) => _ds = iDataService;
 
 
-        //GET: api/search/r
-        [HttpGet("r", Name = nameof(RankedPostSearch))]
+        //GET: api/search/java%20python
+        [HttpGet("{terms}", Name = nameof(RankedPostSearch))] //TODO: use parameters instead
         public IActionResult RankedPostSearch(string terms, int page = 0, int pageSize = 10)
         {
             var data = _ds.RankedPostSearch(terms, page, pageSize);
