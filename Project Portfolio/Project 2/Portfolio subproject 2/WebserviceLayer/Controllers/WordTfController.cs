@@ -25,10 +25,12 @@ namespace WebLayer.Controllers
                     text = x.Word,
                     weight = x.TermFrequency
                 });
+
             if (tf.First() == null)
             {
                 return NotFound();
             }
+
             return Ok(tf);
         }
     }
