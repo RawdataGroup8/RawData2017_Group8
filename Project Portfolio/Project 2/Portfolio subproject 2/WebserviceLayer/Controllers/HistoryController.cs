@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace WebLayer.Controllers
 {
     [Produces("application/json")]
-    [Route("api/History")]
+    [Route("api/history")]
     public class HistoryController : Controller
     {
         private readonly IDataService _ds;
