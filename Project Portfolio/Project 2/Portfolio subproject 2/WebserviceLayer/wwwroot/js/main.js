@@ -48,7 +48,13 @@ require(['knockout'], function (ko) {
     });
 });
 
-require(['knockout', 'store'], function(ko, store) {
+require(['knockout', 'store'], function (ko, store) {
+
+    // show the state everytime it is updated
+    store.subscribe(() => {
+        console.log(store.getState());
+    });
+
     var vm = (function() {
         var title = ko.observable();
         var currentView = ko.observable();

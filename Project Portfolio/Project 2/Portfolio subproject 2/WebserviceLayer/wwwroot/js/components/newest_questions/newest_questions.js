@@ -1,6 +1,6 @@
 ﻿define(['knockout', 'dataservice', 'store'], (ko, dataservice, store) => {
     return function (params) {
-        //var title = ko.observable("Newest Questions");
+        var title = ko.observable("Newest Questions");
         var posts = ko.observableArray([]);
         var nextLink = ko.observable();
         var prevLink = ko.observable();
@@ -43,8 +43,8 @@
             canNext,
             prev,
             canPrev,
-            showPost
-            //title
+            showPost,
+            title
         };
     }
 });
