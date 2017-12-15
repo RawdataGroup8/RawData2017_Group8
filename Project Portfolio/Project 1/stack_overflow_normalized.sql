@@ -36,7 +36,7 @@ from stackoverflow_sample_universal.comments;
 -- from stackoverflow_sample_universal.comments;
 
 -- post(post_id(PK), creation_date, score, body, title, owner_user_id(FK), type_id) /* type id somewhat redundant */
--- drop table if exists post;
+drop table if exists post;
 CREATE TABLE post (
     post_id INT UNSIGNED PRIMARY KEY,
     creation_date DATETIME,
@@ -50,7 +50,7 @@ CREATE TABLE post (
 	#FULLTEXT (title)-- used by: Searching_Questions
 );
 CREATE INDEX index_post
-ON post (post_id, creation_date);
+ON post (post_id, title, type_id, creation_date);
 #alter table `user`
 #	modify column `body` VARCHAR(30)
 #	CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL ;
@@ -256,6 +256,18 @@ END //
 DELIMITER ; /* todo: handle the user inserting multiple identical marks. gives duplicate error now. insert ignore would do it but its probably bad design*/
 -- call add_marking(1185, 9033, 'MyFolder');
 -- select * from marking;
+
+drop procedure if exists add_question;
+DELIMITER //
+CREATE PROCEDURE add_question (IN user_id int, in body varchar(5000), in title varchar(500))
+BEGIN
+	declare pid INT DEFAULT NULL;
+    set pid =  (select max(post_id) from post)+1;
+    insert into post values (pid, now(), 0, body, title, user_id, 1);
+    insert into question values (pid, null, null);
+END //
+DELIMITER ; 
+
 
 -- Searching_Questions /* Finds questions that matches the last meaningful word of the input string, where that word must be in the title. */
 /*drop procedure if exists Searching_Questions;
