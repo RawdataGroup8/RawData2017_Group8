@@ -7,6 +7,12 @@
         $.getJSON(url, callback);
     };
 
+    var addPost = function(url, callback) {
+        if (url === undefined) {
+            url = "api/posts/add";
+        }
+        $.getJSON(url, callback);
+    }
     var getPost = function (url, callback) {
         $.getJSON(url, data => {
             var post = {

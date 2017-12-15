@@ -92,22 +92,22 @@ define(['redux'], function (redux) {
         }
     };
 
-    return {
+    /*return {
         getState,
         dispatch,
         subscribe,
         actions
-    };
+    };*/
 
 
     // uncomment above return
     // and use this instead to use the real Redux :-)
-    /*var reduxstore = redux.createStore(reducer);
+    var reduxstore = redux.createStore(reducer);
 
     return {
         getState: reduxstore.getState,
         dispatch: reduxstore.dispatch,
         subscribe: reduxstore.subscribe,
         actions
-    };*/
+    };
 });

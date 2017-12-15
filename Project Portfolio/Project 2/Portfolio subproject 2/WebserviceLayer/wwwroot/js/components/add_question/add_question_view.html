@@ -1,17 +1,18 @@
 ﻿<div class="container">
-    <h2>Vertical (basic) form</h2>
-    <form action="#">
+    <h2>Post a question</h2>
+    <form > <!--data-bind="submit: addQuestion"-->
         <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+            <label for="id">User id:</label>
+            <input type="number" class="form-control" id="id" placeholder="666" name="uid" value="666">
         </div>
         <div class="form-group">
-            <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+            <label for="title">Title:</label>
+            <input type="text" class="form-control" id="title" placeholder="Enter title" name="title">
         </div>
-        <div class="checkbox">
-            <label><input type="checkbox" name="remember"> Remember me</label>
+        <div class="form-group">
+            <label for="body">Question:</label>
+            <input type="text" class="form-control" id="body" placeholder="Write your question here" name="body">
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" data-bind="click: addQuestion" class="btn btn-default">Submit</button>
     </form>
 </div>

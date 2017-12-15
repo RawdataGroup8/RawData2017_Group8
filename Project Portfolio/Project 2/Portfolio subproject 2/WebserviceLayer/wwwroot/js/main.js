@@ -84,15 +84,11 @@ require(['knockout', 'store'], function (ko, store) {
 
         }*/
 
-        var WordcloudView = function() {
-            if (currentView() !== "wordcloud") {
-                currentView("wordcloud");
-            }
+        var wordcloudView = function() {
+            store.dispatch(store.actions.changeView('wordcloud'));
         }
-        var add_question = function () {
-            if (currentView() !== "add_quest") {
-                currentView("add_quest");
-            }
+        var addQuestion = function () {
+            store.dispatch(store.actions.changeView('add_quest'));
         }
 
         /*postman.subscribe(postman.events.changeView,
@@ -105,8 +101,8 @@ require(['knockout', 'store'], function (ko, store) {
             title,
             currentView,
             //switchComponent,
-            WordcloudView,
-            add_question
+            wordcloudView,
+            addQuestion
         }
     })();
 
