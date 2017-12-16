@@ -32,6 +32,13 @@ require(['knockout'], function (ko) {
         template: { require: "text!components/element/element_view.html" }
     });*/
 
+    ko.components.register("all_users", {
+        viewModel: { require: "components/user/user" },
+        template: { require: "text!components/user/user_view.html" }
+    });
+
+
+
     ko.components.register("new_quest", {
         viewModel: { require: "components/newest_questions/newest_questions" },
         template: { require: "text!components/newest_questions/newest_questions_view.html" }
@@ -91,6 +98,12 @@ require(['knockout', 'store'], function (ko, store) {
             store.dispatch(store.actions.changeView('add_quest'));
         }
 
+        // the users
+
+        var all_users = function () {
+            store.dispatch(store.actions.changeView('all_users'));
+        }
+
         /*postman.subscribe(postman.events.changeView,
             viewName => {
                 currentParams({ name: "hello"});
@@ -102,7 +115,8 @@ require(['knockout', 'store'], function (ko, store) {
             currentView,
             //switchComponent,
             wordcloudView,
-            addQuestion
+            addQuestion,
+            all_users
         }
     })();
 

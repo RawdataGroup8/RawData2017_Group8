@@ -26,5 +26,6 @@ namespace DataAccesLayer
         int NumberOfQuestions();
         List<Post> GetPosts(int page, int pageSize);
         List<Answers> GetAnswers(int id);
+        List<Post> GetPostsUser(int id);
     }
 }

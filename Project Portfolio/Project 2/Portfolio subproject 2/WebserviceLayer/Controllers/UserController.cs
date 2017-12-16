@@ -25,7 +25,7 @@ namespace WebLayer.Controllers
             var data = _ds.GetUsers(page, pageSize)
                 .Select(x => new
                 {
-                    Url = Url.Link(nameof(GetUser), new { id = x.Userid }),
+                    Url = Url.Link(nameof(GetPostUser), new { id = x.Userid }),
                     Name = x.UserName
                 });
 
@@ -49,59 +49,34 @@ namespace WebLayer.Controllers
         }
 
 
-
-
-
-        //like: "api/User/1"
-        [HttpGet("{id}", Name = nameof(GetUser))]
-        public IActionResult GetUser(int id)
-        {
-            var data = _ds.GetUser(id);
-
-            var result = new
-            {
-                Link1 = Url.Link(nameof(GetUser), new { id }),
-                Names = data.UserName != null ? data.UserName : null,
-                Link2 = Url.Link(nameof(GetUserPosts), new { data.Userid }),
-                data = data
-            };
-
-            return Ok(result);
-
-        }
-
-        [HttpGet("{id}/Posts", Name = nameof(GetUserPosts))]
-        public IActionResult GetUserPosts(int id, int page = 0, int pageSize = 10)
+        [HttpGet("{id}", Name = nameof(GetPostUser))]
+        public IActionResult GetPostUser(int id)
         {
 
 
             try
             {
 
-                var total = _ds.GetUser(id).Posts.Count;
-                var totalPages = Math.Ceiling(total / (double)total);
-                var pages = Math.Ceiling(total / (double)pageSize); // check it
-
-                var data = _ds.GetUser(id).Posts
+                var total = _ds.GetPostsUser(id).Count;
+            
+                var Data = _ds.GetPostsUser(id)
                     .Select(x => new
                     {
-                        Url = Url.Link((nameof(PostsController.GetPosts)), new { id = x.PostId }),
-                        Name = x.Title
+                        Url = Url.Link((nameof(PostsController.GetPost)), new { id = x.PostId }),
+                        Name = x.Title,
+                        Type = x.TypeId,
+                        x.Body
                     });
 
                 var result = new
                 {
                     Number_Of_Posts = total,
-                    Number_Of_Pages = totalPages,
-                    PageSize = pages,
-                    Page = page,
-                    prev = page > 0 ? Url.Link(nameof(GetUserPosts), new { page = page - 1, pageSize }) : null,
-                    next = page < pages - 1 ? Url.Link(nameof(GetUserPosts), new { page = page + 1, pageSize }) : null,
-                    Url=  Url.Link(nameof(GetUserPosts), new { page, pageSize })
-                    //Data = data
+                    
+                    data = Data
+
 
                 };
-                return Ok(new { result, data });
+                return Ok(result);
 
             }
 
@@ -109,9 +84,64 @@ namespace WebLayer.Controllers
             {
                 return NotFound();
             }
+
+            
+
+
+
         }
    }
 
 
 }
 
+//-----------------------------------------------------------------------------------------------------
+
+// The old Controller just incase
+
+/*
+
+[HttpGet("{id}/Posts", Name = nameof(GetUserPosts))]
+like: "api/User/1"
+[HttpGet("{id}", Name = nameof(GetUser))]
+public IActionResult GetUser(int id, int page = 0, int pageSize = 10)
+{
+
+
+try
+{
+
+    var total = _ds.GetUser1(id).Count;
+    // var totalPages = Math.Ceiling(total / (double)total);
+    // var pages = Math.Ceiling(total / (double)pageSize); // check it
+
+    var Data = _ds.GetUser1(id)
+        .Select(x => new
+        {
+            Url = Url.Link((nameof(PostsController.GetPost)), new { id = x.PostId }),
+            Name = x.Title
+        });
+
+    var result = new
+    {
+        Number_Of_Posts = total,
+        Number_Of_Pages = totalPages,
+        PageSize = pages,
+        Page = page,
+        prev = page > 0 ? Url.Link(nameof(GetUser), new { page = page - 1, pageSize }) : null,
+        next = page < pages - 1 ? Url.Link(nameof(GetUser), new { page = page + 1, pageSize }) : null,
+        Url=  Url.Link(nameof(GetUser), new { page, pageSize }),
+        data = Data
+
+
+    };
+    return Ok(result);
+
+}
+
+catch
+{
+    return NotFound();
+}
+
+*/

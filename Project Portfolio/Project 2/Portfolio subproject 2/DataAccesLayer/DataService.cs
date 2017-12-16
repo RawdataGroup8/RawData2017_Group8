@@ -39,6 +39,15 @@ namespace DataAccesLayer
             }
         }
 
+
+        // get all users owning the post-id
+        public List<Post> GetPostsUser(int id)
+        {
+            using (var db = new StackoverflowContext())
+            {
+                return db.Post.Where(p => p.OwnerUserId == id).ToList();
+            }
+        }
         // ------------------------ POSTS (QUESTIONS / ANSWERS) ------------------------   
 
         public List<Post> GetPosts(int page, int pageSize)

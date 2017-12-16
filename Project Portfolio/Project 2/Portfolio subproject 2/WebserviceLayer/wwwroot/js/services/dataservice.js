@@ -7,6 +7,16 @@
         $.getJSON(url, callback);
     };
 
+    //getting the users
+    var getUsers = (url, callback) => {
+        if (url === undefined) {
+            url = "api/user";
+        }
+        $.getJSON(url, callback);
+    };
+
+
+
     var addPost = function(url, callback) {
         if (url === undefined) {
             url = "api/posts/add";
@@ -30,6 +40,7 @@
     };
 
     return {
+        getUsers,
         getPosts,
         getPost
     };
