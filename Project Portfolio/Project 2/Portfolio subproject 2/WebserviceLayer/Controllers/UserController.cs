@@ -26,8 +26,13 @@ namespace WebLayer.Controllers
                 .Select(x => new
                 {
                     Url = Url.Link(nameof(GetPostUser), new { id = x.Userid }),
-                    Name = x.UserName
-                });
+                    Name = x.UserName,
+                    age = x.Userage,
+                    adress = x.UserLocation,
+                    total = _ds.GetPostsUser(x.Userid).Count
+
+
+        });
 
             //var total = _ds.NumberOfQuestions();
             var pages = Math.Ceiling(total / (double)pageSize);
@@ -37,7 +42,7 @@ namespace WebLayer.Controllers
 
             var result = new
             {
-                //total,
+                total,
                 pages,
                 prev,
                 next,
