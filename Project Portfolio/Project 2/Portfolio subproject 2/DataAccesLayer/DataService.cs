@@ -123,7 +123,9 @@ namespace DataAccesLayer
             }
         }
 
-        public List<RankedQuestions> RankedPostSearch(string terms, int page, int pageSize)
+
+        // I commented out the RankedPostSearch as it needs enhansment (giving me errors) 
+       /* public List<RankedQuestions> RankedPostSearch(string terms, int page, int pageSize)
         {
             using (var db = new StackoverflowContext())
             {
@@ -132,14 +134,14 @@ namespace DataAccesLayer
                 //IList<RankedQuestions> empSummary = db.Database.SqlQuery<RankedQuestions>("GetEmployeesSummary").ToList();
                 var posts = db.RankedQuestions.FromSql("call ranked_post_search({0})", terms).OrderByDescending(q => q.Rank)
                     .Skip(page * pageSize).Take(pageSize).ToList();
-                /*foreach (var p in posts)
+                foreach (var p in posts)
                 {
                     p.Question = GetQuestion(p.Id);
-                }*/
+                }
                 return posts;//.Select(post => GetQuestion(post.Id)).ToList();
                 
             }
-        }
+        }*/
 
         //return a full answer
         public Answers GetAnswer(int id)

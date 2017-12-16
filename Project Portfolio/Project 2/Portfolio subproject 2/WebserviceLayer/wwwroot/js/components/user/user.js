@@ -51,7 +51,7 @@
             canNext,
             prev,
             canPrev,
-            //showPost,
+            showPost,
             title,
             total
         };
