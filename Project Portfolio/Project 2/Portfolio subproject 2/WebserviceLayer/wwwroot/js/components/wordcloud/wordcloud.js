@@ -13,7 +13,16 @@
             /* ... */
         ]);
 
+        var getWordsTf = function (url) {
+            dataservice.getTfWords(url, data => {
+                console.log(data);
+                words(data);
+            });
+        };
+        //getWordsTf();
+
         var changeWords = function () {
+            getWordsTf();
 //            words([
 //                { text: "Joe", weight: 13 },
 //                { text: "Peter", weight: 10.5 },
@@ -25,17 +34,20 @@
 //                /* ... */
 //            ]);
             //words(dataservice.GetTfOfWordsInAPost(19));
-            forEach(VARIABLE in dataservice.GetTfOfWordsInAPost(19))
+
+            /*forEach(w in dataservice.GetTfOfWordsInAPost(19))
             {
-                words.add({ text: $parent.text, weight: $parent.weight })
-            }
+                //words.add({ text: $parent.text, weight: $parent.weight });
+                //words.add({text: w.});
+            }*/
         }
 
 
         return {
             title,
             words,
-            changeWords
+            changeWords,
+            getWordsTf
         };
     }
 });
