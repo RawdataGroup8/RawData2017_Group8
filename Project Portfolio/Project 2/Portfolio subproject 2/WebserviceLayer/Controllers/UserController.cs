@@ -29,10 +29,10 @@ namespace WebLayer.Controllers
                     Name = x.UserName,
                     age = x.Userage,
                     adress = x.UserLocation,
-                    x.Posts.Count
-                    
+                    total = _ds.GetPostsUser(x.Userid).Count
 
-                });
+
+        });
 
             //var total = _ds.NumberOfQuestions();
             var pages = Math.Ceiling(total / (double)pageSize);

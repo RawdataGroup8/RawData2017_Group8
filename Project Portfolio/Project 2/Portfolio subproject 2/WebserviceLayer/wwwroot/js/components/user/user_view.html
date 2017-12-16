@@ -2,35 +2,22 @@
     <div class="col-sm-2"></div>
     <div class="col-sm-8">
         <h2 data-bind="text: title"></h2>
-     
+        
+        <label>Name, Age, country, totalposts</label>
         <ul class="list-group" data-bind="foreach: users">
-           
+            
             <li class="list-group-item">
+
                 <a href="#" data-bind="click: $parent.showPost">
                     <span data-bind="text: name"></span></a>
                     <span data-bind="text: age"></span>
                     <span data-bind="text: adress"></span>
+                <span data-bind="text: total"></span>
                     <!--<a href="#" data-bind="click: $parent.showPost"><span data-bind="text: name"></span></a>-->
 </li>
         </ul>
 
 
-       <!-- <table data-bind="template:{name:'user-temp', foreach:users}"></table>
-        <script type="text/html" id="user-temp">
-            <tr>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Country</th>
-            </tr>
-            <tr>
-
-                <td data-bind="text:name"></td>
-                <td data-bind="text:age"></td>
-                <td data-bind="text:adress"></td>
-                
-
-            </tr>
-        </script>-->
         <div class="btn-group">
             <button class="btn btn-basic" data-bind="click: prev, enable: canPrev">Prev</button>
             <button class="btn btn-basic" data-bind="click: next, enable: canNext">Next</button>

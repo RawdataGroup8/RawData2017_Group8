@@ -4,25 +4,23 @@
         var users = ko.observableArray([]);
         var nextLink = ko.observable();
         var prevLink = ko.observable();
-        //var name = ko.observable();
-        var total = ko.observable();
+      //var total = data.total;
+        
 
         var getUsers = function (url) {
             dataservice.getUsers(url, data => {
                 users(data.items);
                 nextLink(data.next);
                 prevLink(data.prev);
-                //name(data.items.name);
-                total(data.total);
+                
+               
             });
         };
 
         var next = () => {
             getUsers(nextLink());
         };
-        var total = () => {
-            getUsers(total());
-        };
+      
         var canNext = ko.computed(() => {
             return nextLink() !== null;
         });
@@ -55,8 +53,8 @@
             prev,
             canPrev,
             showPost,
-            title,
-            total
+            title
+            
         };
     }
 });
