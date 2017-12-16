@@ -22,11 +22,6 @@ require.config({
 
 require(['knockout'], function (ko) {
 
-    ko.components.register("all_users", {
-        viewModel: { require: "components/user/user" },
-        template: { require: "text!components/user/user_view.html" }
-    });
-
     ko.components.register("new_quest", {
         viewModel: { require: "components/newest_questions/newest_questions" },
         template: { require: "text!components/newest_questions/newest_questions_view.html" }
@@ -45,6 +40,16 @@ require(['knockout'], function (ko) {
     ko.components.register("add_quest", {
         viewModel: { require: "components/add_question/add_question" },
         template: { require: "text!components/add_question/add_question_view.html" }
+    });
+
+    ko.components.register("all_users", {
+        viewModel: { require: "components/user/user" },
+        template: { require: "text!components/user/user_view.html" }
+    });
+
+    ko.components.register("search", {
+        viewModel: { require: "components/search/search" },
+        template: { require: "text!components/search/search_view.html" }
     });
 });
 
@@ -77,13 +82,17 @@ require(['knockout', 'store'], function (ko, store) {
         var allUsers = function () {
             store.dispatch(store.actions.changeView('all_users'));
         }
+        var search = function () {
+            store.dispatch(store.actions.changeView('search'));
+        }
 
         return {
             title,
             currentView,
             wordcloudView,
             addQuestion,
-            allUsers
+            allUsers,
+            search
         }
     })();
 

@@ -16,8 +16,7 @@ namespace WebLayer.Controllers
         [HttpGet(Name = nameof(GetPosts))]
         public IActionResult GetPosts(int page = 0, int pageSize = 10)
         {
-            var posts = _ds.GetPosts(page, pageSize)
-                .Select(x => new
+            var posts = _ds.GetPosts(page, pageSize).Select(x => new
                 {
                     Link = Url.Link(nameof(GetPost), new {x.PostId}),
                     x.Title

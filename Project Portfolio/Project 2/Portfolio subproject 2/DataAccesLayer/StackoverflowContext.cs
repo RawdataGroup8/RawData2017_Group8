@@ -120,7 +120,7 @@ namespace DataAccesLayer
             modelBuilder.Entity<WordIndex>().HasKey(k => new { k.Id, k.Word, k.TermFrequency});
 
             //Search
-            modelBuilder.Entity<RankedQuestions>().Property(x => x.Id).HasColumnName("id");
+            modelBuilder.Entity<RankedQuestions>().Property(x => x.PostId).HasColumnName("id");
             modelBuilder.Entity<RankedQuestions>().Property(x => x.Rank).HasColumnName("rank");
             modelBuilder.Entity<RankedQuestions>().Property(x => x.Title).HasColumnName("title");
         }

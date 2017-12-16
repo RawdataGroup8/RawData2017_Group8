@@ -7,6 +7,11 @@
         $.getJSON(url, callback);
     };
 
+
+    var searchPosts = (terms, callback) => {
+        $.getJSON('api/search/'+terms, callback);
+    };
+
     var getTfWords = (url, callback) => {
         if (url === undefined) {
             url = "api/wordtf/19";
@@ -58,6 +63,7 @@
         getUsers,
         getPosts,
         getPost,
-        getTfWords
+        getTfWords,
+        searchPosts       
     };
 });
