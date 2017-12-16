@@ -22,16 +22,6 @@ require.config({
 
 require(['knockout'], function (ko) {
 
-    /*ko.components.register("mylist", {
-        viewModel: { require: "components/mylist/mylist" },
-        template: { require: "text!components/mylist/mylist_view.html"}
-    });
-
-    ko.components.register("my-element", {
-        viewModel: { require: "components/element/element" },
-        template: { require: "text!components/element/element_view.html" }
-    });*/
-
     ko.components.register("all_users", {
         viewModel: { require: "components/user/user" },
         template: { require: "text!components/user/user_view.html" }
@@ -77,18 +67,6 @@ require(['knockout', 'store'], function (ko, store) {
         store.dispatch(store.actions.pageListTitle());
         store.dispatch(store.actions.pageListView());
 
-        /*var switchComponent = function() {
-            if (currentView() === "mylist") {
-                currentView("my-element");
-            } else if (currentView() === "wordcloud") {
-                currentView("mylist");
-            } else {
-                //currentView("post"); //comented out for testing of the wordcloud
-                currentView("wordcloud");
-            }
-
-        }*/
-
         var wordcloudView = function() {
             store.dispatch(store.actions.changeView('wordcloud'));
         }
@@ -96,22 +74,13 @@ require(['knockout', 'store'], function (ko, store) {
             store.dispatch(store.actions.changeView('add_quest'));
         }
 
-        // the users
-
         var allUsers = function () {
             store.dispatch(store.actions.changeView('all_users'));
         }
 
-        /*postman.subscribe(postman.events.changeView,
-            viewName => {
-                currentParams({ name: "hello"});
-                currentView(viewName);
-            });
-        */
         return {
             title,
             currentView,
-            //switchComponent,
             wordcloudView,
             addQuestion,
             allUsers
