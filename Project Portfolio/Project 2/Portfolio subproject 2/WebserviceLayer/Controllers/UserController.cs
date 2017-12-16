@@ -26,7 +26,12 @@ namespace WebLayer.Controllers
                 .Select(x => new
                 {
                     Url = Url.Link(nameof(GetPostUser), new { id = x.Userid }),
-                    Name = x.UserName
+                    Name = x.UserName,
+                    age = x.Userage,
+                    adress = x.UserLocation,
+                    x.Posts.Count
+                    
+
                 });
 
             //var total = _ds.NumberOfQuestions();
@@ -37,7 +42,7 @@ namespace WebLayer.Controllers
 
             var result = new
             {
-                //total,
+                total,
                 pages,
                 prev,
                 next,
