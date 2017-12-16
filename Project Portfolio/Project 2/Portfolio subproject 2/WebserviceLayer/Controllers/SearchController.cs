@@ -23,11 +23,11 @@ namespace WebLayer.Controllers
             {
                 Link = Url.Link(nameof(PostsController.GetPost), new { x.PostId }),
                 x.Title
-            }).ToList();
-            var total = data.Count;
+            });
+            var total = 100;//need to find a way to get the length of the IEnumerable here
             var pages = Math.Ceiling(total / (double)pageSize);
-            var prev = page > 0 ? Url.Link(nameof(RankedPostSearch), new {terms, page = page - 1, pageSize }) : null;
-            var next = page < pages - 1 ? Url.Link(nameof(RankedPostSearch), new {terms, page = page + 1, pageSize }) : null;
+            var prev = page > 0 ? Url.Link(nameof(RankedPostSearch), new {page = page - 1, pageSize }) : null;
+            var next = page < pages - 1 ? Url.Link(nameof(RankedPostSearch), new {page = page + 1, pageSize }) : null;
 
             var result = new
             {

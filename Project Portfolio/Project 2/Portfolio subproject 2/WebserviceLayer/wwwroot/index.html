@@ -23,7 +23,12 @@
 </head>
 <body>
 <div id="header"></div>
-<div data-bind="component: {name: currentView}"></div>
+<!-- ko if: false -->
+<div class="loader"></div>
+<!-- /ko -->
+<div data-bind="css: { hide: false }" class="hide">
+    <div data-bind="component: {name: currentView}"></div>
+</div>
 
 <!--<div class="navbar navbar-default navbar-fixed-bottom">      
     <div class="container">       

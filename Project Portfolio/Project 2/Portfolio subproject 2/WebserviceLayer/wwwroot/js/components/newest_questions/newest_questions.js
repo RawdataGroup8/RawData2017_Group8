@@ -4,10 +4,12 @@
         var posts = ko.observableArray([]);
         var nextLink = ko.observable();
         var prevLink = ko.observable();
+        var done = ko.observable(true);
 
         var getPosts = function (url) {
             dataservice.getPosts(url, data => {
                 posts(data.items);
+                done = false;
                 nextLink(data.next);
                 prevLink(data.prev);
             });
@@ -44,7 +46,8 @@
             prev,
             canPrev,
             showPost,
-            title
+            title,
+            done
         };
     }
 });

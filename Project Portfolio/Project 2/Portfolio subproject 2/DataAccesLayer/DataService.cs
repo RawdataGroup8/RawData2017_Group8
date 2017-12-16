@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DataAccesLayer.DBObjects;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators.Internal;
 
 namespace DataAccesLayer
 {
@@ -117,29 +118,9 @@ namespace DataAccesLayer
         {
             using (var db = new StackoverflowContext())
             {
-                var posts = db.Post.Where(p => p.TypeId == 1).OrderByDescending(q => q.CreationDate)
+                var posts = db.Post.Where(p => p.TypeId == 1 /*&& p.CreationDate>DateTime.Now.AddDays(-1027)*/).OrderByDescending(q => q.CreationDate)
                     .Skip(page * pageSize).Take(pageSize).ToList();
                 return posts.Select(post => GetQuestion(post.PostId)).ToList();
-            }
-        }
-
-
-        // I commented out the RankedPostSearch as it needs enhansment (giving me errors) 
-        //Reimplemented.. errors came from RankedQuestions not beeing in the dbContext anymore
-        public List<RankedQuestions> RankedPostSearch(string terms, int page, int pageSize)
-        {
-            using (var db = new StackoverflowContext())
-            {
-                if (string.IsNullOrEmpty(terms)) terms = "Python Dictionary"; //only for testing, parameter shpuld be used
-                terms = terms.Replace(" ", ", ");
-                var posts = db.RankedQuestions.FromSql("call ranked_post_search({0})", terms).OrderByDescending(q => q.Rank)
-                    .Skip(page * pageSize).Take(pageSize).ToList();
-                /*foreach (var p in posts)
-                {
-                    p.Question = GetQuestion(p.Id);
-                }*/
-                return posts;//.Select(post => GetQuestion(post.Id)).ToList();
-
             }
         }
 
@@ -246,10 +227,25 @@ namespace DataAccesLayer
                 db.SaveChanges();
             }
         }
-        // ------------------------ PROCEDURES ------------------------         
-        // A procedure that searches
-        //public List<Post> FulltextSearch(string text, int postType) => _db.Post.FromSql("call fulltext_search({0},{1})", text, postType).ToList();
+        // ------------------------ PROCEDURES ------------------------       
 
+
+        public List<RankedQuestions> RankedPostSearch(string terms, int page, int pageSize)
+        {
+            using (var db = new StackoverflowContext())
+            {
+                if (string.IsNullOrEmpty(terms)) terms = "Python Dictionary"; //only for testing, parameter shpuld be used
+                terms = terms.Replace(" ", ", ");
+                var posts = db.RankedQuestions.FromSql("call ranked_post_search({0})", terms).OrderByDescending(q => q.Rank)
+                    .Skip(page * pageSize).Take(pageSize).ToList();
+                /*foreach (var p in posts)
+                {
+                    p.Question = GetQuestion(p.Id);
+                }*/
+                return posts;//.Select(post => GetQuestion(post.Id)).ToList();
+
+            }
+        }
 
         public List<Post> BestMatch(string text)
         {

@@ -2,20 +2,20 @@
     <div class="col-sm-2"></div>
     <div class="col-sm-8">
         <form data-bind="submit: getPosts">
-            <p>Search: <input type="text" data-bind="value: terms" /></p>
+            <p>Search: <input type="text" class="form-control" data-bind="value: terms" /></p>
             <button type="submit">Submit</button>
         </form>
         <h2 data-bind="text: title"></h2>
         <ul class="list-group" data-bind="foreach: posts">
             <li class="list-group-item">
-                <a href="#" data-bind="submit: $parent.showPost"><span data-bind="text: title"></span></a>
+                <a href="#" data-bind="click: $parent.showPost"><span data-bind="text: title"></span></a>
             </li>
         </ul>
 
-        <div class="btn-group">
+        <!--<div class="btn-group">
             <button class="btn btn-basic" data-bind="click: prev, enable: canPrev">Prev</button>
             <button class="btn btn-basic" data-bind="click: next, enable: canNext">Next</button>
-        </div>
+        </div>-->
     </div>
 
 </div>
