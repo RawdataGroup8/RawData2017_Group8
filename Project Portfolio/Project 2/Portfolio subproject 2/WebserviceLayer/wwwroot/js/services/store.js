@@ -85,12 +85,7 @@ define(['redux'], function (redux) {
             }
         },
 
-        pageListView1:function () {
-            return {
-                type: CHANGE_VIEW,
-                componentName: 'new_quest'
-            }
-        },
+       
         
         selectPost: function (post) {
             return {

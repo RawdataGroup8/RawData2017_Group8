@@ -22,11 +22,6 @@ require.config({
 
 require(['knockout'], function (ko) {
 
-    ko.components.register('post',
-        {
-            viewModel: { require: 'components/post/post' },
-            template: { require: 'text!components/post/post_view.html' }
-        });
 
     ko.components.register("new_quest", {
         viewModel: { require: "components/newest_questions/newest_questions" },

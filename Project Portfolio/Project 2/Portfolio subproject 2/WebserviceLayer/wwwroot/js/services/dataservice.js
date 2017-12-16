@@ -59,22 +59,6 @@
         });
     };
 
-    // expected to return posts and its returning as expected
-    var getPost1 = function (url, callback) {
-        $.getJSON(url, data => {
-            var post = {
-                title: data.title,
-                score: data.score,
-                creationDate: data.creationDate,
-                body: data.body
-            }
-
-           
-        });
-    };
-
-
-    
 
     return {
         getUsers,

@@ -1,6 +1,6 @@
 ﻿define(['knockout'], function (ko) {
     return function (params) {
-        var id = ko.observable(666);
+        var id = ko.observable(66);
         var body = ko.observable("");
         var title = ko.observable("");
 

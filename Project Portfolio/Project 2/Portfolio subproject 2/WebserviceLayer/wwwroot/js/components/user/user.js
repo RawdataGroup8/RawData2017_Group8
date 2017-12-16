@@ -34,10 +34,10 @@
         });
 
         // this will be called for each user, and it will be defined in the dataservice.js
-        var showPost1 = (data) => {
+        var showPost = (data) => {
             dataservice.getPost(data.url, post => {
                 store.dispatch(store.actions.selectPost(post));
-                store.dispatch(store.actions.changeView("post"));
+                store.dispatch(store.actions.changeView("show_quest"));
             });
         };
         
@@ -54,7 +54,7 @@
             canNext,
             prev,
             canPrev,
-            showPost1,
+            showPost,
             title
             
             
