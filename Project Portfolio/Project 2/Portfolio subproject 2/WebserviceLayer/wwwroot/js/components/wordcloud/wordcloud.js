@@ -16,7 +16,7 @@
         var getWordsTf = function (url) {
             dataservice.getTfWords(url, data => {
                 console.log(data);
-                words(data.items);
+                words(data);
             });
         };
         //getWordsTf();

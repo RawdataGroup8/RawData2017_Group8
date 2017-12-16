@@ -37,8 +37,6 @@ require(['knockout'], function (ko) {
         template: { require: "text!components/user/user_view.html" }
     });
 
-
-
     ko.components.register("new_quest", {
         viewModel: { require: "components/newest_questions/newest_questions" },
         template: { require: "text!components/newest_questions/newest_questions_view.html" }
