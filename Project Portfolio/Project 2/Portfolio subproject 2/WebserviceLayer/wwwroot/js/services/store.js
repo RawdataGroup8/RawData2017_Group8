@@ -11,6 +11,7 @@ define(['redux'], function (redux) {
     const CHANGE_TITLE = "CHANGE_TITLE";
     const CHANGE_VIEW = "CHANGE_VIEW";
     const SELECT_POST = "SELECT_POST";
+    const SELECT_USER = "SELECT_USER";
 
     // this is the state we want to handle
     var currentState = {
@@ -31,6 +32,8 @@ define(['redux'], function (redux) {
                 return Object.assign({}, state, { view: action.componentName });
             case SELECT_POST:
                 return Object.assign({}, state, { selectedPost: action.post });
+            case SELECT_USER:
+                return Object.assign({}, state, { selectedUser: action.user });
             default:
                 return state;
         }
@@ -91,6 +94,13 @@ define(['redux'], function (redux) {
             return {
                 type: SELECT_POST,
                 post
+            }
+        },
+
+        selectUser: function (user) {
+            return {
+                type: SELECT_USER,
+                user
             }
         }
     };
