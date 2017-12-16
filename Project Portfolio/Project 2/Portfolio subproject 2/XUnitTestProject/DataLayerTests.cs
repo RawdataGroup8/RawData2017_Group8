@@ -105,5 +105,18 @@ namespace XUnitTestProject
             Assert.Equal(10, simpleQuestions.Count);
 
         }
+
+
+        [Fact]
+        public void GetTfByIdReturnsCorrect()
+        {
+            var ds = new DataService();
+            var wordIndex = ds.GetTfOfWordsInAPost(19);
+            Assert.NotEmpty(wordIndex);
+            Assert.Equal("acos", wordIndex.First().Word);
+
+        }
+
+
     }
 }

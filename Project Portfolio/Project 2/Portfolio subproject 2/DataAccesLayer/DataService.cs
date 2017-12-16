@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DataAccesLayer.DBObjects;
 using Microsoft.EntityFrameworkCore;
@@ -119,6 +120,24 @@ namespace DataAccesLayer
                 var posts = db.Post.Where(p => p.TypeId == 1).OrderByDescending(q => q.CreationDate)
                     .Skip(page * pageSize).Take(pageSize).ToList();
                 return posts.Select(post => GetQuestion(post.PostId)).ToList();
+            }
+        }
+
+        public List<RankedQuestions> RankedPostSearch(string terms, int page, int pageSize)
+        {
+            using (var db = new StackoverflowContext())
+            {
+                if (string.IsNullOrEmpty(terms)) terms = "Python Dictionary"; //only for testing, parameter shpuld be used
+                terms = terms.Replace(" ", ", ");
+                //IList<RankedQuestions> empSummary = db.Database.SqlQuery<RankedQuestions>("GetEmployeesSummary").ToList();
+                var posts = db.RankedQuestions.FromSql("call ranked_post_search({0})", terms).OrderByDescending(q => q.Rank)
+                    .Skip(page * pageSize).Take(pageSize).ToList();
+                /*foreach (var p in posts)
+                {
+                    p.Question = GetQuestion(p.Id);
+                }*/
+                return posts;//.Select(post => GetQuestion(post.Id)).ToList();
+                
             }
         }
 
@@ -245,6 +264,18 @@ namespace DataAccesLayer
             using (var db = new StackoverflowContext())
             {
                 return db.Question.FromSql("call search_questions_by_tag({0},{1})", tag, limit).ToList();
+            }
+        }
+
+        //----- For the wordcloud -----//
+        public List<WordIndex> GetTfOfWordsInAPost(int id)
+        {
+            using (var db = new StackoverflowContext())
+            {
+                return db.WordIndex.Where(i => i.Id == id)
+                    .GroupBy(test => test.Word)
+                    .Select(grp => grp.First())
+                    .ToList();
             }
         }
     }

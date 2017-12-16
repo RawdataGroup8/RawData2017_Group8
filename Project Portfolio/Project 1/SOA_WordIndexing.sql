@@ -183,7 +183,7 @@ begin
     DECLARE result TEXT DEFAULT NULL;
     DECLARE firstIter BOOL DEFAULT TRUE;
     
-    set result = 'select wi.id, sum(score) as rank from wi, (';
+    set result = 'select wi.id, title, sum(score2) as rank from wi, (';
     iterator:
 	LOOP
 		IF LENGTH(TRIM(_wlist)) = 0 OR _wlist IS NULL THEN
@@ -201,13 +201,13 @@ begin
         /*store length of _next'*/
         SET _nextlen = LENGTH(_next); 
         /*add a line to the sql query*/
-        SET result = CONCAT(result, 'select distinct id, tf_idf as score from wi where word = ', "'",trim(_next),"'");
+        SET result = CONCAT(result, 'select distinct id, tf_idf as score2 from wi where word = ', "'",trim(_next),"'");
         /*remove the processed word from the input string*/
         SET _wlist = INSERT(_wlist,1,_nextlen + 1,'');
     END LOOP;
     
     /*close the query string*/
-	set @res = concat(result, ') t where t.id=wi.id group by t.id order by rank desc limit 15'); 
+	set @res = concat(result, ') t, (select post_id, title from post) as tt where t.id=wi.id and tt.post_id = t.id group by t.id order by rank desc limit 15'); 
     
     /*prepare and execute the string with the sql query*/
     PREPARE stmt FROM @res;
