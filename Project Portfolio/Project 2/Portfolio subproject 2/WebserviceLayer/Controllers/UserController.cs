@@ -68,9 +68,10 @@ namespace WebLayer.Controllers
                     .Select(x => new
                     {
                         Url = Url.Link((nameof(PostsController.GetPost)), new { id = x.PostId }),
-                        Name = x.Title,
+                        title= x.Title,
                         Type = x.TypeId,
-                        x.Body
+                        x.Body,
+                        x.Score
                     });
 
                 var result = new

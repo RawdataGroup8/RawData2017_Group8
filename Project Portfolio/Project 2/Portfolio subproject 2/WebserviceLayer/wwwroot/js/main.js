@@ -22,6 +22,12 @@ require.config({
 
 require(['knockout'], function (ko) {
 
+    ko.components.register('post',
+        {
+            viewModel: { require: 'components/post/post' },
+            template: { require: 'text!components/post/post_view.html' }
+        });
+
     ko.components.register("new_quest", {
         viewModel: { require: "components/newest_questions/newest_questions" },
         template: { require: "text!components/newest_questions/newest_questions_view.html" }
@@ -78,7 +84,10 @@ require(['knockout', 'store'], function (ko, store) {
         var addQuestion = function () {
             store.dispatch(store.actions.changeView('add_quest'));
         }
-
+        // I added this post is related with getting post of each user, I tried to use the show_quest but i couldnot make it!
+        var post= function () {
+            store.dispatch(store.actions.changeView('post'));
+        }
         var allUsers = function () {
             store.dispatch(store.actions.changeView('all_users'));
         }
@@ -92,7 +101,8 @@ require(['knockout', 'store'], function (ko, store) {
             wordcloudView,
             addQuestion,
             allUsers,
-            search
+            search,
+            post
         }
     })();
 

@@ -33,12 +33,14 @@
             return prevLink() !== null;
         });
 
-        var showPost = (data) => {
+        // this will be called for each user, and it will be defined in the dataservice.js
+        var showPost1 = (data) => {
             dataservice.getPost(data.url, post => {
                 store.dispatch(store.actions.selectPost(post));
-                store.dispatch(store.actions.changeView("all_users"));
+                store.dispatch(store.actions.changeView("post"));
             });
         };
+        
        
 
           //getPosts();
@@ -52,8 +54,9 @@
             canNext,
             prev,
             canPrev,
-            showPost,
+            showPost1,
             title
+            
             
         };
     }
