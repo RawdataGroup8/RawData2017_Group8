@@ -21,11 +21,8 @@ namespace WebLayer.Controllers
         
         public IActionResult RankedPostSearch(string terms, int page = 0, int pageSize = 10)
         {
-            //var data = _ds.RankedPostSearch(terms, page, pageSize);
-            //return data != null ? (IActionResult)Ok(data) : NotFound();
-
-            return null;
-
+            var data = _ds.RankedPostSearch(terms, page, pageSize);
+            return data != null ? (IActionResult)Ok(data) : NotFound();
         }
         
     }

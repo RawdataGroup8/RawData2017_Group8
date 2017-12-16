@@ -28,5 +28,7 @@ namespace DataAccesLayer
         List<Answers> GetAnswers(int id);
         List<WordIndex> GetTfOfWordsInAPost(int id);
         List<Post> GetPostsUser(int id);
+        List<RankedQuestions> RankedPostSearch(string terms, int page, int pageSize);
+
     }
 }
