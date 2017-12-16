@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace WebLayer.Controllers
 {
     [Produces("application/json")]
-    [Route("api/WordTf")]
+    [Route("api/wordtf")]
     public class WordTfController : Controller
     {
         private readonly IDataService _ds;

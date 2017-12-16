@@ -100,7 +100,7 @@ require(['knockout', 'store'], function (ko, store) {
 
         // the users
 
-        var all_users = function () {
+        var allUsers = function () {
             store.dispatch(store.actions.changeView('all_users'));
         }
 
@@ -116,7 +116,7 @@ require(['knockout', 'store'], function (ko, store) {
             //switchComponent,
             wordcloudView,
             addQuestion,
-            all_users
+            allUsers
         }
     })();
 

@@ -132,7 +132,6 @@ namespace DataAccesLayer
             {
                 if (string.IsNullOrEmpty(terms)) terms = "Python Dictionary"; //only for testing, parameter shpuld be used
                 terms = terms.Replace(" ", ", ");
-                //IList<RankedQuestions> empSummary = db.Database.SqlQuery<RankedQuestions>("GetEmployeesSummary").ToList();
                 var posts = db.RankedQuestions.FromSql("call ranked_post_search({0})", terms).OrderByDescending(q => q.Rank)
                     .Skip(page * pageSize).Take(pageSize).ToList();
                 /*foreach (var p in posts)
