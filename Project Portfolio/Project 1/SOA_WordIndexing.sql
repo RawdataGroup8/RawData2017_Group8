@@ -207,7 +207,7 @@ begin
     END LOOP;
     
     /*close the query string*/
-	set @res = concat(result, ') t, (select post_id, title from post) as tt where t.id=wi.id and tt.post_id = t.id group by t.id order by rank desc limit 15'); 
+	set @res = concat(result, ') t, (select post_id, title, type_id from post) as tt where t.id=wi.id and tt.post_id = t.id and tt.type_id = 1 group by t.id order by rank desc limit 15'); 
     
     /*prepare and execute the string with the sql query*/
     PREPARE stmt FROM @res;
