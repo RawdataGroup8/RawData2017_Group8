@@ -80,7 +80,7 @@ require(['knockout', 'store'], function (ko, store) {
             store.dispatch(store.actions.changeView('add_quest'));
         }
         // I added this post is related with getting post of each user, I tried to use the show_quest but i couldnot make it!
-        var post= function () {
+        var post = function () {
             store.dispatch(store.actions.changeView('post'));
         }
         var allUsers = function () {
@@ -89,12 +89,16 @@ require(['knockout', 'store'], function (ko, store) {
         var search = function () {
             store.dispatch(store.actions.changeView('search'));
         }
+        var new_quest = function () {
+            store.dispatch(store.actions.changeView('new_quest'));
+        }
 
         return {
             title,
             currentView,
             wordcloudView,
             addQuestion,
+            new_quest,
             allUsers,
             search,
             post
