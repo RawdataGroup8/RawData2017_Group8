@@ -60,7 +60,7 @@ require(['knockout', 'store'], function (ko, store) {
     // show the state everytime it is updated
     store.subscribe(() => {
         if (store.getState().view !== "nostate") {
-            console.log(store.getState());
+            //console.log(store.getState());//getState());
             states.push(store.getState());
         }
     });
