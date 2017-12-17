@@ -54,11 +54,15 @@ require(['knockout'], function (ko) {
     });
 });
 
+var states = []
 require(['knockout', 'store'], function (ko, store) {
 
     // show the state everytime it is updated
     store.subscribe(() => {
-        console.log(store.getState());
+        if (store.getState().view !== "nostate") {
+            console.log(store.getState());
+            states.push(store.getState());
+        }
     });
 
     var vm = (function() {
@@ -74,20 +78,34 @@ require(['knockout', 'store'], function (ko, store) {
         store.dispatch(store.actions.pageListView());
 
         var wordcloudView = function() {
+            store.dispatch(store.actions.changeTitle('Wordcloud'));
             store.dispatch(store.actions.changeView('wordcloud'));
         }
         var addQuestion = function () {
+            store.dispatch(store.actions.changeTitle('New Question'));
             store.dispatch(store.actions.changeView('add_quest'));
         }
         // I added this post is related with getting post of each user, I tried to use the show_quest but i couldnot make it!
-        var post= function () {
+        var post = function () {
+            store.dispatch(store.actions.changeTitle('Post'));
             store.dispatch(store.actions.changeView('post'));
         }
         var allUsers = function () {
+            store.dispatch(store.actions.changeTitle('Users'));
             store.dispatch(store.actions.changeView('all_users'));
         }
         var search = function () {
+            store.dispatch(store.actions.changeTitle('Search'));
             store.dispatch(store.actions.changeView('search'));
+        }
+        var new_quest = function () {
+            store.dispatch(store.actions.changeTitle('Questions'));
+            store.dispatch(store.actions.changeView('new_quest'));
+        }
+
+        var back = function() {
+            store.dispatch(store.actions.changeView(states[states.length-2]));
+
         }
 
         return {
@@ -95,9 +113,11 @@ require(['knockout', 'store'], function (ko, store) {
             currentView,
             wordcloudView,
             addQuestion,
+            new_quest,
             allUsers,
             search,
-            post
+            post,
+            back
         }
     })();
 

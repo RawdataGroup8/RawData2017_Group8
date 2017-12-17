@@ -12,6 +12,8 @@
         $.getJSON('api/search/'+terms, callback);
     };
 
+
+    //for use with the wordcloud
     var getTfWords = (id, callback) => {
         $.getJSON('api/wordtf/' + id, callback);
     }
