@@ -2,16 +2,4 @@
 
 <div data-bind="cloud: {words}" style="width: 200px; height: 200px"></div>
 
-<table>
-    <thead>
-        <tr><th>First name</th><th>Last name</th></tr>
-    </thead>
-    <tbody data-bind="foreach: words">
-        <tr>
-            <td data-bind="text: text"></td>
-            <td data-bind="text: weight"></td>
-        </tr>
-    </tbody>
-</table>
-
 <button data-bind="click: changeWords"> Change Words</button>

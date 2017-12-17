@@ -12,13 +12,10 @@
         $.getJSON('api/search/'+terms, callback);
     };
 
-    var getTfWords = (url, callback) => {
-        if (url === undefined) {
-            url = "api/wordtf/19";
-        }
-        $.getJSON(url, callback);
-    };
-
+    var getTfWords = (id, callback) => {
+        $.getJSON('api/wordtf/' + id, callback);
+    }
+    
     //getting the users
     var getUsers = (url, callback) => {
         if (url === undefined) {
