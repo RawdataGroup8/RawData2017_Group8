@@ -1,15 +1,50 @@
 body {
-  padding-top: 50px;
-  margin-top: 30px; /* 100px is double the height of the navbar - I made it a big larger for some more space - keep it at 50px at least if you want to use the fixed top nav */
+    padding-top: 50px;
+    margin-top: 30px; /* 100px is double the height of the navbar - I made it a big larger for some more space - keep it at 50px at least if you want to use the fixed top nav */
+    margin-bottom: 8%;
+    background: #383838;
 }
 .starter-template {
   padding: 40px 15px;
   text-align: center;
 }
 
-footer {
-    margin: 50px 0;
+.navbar {
+    background: #222;
+    border: 0;
 }
+
+.list-group-item {
+    border-color: #666666;
+    background: #757575;
+}
+
+.navbar-inverse .navbar-form {
+    border: none;
+}
+
+a {
+    color: #448cff;
+}
+h2 {
+    color: #999999;
+}
+
+p {
+    color: #999999;
+}
+
+strong {
+    color: #999999;
+}
+
+pre {
+    background: #666666;
+}
+
+/*footer {
+    margin: 50px 0;
+}*/
 
 .label {
     min-width: 22px !important;
