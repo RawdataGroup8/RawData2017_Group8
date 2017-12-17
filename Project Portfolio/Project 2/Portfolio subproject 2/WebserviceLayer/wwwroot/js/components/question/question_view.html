@@ -1,0 +1,58 @@
+﻿<div>
+    <button data-bind="click: home">Back</button>
+</div>
+<div data-bind="text: koRocks"></div>
+<div data-bind="with: currentPost">
+    <h2 data-bind="text: title"></h2>
+    <h3>
+        Creation Date: <span data-bind="text: creationDate"></span>
+    </h3>
+    <h3>
+        Score: <span data-bind="text: score"></span>
+    </h3>
+    <div data-bind="html: body"></div>
+
+    <hr />
+
+    <div data-bind="foreach: answers">
+        <div data-bind="component: {name: 'answer', params: { body}}"></div>
+        <!--<answer params="body: body, title: $parent.title, currentView: $parent.currentView"></answer>-->
+        <!--<div data-bind="html: body"></div>
+        <hr/>
+        <div>
+            <button data-bind="click: $parents[1].home">Back</button>
+        </div>-->
+    </div>
+</div>
+
+<!--<pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
+    <!--
+    <h1 data-bind="text: title"></h1>
+
+    <div data-bind="template: {name: currentView}"></div>
+
+    <div>
+        <button data-bind="click: home">Back</button>
+    </div>
+    <div data-bind="with: currentPost">
+        <h2 data-bind="text: title"></h2>
+        <h3>
+            Creation Date: <span data-bind="text: creationDate"></span>
+        </h3>
+        <h3>
+            Score: <span data-bind="text: score"></span>
+        </h3>
+        <div data-bind="html: body"></div>
+
+        <hr />
+
+        <div data-bind="foreach: answers">
+            <div data-bind="html: body"></div>
+            <hr />
+            <div>
+                <button data-bind="click: $parents[1].home">Back</button>
+            </div>
+        </div>
+
+    </div>
+    -->
