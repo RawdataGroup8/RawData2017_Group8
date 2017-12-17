@@ -1,6 +1,4 @@
-﻿
-
-require.config({
+﻿require.config({
 
     baseUrl: "js",
     paths: {
@@ -54,11 +52,16 @@ require(['knockout'], function (ko) {
     });
 });
 
+var states = [];
 require(['knockout', 'store'], function (ko, store) {
 
     // show the state everytime it is updated
     store.subscribe(() => {
-        console.log(store.getState());
+        //console.log(store.getState());
+        states.push(store.getState());
+        console.log(store.getState().title);
+        
+        //console.log(states);
     });
 
     var vm = (function() {
@@ -73,7 +76,7 @@ require(['knockout', 'store'], function (ko, store) {
         store.dispatch(store.actions.pageListTitle());
         store.dispatch(store.actions.pageListView());
 
-        var wordcloudView = function() {
+        var wordcloudView = function () {
             store.dispatch(store.actions.changeView('wordcloud'));
         }
         var addQuestion = function () {
@@ -89,6 +92,9 @@ require(['knockout', 'store'], function (ko, store) {
         var search = function () {
             store.dispatch(store.actions.changeView('search'));
         }
+        var back = function() {
+            store.dispatch(store.actions.changeView(states[states.length - 2].view));
+        }
 
         return {
             title,
@@ -97,7 +103,8 @@ require(['knockout', 'store'], function (ko, store) {
             addQuestion,
             allUsers,
             search,
-            post
+            post,
+            back
         }
     })();
 
