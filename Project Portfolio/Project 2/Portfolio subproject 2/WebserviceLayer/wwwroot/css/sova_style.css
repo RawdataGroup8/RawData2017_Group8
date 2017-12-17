@@ -14,8 +14,14 @@ body {
     border: 0;
 }
 
+
+.navbar-btn {
+    background: #757575;
+    border: 0;
+}
+
 .list-group-item {
-    border-color: #666666;
+    border-color: #505050;
     background: #757575;
 }
 

@@ -87,9 +87,7 @@ define(['redux'], function (redux) {
                 componentName: 'new_quest'
             }
         },
-
        
-        
         selectPost: function (post) {
             return {
                 type: SELECT_POST,

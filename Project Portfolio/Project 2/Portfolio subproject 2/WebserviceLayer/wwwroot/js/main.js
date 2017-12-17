@@ -54,11 +54,15 @@ require(['knockout'], function (ko) {
     });
 });
 
+var states = []
 require(['knockout', 'store'], function (ko, store) {
 
     // show the state everytime it is updated
     store.subscribe(() => {
-        console.log(store.getState());
+        if (store.getState().view !== "nostate") {
+            console.log(store.getState());
+            states.push(store.getState());
+        }
     });
 
     var vm = (function() {
@@ -99,6 +103,11 @@ require(['knockout', 'store'], function (ko, store) {
             store.dispatch(store.actions.changeView('new_quest'));
         }
 
+        var back = function() {
+            store.dispatch(store.actions.changeView(states[states.length-2]));
+
+        }
+
         return {
             title,
             currentView,
@@ -107,7 +116,8 @@ require(['knockout', 'store'], function (ko, store) {
             new_quest,
             allUsers,
             search,
-            post
+            post,
+            back
         }
     })();
 
