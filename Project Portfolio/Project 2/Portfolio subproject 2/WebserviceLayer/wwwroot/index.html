@@ -26,7 +26,6 @@
 <div class="loader"></div>
 <!-- /ko -->
 
-<button data-bind="click: back">BACK</button>
 
 <div data-bind="css: { hide: false }" class="hide">
     <div data-bind="component: {name: currentView}"></div>
@@ -34,7 +33,9 @@
 
 <div class="navbar navbar-default navbar-fixed-bottom">      
     <div class="container">       
-        <p class="navbar-text pull-left">© Group 8, RAWDATA 2017</p>
+        <p class="navbar-text pull-left">© Group 8, RAWDATA 2017        <button class="btn btn-basic" data-bind="click: back">Back</button>
+        </p>
+
         <a href="https://github.com/RawdataGroup8/RawData2017_Group8/tree/master/Project%20Portfolio/Project%202/Portfolio%20subproject%202" class="navbar-btn btn-default btn pull-right">
             <img src="img/sova.png" height="25" /> </a> 
     </div>

@@ -48,7 +48,6 @@ define(['redux'], function (redux) {
                 return state;
         }
         
-        return nextState;
     };
     
     // here we change the state by calling the reducer

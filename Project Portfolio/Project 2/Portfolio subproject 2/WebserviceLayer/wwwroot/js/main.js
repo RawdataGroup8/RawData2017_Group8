@@ -100,8 +100,8 @@ require(['knockout', 'store'], function (ko, store) {
         }
 
         var back = function () {
-            console.log(store.getState().history.length-1);
-            store.dispatch(store.actions.useHistory(store.getState().history.length).state);
+            console.log(store.getState().history[store.getState().history.length-1]);
+            store.dispatch(store.actions.useHistory(store.getState().history[store.getState().history.length-1]));
         }
 
         return {

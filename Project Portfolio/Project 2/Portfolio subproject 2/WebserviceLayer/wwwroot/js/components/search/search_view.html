@@ -2,8 +2,10 @@
     <div class="col-sm-2"></div>
     <div class="col-sm-8">
         <form data-bind="submit: getPosts">
-            <p>Search: <input type="text" class="form-control" data-bind="value: terms" /></p>
-            <button type="submit">Submit</button>
+            <div>
+            <p>Search: <input type="text" class="form-control" data-bind="value: terms"/></p>
+            <button class="btn btn-basic" type="submit">Search</button>
+            </div>
         </form>
         <h2 data-bind="text: title"></h2>
         <ul class="list-group" data-bind="foreach: posts">
