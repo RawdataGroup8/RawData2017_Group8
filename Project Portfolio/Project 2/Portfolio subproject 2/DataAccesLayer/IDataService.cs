@@ -10,8 +10,8 @@ namespace DataAccesLayer
         Post GetPost(int id);
         Post GetPosts_Tags(int id);
         Question GetQuestion(int id);
-        List<NewestQuestions> GetNewestQuestions(int page, int pageSize);
-        List<Post> GetNewestQuestionsFull(int page, int pageSize);
+        List<Post> GetNewestQuestions(int page, int pageSize);
+        //List<Post> GetNewestQuestionsFull(int page, int pageSize);
         Answers GetAnswer(int id);
         User GetUser(int id);
         List<LinkedPosts> LinkingToThisPost(int id);
@@ -30,7 +30,7 @@ namespace DataAccesLayer
         List<WordIndex> GetTfOfWordsInAPost(int id);
         List<Post> GetPostsUser(int id);
         List<RankedQuestions> RankedPostSearch(string terms, int page, int pageSize);
-        List<RankedWords> RankedWordsSearch(string terms, int page, int pageSize);
+        List<RankedWords> RankedWordsSearch(string terms/*, int page, int pageSize*/);
 
     }
 }

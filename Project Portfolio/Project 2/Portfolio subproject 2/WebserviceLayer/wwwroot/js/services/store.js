@@ -48,7 +48,6 @@ define(['redux'], function (redux) {
                 return state;
         }
         
-        return nextState;
     };
     
     // here we change the state by calling the reducer
@@ -121,7 +120,7 @@ define(['redux'], function (redux) {
         },
         useHistory: function (state) {
             return {
-                type: SAVE_HISTORY,
+                type: USE_HISTORY,
                 state
             }
         }

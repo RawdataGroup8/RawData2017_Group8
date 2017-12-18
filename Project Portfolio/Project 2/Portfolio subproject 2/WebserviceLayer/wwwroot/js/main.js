@@ -22,7 +22,6 @@ require.config({
 
 require(['knockout'], function (ko) {
 
-
     ko.components.register("new_quest", {
         viewModel: { require: "components/newest_questions/newest_questions" },
         template: { require: "text!components/newest_questions/newest_questions_view.html" }
@@ -62,12 +61,9 @@ var states = [];
 require(['knockout', 'store'], function (ko, store) {
 
     // show the state everytime it is updated
-    store.subscribe(() => {
-        if (store.getState().view !== "nostate") {
-            console.log(store.getState());//getState());
-            states.push(store.getState());
-        }
-    });
+    //store.subscribe(() => {
+    //    console.log(store.getState());
+    //});
 
     var vm = (function() {
         var title = ko.observable();
@@ -107,9 +103,9 @@ require(['knockout', 'store'], function (ko, store) {
             store.dispatch(store.actions.changeView('new_quest'));
         }
 
-        var back = function() {
-            store.dispatch(store.actions.changeView(states[states.length-2]));
-
+        var back = function () {
+            console.log(store.getState().history[store.getState().history.length-1]);
+            store.dispatch(store.actions.useHistory(store.getState().history[store.getState().history.length-1]));
         }
 
         return {

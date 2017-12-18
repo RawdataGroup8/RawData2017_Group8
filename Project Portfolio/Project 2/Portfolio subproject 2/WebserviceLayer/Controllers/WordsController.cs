@@ -15,16 +15,16 @@ namespace WebLayer.Controllers
         public WordsController(IDataService iDataService) => _ds = iDataService;
 
 
-        //GET: api/search/java%20python
+        //GET: api/words/java%20python
         [HttpGet("{terms}", Name = nameof(RankedWordsSearch))]       
-        public IActionResult RankedWordsSearch(string terms, int page = 0, int pageSize = 10)
+        public IActionResult RankedWordsSearch(string terms/*, int page = 0, int pageSize = 10*/)
         {
-            var data = _ds.RankedWordsSearch(terms, page, pageSize).Select(x => new
+            var data = _ds.RankedWordsSearch(terms/*, page, pageSize*/).Select(x => new
             {
                 //Link = Url.Link(nameof(PostsController.GetPost), new { x.PostId }),
                 //x.
-                word = x.Word,
-                rank = x.Rank
+                text = x.Word,
+                weight = x.Rank
 
             });
             /*var total = 100;//need to find a way to get the length of the IEnumerable here
