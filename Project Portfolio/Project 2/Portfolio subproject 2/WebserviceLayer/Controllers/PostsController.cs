@@ -49,7 +49,7 @@ namespace WebLayer.Controllers
                     x.Score
                 });
 
-            var total = _ds.NumberOfQuestions();
+            var total = 100;//_ds.NumberOfQuestions();
             var pages = Math.Ceiling(total / (double) pageSize);
             var prev = page > 0 ? Url.Link(nameof(GetNewestQuestions), new {page = page - 1, pageSize}) : null;
             var next = page < pages - 1 ? Url.Link(nameof(GetNewestQuestions), new {page = page + 1, pageSize}) : null;

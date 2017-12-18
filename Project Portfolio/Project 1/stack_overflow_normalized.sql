@@ -262,7 +262,7 @@ DELIMITER //
 CREATE PROCEDURE add_question (IN user_id int, in body varchar(5000), in title varchar(500))
 BEGIN
 	declare pid INT DEFAULT NULL;
-    set pid = (select max(post_id) from post)+1;
+    set pid = (select max(post_id) from question)+1;
     insert into post values (pid, now(), 0, body, title, user_id, 1);
     insert into question values (pid, null, null);
 END //
