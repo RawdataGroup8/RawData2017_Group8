@@ -15,12 +15,14 @@ namespace DataAccesLayer
         public DbSet<LinkedPosts> LinkedPosts { get; set; }
         public DbSet<Marking> Marking { get; set; } 
         public DbSet<Post> Post { get; set; }
+        public DbSet<SimplePost> SimplePost { get; set; }
         public DbSet<PostTags> PostTags { get; set; }
         public DbSet<Question> Question { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<WordIndex> WordIndex { get; set; }
         public DbSet<RankedQuestions> RankedQuestions { get; set; }
         public DbSet<RankedWords> RankedWords { get; set; }
+        public DbSet<NewestQuestions> NewestQuestions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -128,6 +130,20 @@ namespace DataAccesLayer
             //Ranked Words search
             modelBuilder.Entity<RankedWords>().Property(x => x.Word).HasColumnName("word");
             modelBuilder.Entity<RankedWords>().Property(x => x.Rank).HasColumnName("rank");
+
+            //Newest Questions View
+            modelBuilder.Entity<NewestQuestions>().ToTable("newest_question_view");
+            modelBuilder.Entity<NewestQuestions>().Property(x => x.Title).HasColumnName("title");
+            modelBuilder.Entity<NewestQuestions>().Property(x => x.Score).HasColumnName("score");
+            modelBuilder.Entity<NewestQuestions>().Property(x => x.PostId).HasColumnName("post_id");
+
+            //simplePost
+            modelBuilder.Entity<SimplePost>().Property(x => x.PostId).HasColumnName("post_id");
+            modelBuilder.Entity<SimplePost>().Property(x => x.Score).HasColumnName("score");
+            modelBuilder.Entity<SimplePost>().Property(x => x.Title).HasColumnName("title");
+            modelBuilder.Entity<SimplePost>().Property(x => x.TypeId).HasColumnName("type_id");
+
+
         }
 
 

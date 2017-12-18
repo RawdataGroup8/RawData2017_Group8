@@ -50,7 +50,7 @@ CREATE TABLE post (
 	#FULLTEXT (title)-- used by: Searching_Questions
 );
 CREATE INDEX index_post
-ON post (post_id, type_id);
+ON post (post_id, type_id, creation_date);
 #alter table `user`
 #	modify column `body` VARCHAR(30)
 #	CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL ;
@@ -262,11 +262,16 @@ DELIMITER //
 CREATE PROCEDURE add_question (IN user_id int, in body varchar(5000), in title varchar(500))
 BEGIN
 	declare pid INT DEFAULT NULL;
-    set pid = (select max(post_id) from post)+1;
+    set pid = (select max(post_id) from question)+1;
     insert into post values (pid, now(), 0, body, title, user_id, 1);
     insert into question values (pid, null, null);
 END //
 DELIMITER ; 
+
+drop view if exists newest_question_view;
+create view newest_question_view as select post_id, title, score from post natural join question order by creation_date desc limit 100; 
+
+
 
 
 -- Searching_Questions /* Finds questions that matches the last meaningful word of the input string, where that word must be in the title. */

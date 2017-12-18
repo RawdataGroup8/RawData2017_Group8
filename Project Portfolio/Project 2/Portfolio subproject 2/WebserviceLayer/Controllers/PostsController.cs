@@ -41,12 +41,12 @@ namespace WebLayer.Controllers
         [HttpGet("q", Name = nameof(GetNewestQuestions))]
         public IActionResult GetNewestQuestions(int page = 0, int pageSize = 10)
         {
-            var posts = _ds.GetNewestQuestions(page, pageSize)
+            var posts = _ds.GetNewestQuestionsFull(page, pageSize)
                 .Select(x => new
                 {
-                    Link = Url.Link(nameof(GetPost), new {x.Post.PostId}),
-                    x.Post.Title,
-                    x.Post.Score
+                    Link = Url.Link(nameof(GetPost), new {x.PostId}),
+                    x.Title,
+                    x.Score
                 });
 
             var total = _ds.NumberOfQuestions();
