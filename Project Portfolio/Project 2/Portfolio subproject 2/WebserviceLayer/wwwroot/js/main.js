@@ -32,7 +32,7 @@ require(['knockout'], function (ko) {
         viewModel: { require: "components/question/question" },
         template: { require: "text!components/question/question_view.html" }
     });
-    ko.components.register("show_userpost", {
+    ko.components.register("show_user", {
         viewModel: { require: "components/userposts/userposts" },
         template: { require: "text!components/question/userposts_view.html" }
     });

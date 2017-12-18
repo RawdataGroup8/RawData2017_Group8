@@ -35,9 +35,10 @@
 
         // this will be called for each user, and it will be defined in the dataservice.js
         var showUser = (data) => {
-            dataservice.getUser(data.url, user => {
+            dataservice.getU
+            ser(data.url, user => {
                 store.dispatch(store.actions.selectUser(user));
-                store.dispatch(store.actions.changeView("show_userpost"));
+                store.dispatch(store.actions.changeView("show_user"));
             });
         };
         
@@ -54,7 +55,7 @@
             canNext,
             prev,
             canPrev,
-            //showPost,
+            showUser,
             title
             
             

@@ -61,18 +61,20 @@
     var getUser = function (url, callback) {
         $.getJSON(url, data => {
             var post = {
-                Userid: data.Userid,
-                Name: data.userName,
-                Age: data.userage,
-                Location: data.userLocation
+                Postid: data.result.id,
+                Body: data.data,
+                
             }
 
-            $.getJSON(data.linkp, ans => {
-                post.answers = ko.observableArray(ans);
+            $.getJSON(data.linkp, pos => {
+                post.linkp = ko.observableArray(pos);
                 callback(post);
             });
+           
         });
     };
+
+   
 
 
     return {
