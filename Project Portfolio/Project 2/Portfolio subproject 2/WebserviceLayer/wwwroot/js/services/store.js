@@ -121,7 +121,7 @@ define(['redux'], function (redux) {
         },
         useHistory: function (state) {
             return {
-                type: SAVE_HISTORY,
+                type: USE_HISTORY,
                 state
             }
         }
