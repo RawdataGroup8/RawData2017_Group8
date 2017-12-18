@@ -60,12 +60,6 @@ namespace WebLayer.Controllers
             var post= _ds.GetUser(postId).Posts;
             var Linku = Url.Link(nameof(GetUser), new { postId });
             var Linkp = Url.Link(nameof(GetUserPosts), new { postId });
-            var Linkpp = _ds.GetUser(postId).Posts
-                    .Select(x => new
-                    {
-                        Url = Url.Link(nameof(PostsController.GetPost), new { x.PostId }),
-                       
-                    });
 
             var data = new
             {
@@ -74,8 +68,8 @@ namespace WebLayer.Controllers
                 Data.Userage,
                 Data.UserLocation,
                 Linku,
-                Linkp,
-                Linkpp
+                Linkp
+         
             };
             return Data != null ? (IActionResult)Ok(data) : NotFound();
         }
