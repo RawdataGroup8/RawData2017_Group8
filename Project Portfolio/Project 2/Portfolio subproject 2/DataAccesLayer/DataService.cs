@@ -248,7 +248,7 @@ namespace DataAccesLayer
             }
         }
 
-        public List<RankedWords> RankedWordsSearch(string terms, int page, int pageSize)
+        public List<RankedWords> RankedWordsSearch(string terms/*, int page, int pageSize*/)
         {
             using (var db = new StackoverflowContext())
             {

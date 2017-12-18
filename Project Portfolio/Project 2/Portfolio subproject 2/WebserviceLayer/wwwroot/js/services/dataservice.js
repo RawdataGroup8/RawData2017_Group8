@@ -17,6 +17,10 @@
     var getTfWords = (id, callback) => {
         $.getJSON('api/wordtf/' + id, callback);
     }
+
+    var RankedWordsSearch = (terms, callback) => {
+        $.getJSON('api/words/' + terms, callback);
+    }
     
     //getting the users
     var getUsers = (url, callback) => {
@@ -64,7 +68,8 @@
         getPosts,
         getPost,
         getTfWords,
-        searchPosts, 
+        searchPosts,
+        RankedWordsSearch,
       //getuserp
     };
 });
