@@ -25,6 +25,11 @@ body {
     background: #858585;
 }
 
+.table-condensed {
+    border-color: #505050;
+    background: #757575;
+}
+
 .navbar-inverse .navbar-form {
     border: none;
 }

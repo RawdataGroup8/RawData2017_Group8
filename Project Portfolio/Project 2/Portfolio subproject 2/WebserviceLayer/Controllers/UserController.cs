@@ -29,7 +29,10 @@ namespace WebLayer.Controllers
                 .Select(x => new
                 {
                     Url = Url.Link(nameof(GetUser), new { id = x.Userid }),
-                    Name = x.UserName
+                    Name = x.UserName,
+                    Age =x.Userage,
+                    Adress = x.UserLocation,
+                    
                 });
 
             var result = new
