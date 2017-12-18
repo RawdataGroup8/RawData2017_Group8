@@ -149,17 +149,17 @@ call bestmatch('mysql, procedures');
 /*B.3 create word index with tf idf columns*/
 drop table if exists ndt;
 create table ndt as 
-select id, word, count(*) as ndt_ FROM words where word regexp '^[A-Za-z][A-Za-z]{1,}$' and word not in (select * from stopwords) group by id, word;
+select id, word, count(*) as ndt_ FROM words where word regexp '^[A-Za-z][A-Za-z0-9]{1,}$' and word not in (select * from stopwords) group by id, word;
 create index ndtIndex on ndt(id, word);
 
 drop table if exists nd;
 create table nd as 
-select distinct id, count(word) as nd_ FROM words where word regexp '^[A-Za-z][A-Za-z]{1,}$' and word not in (select * from stopwords) group by id;
+select distinct id, count(word) as nd_ FROM words where word regexp '^[A-Za-z][A-Za-z0-9]{1,}$' and word not in (select * from stopwords) group by id;
 create index ndIndex on nd(id);
 
 drop table if exists nt;
 create table nt as 
-select word, count(distinct id) as nt_ from words where word regexp '^[A-Za-z][A-Za-z]{1,}$' and word not in (select * from stopwords) group by word;
+select word, count(distinct id) as nt_ from words where word regexp '^[A-Za-z][A-Za-z0-9]{1,}$' and word not in (select * from stopwords) group by word;
 create index ntIndex on nt(word);
 
 drop table if exists wi;
@@ -178,6 +178,7 @@ drop procedure if exists ranked_post_search;
 delimiter //
 create procedure ranked_post_search (in _wlist varchar(5000))
 begin 
+
 	DECLARE _next TEXT DEFAULT NULL;
 	DECLARE _nextlen INT DEFAULT NULL;
     DECLARE result TEXT DEFAULT NULL;
@@ -273,7 +274,7 @@ begin
     DECLARE result TEXT DEFAULT NULL;
     DECLARE firstIter BOOL DEFAULT TRUE;
     
-    set result = 'select wi.id, sum(score) from wi, (';
+    set result = 'select wi.id, sum(score) rankId from wi, (';
     iterator:
 	LOOP
 		IF LENGTH(TRIM(_wlist)) = 0 OR _wlist IS NULL THEN
@@ -291,24 +292,24 @@ begin
         /*store length of _next'*/
         SET _nextlen = LENGTH(_next); 
         /*add a line to the sql query*/
-        SET result = CONCAT(result, 'select distinct id, tf*idf as score from wi where word = ', "'",trim(_next),"'");
+        SET result = CONCAT(result, 'select distinct id, 1 as score from wi where word = ', "'",trim(_next),"'");
         /*remove the processed word from the input string*/
         SET _wlist = INSERT(_wlist,1,_nextlen + 1,'');
     END LOOP;
     
     /*close the query string*/
-	set @res = concat(result, ') t where t.id=wi.id group by t.id order by sum(score)'); 
+	set @res = concat(result, ') t where t.id=wi.id group by t.id'); 
 
     
 	/*join with wi in order to get ranked words instead of posts*/
-	set @res = concat('select word, sum(tf_idf) as rank from wi, (', @res, ') as t where wi.id = t.id group by word order by rank desc'); 
+	set @res = concat('select word, sum(1)*rankId as rank from wi, (', @res, ') as t where wi.id = t.id group by word order by rank desc'); 
     
     /*prepare and execute the string with the sql query*/
     PREPARE stmt FROM @res;
     execute stmt;
 end//
 delimiter ;
-call ranked_words('csharp, python');
+call ranked_words('database, sql');
 
 /* B.8. */
 drop table if exists cooccuring;

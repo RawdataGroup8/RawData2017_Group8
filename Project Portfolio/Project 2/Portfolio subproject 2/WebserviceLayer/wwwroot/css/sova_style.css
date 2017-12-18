@@ -22,7 +22,7 @@ body {
 
 .list-group-item {
     border-color: #505050;
-    background: #757575;
+    background: #858585;
 }
 
 .navbar-inverse .navbar-form {
@@ -30,7 +30,7 @@ body {
 }
 
 a {
-    color: #448cff;
+    color: #0f2e4f;
 }
 h2 {
     color: #999999;
