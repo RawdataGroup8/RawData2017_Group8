@@ -6,7 +6,7 @@
     <h3>
         Creation Date: <span data-bind="text: creationDate"></span>
     </h3>
-    <h3 div data-bind="visible: test">Score: IM A SPAN-MAN</h3>
+    <h3 div data-bind="visible: $parent.test">Score: IM A SPAN-MAN</h3>
     <button data-bind="click: $parent.toggleVisibility"></button>
     <div data-bind="html: body"></div>
 

@@ -41,7 +41,7 @@ namespace WebLayer.Controllers
         [HttpGet("q", Name = nameof(GetNewestQuestions))]
         public IActionResult GetNewestQuestions(int page = 0, int pageSize = 10)
         {
-            var posts = _ds.GetNewestQuestions(page, pageSize)
+            var posts = _ds.GetNewestQuestionsFull(page, pageSize)
                 .Select(x => new
                 {
                     Link = Url.Link(nameof(GetPost), new {x.PostId}),
@@ -49,7 +49,7 @@ namespace WebLayer.Controllers
                     x.Score
                 });
 
-            var total = 100;//_ds.NumberOfQuestions();
+            var total = _ds.NumberOfQuestions();
             var pages = Math.Ceiling(total / (double) pageSize);
             var prev = page > 0 ? Url.Link(nameof(GetNewestQuestions), new {page = page - 1, pageSize}) : null;
             var next = page < pages - 1 ? Url.Link(nameof(GetNewestQuestions), new {page = page + 1, pageSize}) : null;

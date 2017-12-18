@@ -11,6 +11,7 @@ namespace DataAccesLayer
         Post GetPosts_Tags(int id);
         Question GetQuestion(int id);
         List<NewestQuestions> GetNewestQuestions(int page, int pageSize);
+        List<Post> GetNewestQuestionsFull(int page, int pageSize);
         Answers GetAnswer(int id);
         User GetUser(int id);
         List<LinkedPosts> LinkingToThisPost(int id);

@@ -12,6 +12,7 @@ define(['redux'], function (redux) {
     const CHANGE_VIEW = "CHANGE_VIEW";
     const SELECT_POST = "SELECT_POST";
     const SELECT_USER = "SELECT_USER";
+    const USE_HISTORY = "USE_HISTORY";
 
     // this is the state we want to handle
     var currentState = {
@@ -24,24 +25,30 @@ define(['redux'], function (redux) {
     // The reducer used in this application
     // The main idea is not to modify the state, but create a new copy
     // every time it is changed
-    var states = [];
-    var reducer = function (state, action) {
-        if (action.type) {
-            states.push(state);
-            console.log(action.type);
-        }
+    var reducer = function(state, action) {
+
+        var nextState = Object.assign({}, state, { history: [...(state.history ? state.history : []), state] });
+
         switch (action.type) {
             case CHANGE_TITLE:
-                return Object.assign({}, state, { title: action.title });
+                return Object.assign({}, nextState, { title: action.title });
             case CHANGE_VIEW:
-                return Object.assign({}, state, { view: action.componentName });
+                return Object.assign({}, nextState, { view: action.componentName });
             case SELECT_POST:
-                return Object.assign({}, state, { selectedPost: action.post });
+                return Object.assign({}, nextState, { selectedPost: action.post });
             case SELECT_USER:
-                return Object.assign({}, state, { selectedUser: action.user });
+                return Object.assign({}, nextState, { selectedUser: action.user });
+            case USE_HISTORY:
+                return  action.state;
+
+                //[...(history ? history : []), state]
+                //(hiatory ? history.map(e => e) : []), push(state);
+
             default:
                 return state;
         }
+        
+        return nextState;
     };
     
     // here we change the state by calling the reducer
@@ -105,6 +112,18 @@ define(['redux'], function (redux) {
                 type: SELECT_USER,
                 user
             }
+        }, 
+
+        saveHistory: function () {
+            return {
+                type: SAVE_HISTORY
+            }
+        },
+        useHistory: function (state) {
+            return {
+                type: SAVE_HISTORY,
+                state
+            }
         }
     };
 
@@ -118,7 +137,7 @@ define(['redux'], function (redux) {
 
     // uncomment above return
     // and use this instead to use the real Redux :-)
-    var reduxstore = redux.createStore(reducer);
+    var reduxstore = redux.createStore(reducer, {});
 
     return {
         getState: reduxstore.getState,

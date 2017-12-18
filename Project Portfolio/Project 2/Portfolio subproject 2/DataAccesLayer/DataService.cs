@@ -124,6 +124,16 @@ namespace DataAccesLayer
                 return posts;//.Select(post => GetQuestion(post.PostId)).ToList();
             }
         }
+        public List<Post> GetNewestQuestionsFull(int page, int pageSize)
+        {
+            using (var db = new StackoverflowContext())
+            {
+                var posts = db.Post.Where(p => p.TypeId == 1 /*&& p.CreationDate>DateTime.Now.AddDays(-1027)*/).OrderByDescending(q => q.CreationDate)
+                    .Skip(page * pageSize).Take(pageSize).ToList();
+                //var posts = db.NewestQuestions.Skip(page * pageSize).Take(pageSize).ToList();
+                return posts;//.Select(post => GetQuestion(post.PostId)).ToList();
+            }
+        }
 
         //return a full answer
         public Answers GetAnswer(int id)

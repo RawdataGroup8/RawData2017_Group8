@@ -4,10 +4,10 @@
         //var showWordCloud = ko.observable(false);
         var test = ko.observable(false);
 
-        var toggleVisibility = function () {
+        /*var toggleVisibility = function () {
             test = !test();
             alert('test is now ' + test());
-        };
+        };*/
 
         var home = () => {
             store.dispatch(store.actions.pageListTitle());
@@ -19,8 +19,8 @@
         return {
             currentPost,
             home,
-            test,
-            toggleVisibility
+            test
+            //toggleVisibility
         };
     }
 });

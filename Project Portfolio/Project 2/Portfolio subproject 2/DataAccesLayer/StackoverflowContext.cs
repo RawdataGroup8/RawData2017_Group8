@@ -15,6 +15,7 @@ namespace DataAccesLayer
         public DbSet<LinkedPosts> LinkedPosts { get; set; }
         public DbSet<Marking> Marking { get; set; } 
         public DbSet<Post> Post { get; set; }
+        public DbSet<SimplePost> SimplePost { get; set; }
         public DbSet<PostTags> PostTags { get; set; }
         public DbSet<Question> Question { get; set; }
         public DbSet<User> User { get; set; }
@@ -135,6 +136,13 @@ namespace DataAccesLayer
             modelBuilder.Entity<NewestQuestions>().Property(x => x.Title).HasColumnName("title");
             modelBuilder.Entity<NewestQuestions>().Property(x => x.Score).HasColumnName("score");
             modelBuilder.Entity<NewestQuestions>().Property(x => x.PostId).HasColumnName("post_id");
+
+            //simplePost
+            modelBuilder.Entity<SimplePost>().Property(x => x.PostId).HasColumnName("post_id");
+            modelBuilder.Entity<SimplePost>().Property(x => x.Score).HasColumnName("score");
+            modelBuilder.Entity<SimplePost>().Property(x => x.Title).HasColumnName("title");
+            modelBuilder.Entity<SimplePost>().Property(x => x.TypeId).HasColumnName("type_id");
+
 
         }
 
