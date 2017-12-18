@@ -9,9 +9,9 @@
 
         var getUsers = function (url) {
             dataservice.getUsers(url, data => {
-                users(data.items);
-                nextLink(data.next);
-                prevLink(data.prev);
+                users(data.data);
+                nextLink(data.result.next);
+                prevLink(data.result.prev);
                 
                
             });
@@ -54,7 +54,7 @@
             canNext,
             prev,
             canPrev,
-            showPost,
+            //showPost,
             title
             
             
