@@ -34,10 +34,10 @@
         });
 
         // this will be called for each user, and it will be defined in the dataservice.js
-        var showPost = (data) => {
-            dataservice.getPost(data.url, post => {
-                store.dispatch(store.actions.selectPost(post));
-                store.dispatch(store.actions.changeView("show_quest"));
+        var showUser = (data) => {
+            dataservice.getUser(data.url, user => {
+                store.dispatch(store.actions.selectUser(user));
+                store.dispatch(store.actions.changeView("show_userpost"));
             });
         };
         

@@ -58,9 +58,26 @@
         });
     };
 
+    var getUser = function (url, callback) {
+        $.getJSON(url, data => {
+            var post = {
+                Userid: data.Userid,
+                Name: data.userName,
+                Age: data.userage,
+                Location: data.userLocation
+            }
+
+            $.getJSON(data.linkp, ans => {
+                post.answers = ko.observableArray(ans);
+                callback(post);
+            });
+        });
+    };
+
 
     return {
         getUsers,
+        getUser,
         getPosts,
         getPost,
         getTfWords,

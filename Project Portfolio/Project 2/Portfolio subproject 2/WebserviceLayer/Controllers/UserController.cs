@@ -28,7 +28,7 @@ namespace WebLayer.Controllers
             var data = _ds.GetUsers(page, pageSize)
                 .Select(x => new
                 {
-                    Url = Url.Link(nameof(GetUser), new { id = x.Userid }),
+                    Url = Url.Link(nameof(GetUser), new { postId=x.Userid }),
                     Name = x.UserName,
                     Age =x.Userage,
                     Adress = x.UserLocation,
@@ -52,13 +52,13 @@ namespace WebLayer.Controllers
         }
 
         //like: "api/User/1"
-        [HttpGet("{id}", Name = nameof(GetUser))]
-        public IActionResult GetUser(int id)
+        [HttpGet("{postId}", Name = nameof(GetUser))]
+        public IActionResult GetUser(int postId)
         {
 
-            var Data = _ds.GetUser(id);
-            var Linku = Url.Link(nameof(GetUser), new { id });
-            var Linkp = Url.Link(nameof(GetUserPosts), new { id });
+            var Data = _ds.GetUser(postId);
+            var Linku = Url.Link(nameof(GetUser), new { postId });
+            var Linkp = Url.Link(nameof(GetUserPosts), new { postId });
 
             var data = new
             {
@@ -86,7 +86,7 @@ namespace WebLayer.Controllers
                 var data = _ds.GetUser(postId).Posts
                     .Select(x => new
                     {
-                        Url = Url.Link(nameof(PostsController.GetPost), new { id = x.PostId }),
+                        Url = Url.Link(nameof(PostsController.GetPost), new { x.PostId }),
                         Name = x.Title
                     });
 
