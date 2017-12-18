@@ -1,7 +1,14 @@
 ﻿define(['knockout', 'store'], (ko, store) => {
     return function (params) {
         var currentPost = ko.observable(store.getState().selectedPost);
-        var showWordCloud = ko.observable(false);
+        //var showWordCloud = ko.observable(false);
+        var test = ko.observable(false);
+
+        var toggleVisibility = function () {
+            test = !test();
+            alert('test is now ' + test());
+        };
+
         var home = () => {
             store.dispatch(store.actions.pageListTitle());
             store.dispatch(store.actions.pageListView());
@@ -12,7 +19,8 @@
         return {
             currentPost,
             home,
-            showWordCloud
+            test,
+            toggleVisibility
         };
     }
 });

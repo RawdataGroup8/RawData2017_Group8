@@ -302,14 +302,14 @@ begin
 
     
 	/*join with wi in order to get ranked words instead of posts*/
-	set @res = concat('select word, sum(1)*rankId as rank from wi, (', @res, ') as t where wi.id = t.id group by word order by rank desc'); 
+	set @res = concat('select word, sum(rankId) as rank from wi, (', @res, ') as t where wi.id = t.id group by word order by rank desc'); 
     
     /*prepare and execute the string with the sql query*/
     PREPARE stmt FROM @res;
     execute stmt;
 end//
 delimiter ;
-call ranked_words('database, sql');
+call ranked_words('database, java, sql');
 
 /* B.8. */
 drop table if exists cooccuring;

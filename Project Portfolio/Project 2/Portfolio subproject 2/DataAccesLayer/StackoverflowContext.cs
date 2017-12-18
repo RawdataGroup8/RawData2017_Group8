@@ -21,6 +21,7 @@ namespace DataAccesLayer
         public DbSet<WordIndex> WordIndex { get; set; }
         public DbSet<RankedQuestions> RankedQuestions { get; set; }
         public DbSet<RankedWords> RankedWords { get; set; }
+        public DbSet<NewestQuestions> NewestQuestions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -128,6 +129,13 @@ namespace DataAccesLayer
             //Ranked Words search
             modelBuilder.Entity<RankedWords>().Property(x => x.Word).HasColumnName("word");
             modelBuilder.Entity<RankedWords>().Property(x => x.Rank).HasColumnName("rank");
+
+            //Newest Questions View
+            modelBuilder.Entity<NewestQuestions>().ToTable("newest_question_view");
+            modelBuilder.Entity<NewestQuestions>().Property(x => x.Title).HasColumnName("title");
+            modelBuilder.Entity<NewestQuestions>().Property(x => x.Score).HasColumnName("score");
+            modelBuilder.Entity<NewestQuestions>().Property(x => x.PostId).HasColumnName("post_id");
+
         }
 
 

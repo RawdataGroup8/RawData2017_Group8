@@ -1,15 +1,13 @@
 ﻿<div>
     <button data-bind="click: home">Back</button>
 </div>
-<div data-bind="text: showWordCloud"></div>
 <div data-bind="with: currentPost">
     <h2 data-bind="text: title"></h2>
     <h3>
         Creation Date: <span data-bind="text: creationDate"></span>
     </h3>
-    <h3>
-        <!--Score: <span data-bind="visible: showWordCloud, text: score"></span>-->
-    </h3>
+    <h3 div data-bind="visible: test">Score: IM A SPAN-MAN</h3>
+    <button data-bind="click: $parent.toggleVisibility"></button>
     <div data-bind="html: body"></div>
 
     <hr />
