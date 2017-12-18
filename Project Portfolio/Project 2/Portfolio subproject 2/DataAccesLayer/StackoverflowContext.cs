@@ -18,6 +18,10 @@ namespace DataAccesLayer
         public DbSet<PostTags> PostTags { get; set; }
         public DbSet<Question> Question { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<WordIndex> WordIndex { get; set; }
+        public DbSet<RankedQuestions> RankedQuestions { get; set; }
+        public DbSet<RankedWords> RankedWords { get; set; }
+        public DbSet<NewestQuestions> NewestQuestions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -28,21 +32,6 @@ namespace DataAccesLayer
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-
-            //modelBuilder.Entity<SimplePost>().ToTable("post");
-            /*modelBuilder.Entity<SimplePost>().Property(x => x.PostId).HasColumnName("post_id");
-            
-            modelBuilder.Entity<SimplePost>().HasKey(x => x.PostId);
-
-            //modelBuilder.Entity<SimpleQuestion>().ToTable("post");
-            modelBuilder.Entity<SimpleQuestion>().Property(x => x.PostId).HasColumnName("post_id");
-            modelBuilder.Entity<SimpleQuestion>().Property(x => x.Title).HasColumnName("title");
-            modelBuilder.Entity<SimpleQuestion>().Property(x => x.Body).HasColumnName("body");
-            modelBuilder.Entity<SimpleQuestion>().Property(x => x.Score).HasColumnName("score");
-            modelBuilder.Entity<SimpleQuestion>().Property(x => x.CreationDate).HasColumnName("creation_date");
-            modelBuilder.Entity<SimpleQuestion>().Property(x => x.ClosedDate).HasColumnName("closed_date");
-            modelBuilder.Entity<SimpleQuestion>().HasKey(x => x.PostId);*/
 
             // Answers
             modelBuilder.Entity<Answers>().ToTable("answer");
@@ -56,8 +45,6 @@ namespace DataAccesLayer
             modelBuilder.Entity<Comment>().Property(x => x.CommentScore).HasColumnName("comment_score"); 
             modelBuilder.Entity<Comment>().Property(x => x.PostId).HasColumnName("post_id");
             modelBuilder.Entity<Comment>().Property(x => x.CommentCreateDate).HasColumnName("comment_create_date");
-
-            //modelBuilder.Entity<Post>().HasOne(c => c.LinkedPosts).WithMany(p => p.Post).HasForeignKey(c => c.PostId);
              
             //History
             modelBuilder.Entity<History>().Property(x => x.Userid).HasColumnName("user_id");
@@ -95,8 +82,6 @@ namespace DataAccesLayer
             modelBuilder.Entity<PostTags>().Property(x => x.TagName).HasColumnName("tag_name");
             modelBuilder.Entity<PostTags>().HasKey(k => new { k.PostId, k.TagName });
 
-            //modelBuilder.Entity<PostTags>().HasOne(c => c.Post).WithMany(p => PostTags).HasForeignKey(c => c.PostId);
-
             //Question
             modelBuilder.Entity<Question>().Property(x => x.PostId1).HasColumnName("post_id");
             modelBuilder.Entity<Question>().Property(x => x.AcceptedAnswerId).HasColumnName("accepted_answer_id");
@@ -108,8 +93,31 @@ namespace DataAccesLayer
             modelBuilder.Entity<User>().Property(x => x.UserLocation).HasColumnName("user_location");
             modelBuilder.Entity<User>().Property(x => x.UserCreationDate).HasColumnName("user_creation_date");
             modelBuilder.Entity<User>().Property(x => x.Userage).HasColumnName("user_age");
-            //modelBuilder.Entity<User>().HasMany(Comment).WithOne();
+
+            //WordIndex
+            modelBuilder.Entity<WordIndex>().ToTable("wi");
+            modelBuilder.Entity<WordIndex>().Property(x => x.Id).HasColumnName("id");
+            modelBuilder.Entity<WordIndex>().Property(x => x.Word).HasColumnName("word");
+            modelBuilder.Entity<WordIndex>().Property(x => x.TermFrequency).HasColumnName("tf");
+            modelBuilder.Entity<WordIndex>().HasKey(k => new { k.Id, k.Word, k.TermFrequency});
+
+            //Search
+            modelBuilder.Entity<RankedQuestions>().Property(x => x.PostId).HasColumnName("id");
+            modelBuilder.Entity<RankedQuestions>().Property(x => x.Rank).HasColumnName("rank");
+            modelBuilder.Entity<RankedQuestions>().Property(x => x.Title).HasColumnName("title");
+
+            //Ranked Words search
+            modelBuilder.Entity<RankedWords>().Property(x => x.Word).HasColumnName("word");
+            modelBuilder.Entity<RankedWords>().Property(x => x.Rank).HasColumnName("rank");
+
+            //Newest Questions View
+            modelBuilder.Entity<NewestQuestions>().ToTable("newest_question_view");
+            modelBuilder.Entity<NewestQuestions>().Property(x => x.Title).HasColumnName("title");
+            modelBuilder.Entity<NewestQuestions>().Property(x => x.Score).HasColumnName("score");
+            modelBuilder.Entity<NewestQuestions>().Property(x => x.PostId).HasColumnName("post_id");
         }
+
+
 
     }
 }

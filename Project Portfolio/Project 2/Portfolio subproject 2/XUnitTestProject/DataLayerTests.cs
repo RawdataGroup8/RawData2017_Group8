@@ -88,13 +88,13 @@ namespace XUnitTestProject
             Assert.NotEmpty(ds.LinkingToThisPost(9033));
         }
 
-        [Fact]
+        /*[Fact]
          public void FulltextSearch_StringSentence_ReturnsRelevantPosts()
          {
              var ds = new DataService();
              var posts = ds.FulltextSearch("java like a jedi", 1);
              Assert.Equal(posts.First().PostId, 25115395);
-         }
+         }*/
      
 
         [Fact]
@@ -105,5 +105,18 @@ namespace XUnitTestProject
             Assert.Equal(10, simpleQuestions.Count);
 
         }
+
+
+        [Fact]
+        public void GetTfByIdReturnsCorrect()
+        {
+            var ds = new DataService();
+            var wordIndex = ds.GetTfOfWordsInAPost(19);
+            Assert.NotEmpty(wordIndex);
+            Assert.Equal("acos", wordIndex.First().Word);
+
+        }
+
+
     }
 }

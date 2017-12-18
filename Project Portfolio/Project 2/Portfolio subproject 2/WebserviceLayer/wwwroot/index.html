@@ -1,0 +1,55 @@
+﻿<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>SOVA</title>
+    <!-- Bootstrap core CSS -->
+    <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/sova_style.css" rel="stylesheet">
+    <script src="lib/jquery.min.js"></script>
+    <script> 
+        $(function(){
+            $("#header").load("html/navbar-top.html"); 
+            //$("#footer").load("html/navbar-top.html");
+        });
+    </script> 
+</head>
+<body>
+<div id="header"></div>
+<!-- ko if: false -->
+<div class="loader"></div>
+<!-- /ko -->
+
+
+<div data-bind="css: { hide: false }" class="hide">
+    <div data-bind="component: {name: currentView}"></div>
+</div>
+
+<div class="navbar navbar-default navbar-fixed-bottom">      
+    <div class="container">       
+        <p class="navbar-text pull-left">© Group 8, RAWDATA 2017        <button class="btn btn-basic" data-bind="click: back">Back</button>
+        </p>
+
+        <a href="https://github.com/RawdataGroup8/RawData2017_Group8/tree/master/Project%20Portfolio/Project%202/Portfolio%20subproject%202" class="navbar-btn btn-default btn pull-right">
+            <img src="img/sova.png" height="25" /> </a> 
+    </div>
+</div>
+    
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="lib/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<!-- <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
+
+<script data-main="js/main" src="lib/requirejs/require.js"></script>
+</body>
+</html>

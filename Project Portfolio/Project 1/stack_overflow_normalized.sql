@@ -1,7 +1,12 @@
+#DROP DATABASE if exists raw8;
+#CREATE DATABASE raw8;
+#USE raw8;
+#ALTER DATABASE raw8 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 DROP DATABASE if exists stack_overflow_normalized;
 CREATE DATABASE stack_overflow_normalized;
 USE stack_overflow_normalized;
-
+ALTER DATABASE stack_overflow_normalized CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 -- ---------------- DATABASE CREATION AND DATA INSERTION -------------------
 
 -- user (user_id(PK), user_name, user_creation_date, user_location, user_age) 
@@ -12,6 +17,12 @@ CREATE TABLE user (
     user_location VARCHAR(200),
     user_age INT UNSIGNED
 );
+/*alter table `user`
+	modify column `user_name` VARCHAR(30)
+	CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL ;
+alter table `user`
+	modify column `user_location` VARCHAR(200)
+	CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL ;*/
 
 insert into user (user_id, user_name, user_creation_date, user_location, user_age)
 select distinct owneruserid, owneruserdisplayname, ownerusercreationdate, owneruserlocation, owneruserage
@@ -25,7 +36,7 @@ from stackoverflow_sample_universal.comments;
 -- from stackoverflow_sample_universal.comments;
 
 -- post(post_id(PK), creation_date, score, body, title, owner_user_id(FK), type_id) /* type id somewhat redundant */
--- drop table if exists post;
+drop table if exists post;
 CREATE TABLE post (
     post_id INT UNSIGNED PRIMARY KEY,
     creation_date DATETIME,
@@ -33,12 +44,17 @@ CREATE TABLE post (
     body TEXT,
     title VARCHAR(300),
     owner_user_id INT UNSIGNED NOT NULL REFERENCES user (user_id),
-    type_id INT UNSIGNED,
-    FULLTEXT (title,body), -- used by: fulltext_search
-    FULLTEXT (body), -- used by: Searching_Questions
-	FULLTEXT (title)-- used by: Searching_Questions
+    type_id INT UNSIGNED
+    #FULLTEXT (title,body), -- used by: fulltext_search
+    #FULLTEXT (body), -- used by: Searching_Questions
+	#FULLTEXT (title)-- used by: Searching_Questions
 );
-
+CREATE INDEX index_post
+ON post (post_id, type_id, creation_date);
+#alter table `user`
+#	modify column `body` VARCHAR(30)
+#	CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL ;
+    
 insert into post (post_id, creation_date, score, body, title, owner_user_id, type_id)
 select distinct id, creationdate, score, body, title, owneruserid, posttypeid
 from stackoverflow_sample_universal.posts;
@@ -49,6 +65,8 @@ CREATE TABLE question (
     accepted_answer_id INT REFERENCES post (post_id),
     closed_date DATETIME
 );
+CREATE INDEX index_question
+ON question (post_id);
 
 insert into question (post_id, accepted_answer_id, closed_date) 
 select distinct id, acceptedanswerid, closeddate
@@ -60,6 +78,8 @@ CREATE TABLE answer (
     post_id INT PRIMARY KEY REFERENCES post (post_id),
     parent_id INT
 );
+CREATE INDEX index_answer
+ON answer (post_id);
 
 insert into answer (post_id, parent_id) 
 select distinct id, parentid
@@ -146,8 +166,12 @@ begin
 	close tags_cur;
 end;//
 delimiter ;
-
 call split_insert_into_tags();
+
+-- drop functions/procedures used for creation
+drop function string_at_delimited_pos;
+drop function num_values_in_delimited_str;
+drop procedure split_insert_into_tags;
 
 -- linked_posts(LINK_POST_ID, POST_ID)
 CREATE TABLE linked_posts (
@@ -205,7 +229,7 @@ DELIMITER ;
 -- call retrieve_answers(9033, 50);
 
 -- fulltext_search(search_str) /* Procedure that finds questions using mysql's built in fulltext search (ignoring useless words, using multiword strings), searching in both title and body */
-drop procedure if exists fulltext_search;
+/*drop procedure if exists fulltext_search;
 DELIMITER //
 CREATE PROCEDURE fulltext_search (in search_str varchar(400), post_type int)
 BEGIN
@@ -221,7 +245,7 @@ DELIMITER ;
 -- call fulltext_search('machine learning',1);
 -- call fulltext_search('how to python good',1);
 -- call fulltext_search('Hi database teach me to be the bestest at searching thank you bye bye',1);
-
+*/
 -- add_marking(user_id, post_id, marking_label) /* Inserts a marking to at given post <post_id>, for a given user <user_id>, with a given folder name <marking_label> and a <now()> timestamp*/
 -- drop procedure if exists add_marking;
 DELIMITER //
@@ -233,8 +257,25 @@ DELIMITER ; /* todo: handle the user inserting multiple identical marks. gives d
 -- call add_marking(1185, 9033, 'MyFolder');
 -- select * from marking;
 
+drop procedure if exists add_question;
+DELIMITER //
+CREATE PROCEDURE add_question (IN user_id int, in body varchar(5000), in title varchar(500))
+BEGIN
+	declare pid INT DEFAULT NULL;
+    set pid = (select max(post_id) from question)+1;
+    insert into post values (pid, now(), 0, body, title, user_id, 1);
+    insert into question values (pid, null, null);
+END //
+DELIMITER ; 
+
+drop view if exists newest_question_view;
+create view newest_question_view as select post_id, title, score from post natural join question order by creation_date desc limit 100; 
+
+
+
+
 -- Searching_Questions /* Finds questions that matches the last meaningful word of the input string, where that word must be in the title. */
-drop procedure if exists Searching_Questions;
+/*drop procedure if exists Searching_Questions;
 delimiter //
 create procedure Searching_Questions( in inpute char (200))
 begin
@@ -262,8 +303,6 @@ begin
 	order by post.score desc;
 	
 end;//
-delimiter ;
+delimiter ;*/
 
 
--- Search by %word% in title
--- Search by tag in body

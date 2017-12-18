@@ -6,7 +6,7 @@ using DataAccesLayer.DBObjects;
 
 namespace WebServiceLayer.DataTransferObjects
 {
-    public class PostTagsDTO : BaseDTO
+    public class PostTagsDTO : Post
     {
         public string TagName { get; set; }
 

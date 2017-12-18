@@ -24,7 +24,7 @@ namespace WebServiceLayer.Controllers
         [HttpGet(Name = nameof(GetNewestQuestions))]
         public IActionResult GetNewestQuestions(int limit = 50, int page = 0, int pageSize = 10)
         {
-            var questions = _ds.GetNewestQuestions(limit, page, pageSize);
+            var questions = _ds.GetNewestQuestions(page, pageSize);
             var output = questions.Select(question => new QuestionDTO(question, 
                 Url.Link(nameof(GetNewestQuestions), new{question.PostId1})));
             return Ok(output);

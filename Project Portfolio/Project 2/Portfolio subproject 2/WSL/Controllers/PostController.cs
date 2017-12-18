@@ -11,8 +11,8 @@ namespace WebServiceLayer.Controllers
         private readonly IDataService _ds;
         public PostController(IDataService iDataService) => _ds = iDataService;
 
-        [HttpGet("{id}", Name = nameof(GetPost))]
-        public IActionResult GetPost(int id)
+        [HttpGet("{id}", Name = nameof(GetPost_old))]
+        public IActionResult GetPost_old(int id)
         {
             try
             {
@@ -21,7 +21,7 @@ namespace WebServiceLayer.Controllers
                 {
                     data = new PostDTO
                     {
-                        Url = Url.Link(nameof(GetPost), new {id}),
+                        Url = Url.Link(nameof(GetPost_old), new {id}),
                         Title = _ds.GetPost(id).Title,
                         Author =
                             _ds.GetUser(_ds.GetPost(id).OwnerUserId)
@@ -38,7 +38,7 @@ namespace WebServiceLayer.Controllers
                 {
                     data = new PostDTO
                     {
-                        Url = Url.Link(nameof(GetPost), new {id}),
+                        Url = Url.Link(nameof(GetPost_old), new {id}),
                         Title =
                             "This is an answer to the question: " +
                             _ds.GetPost(_ds.GetAnswer(id).Parentid)

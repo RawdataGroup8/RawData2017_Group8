@@ -1,0 +1,105 @@
+body {
+    padding-top: 50px;
+    margin-top: 30px; /* 100px is double the height of the navbar - I made it a big larger for some more space - keep it at 50px at least if you want to use the fixed top nav */
+    margin-bottom: 8%;
+    background: #383838;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+.navbar {
+    background: #222;
+    border: 0;
+}
+
+
+.navbar-btn {
+    background: #757575;
+    border: 0;
+}
+
+.list-group-item {
+    border-color: #505050;
+    background: #858585;
+}
+
+.table-condensed {
+    border-color: #505050;
+    background: #757575;
+}
+
+.navbar-inverse .navbar-form {
+    border: none;
+}
+
+a {
+    color: #0f2e4f;
+}
+h2 {
+    color: #999999;
+}
+h3 {
+    color: #999999;
+}
+
+p {
+    color: #999999;
+}
+
+strong {
+    color: #999999;
+}
+
+pre {
+    background: #666666;
+}
+
+/*footer {
+    margin: 50px 0;
+}*/
+
+.label {
+    min-width: 22px !important;
+    display: inline-block !important
+}
+
+.loader {
+    margin-left: 46%;
+    width: 8em;
+    height: 8em;
+    box-sizing: border-box;
+    border-radius: 50%;
+    position: relative;
+    border: 1.1em solid #eee;
+    border-left: 1.1em solid #999;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation: spinner 1.1s infinite linear;
+    animation: spinner 1.1s infinite linear;
+}
+@-webkit-keyframes spinner {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes spinner {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+.hide {
+    display: none;
+}
