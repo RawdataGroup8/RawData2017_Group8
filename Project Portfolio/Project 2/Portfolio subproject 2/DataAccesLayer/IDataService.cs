@@ -30,7 +30,7 @@ namespace DataAccesLayer
         List<WordIndex> GetTfOfWordsInAPost(int id);
         List<Post> GetPostsUser(int id);
         List<RankedQuestions> RankedPostSearch(string terms, int page, int pageSize);
-        List<RankedWords> RankedWordsSearch(string terms, int page, int pageSize);
+        List<RankedWords> RankedWordsSearch(string terms/*, int page, int pageSize*/);
 
     }
 }
