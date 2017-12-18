@@ -247,6 +247,23 @@ namespace DataAccesLayer
             }
         }
 
+        public List<RankedWords> RankedWordsSearch(string terms, int page, int pageSize)
+        {
+            using (var db = new StackoverflowContext())
+            {
+                if (string.IsNullOrEmpty(terms)) terms = "Python Dictionary"; //only for testing, parameter shpuld be used
+                terms = terms.Replace(" ", ", ");
+                var posts = db.RankedWords.FromSql("call ranked_words({0})", terms).OrderByDescending(q => q.Rank).ToList();
+                    //.Skip(page * pageSize).Take(pageSize).ToList();
+                /*foreach (var p in posts)
+                {
+                    p.Question = GetQuestion(p.Id);
+                }*/
+                return posts;//.Select(post => GetQuestion(post.Id)).ToList();
+
+            }
+        }
+
         public List<Post> BestMatch(string text)
         {
             using (var db = new StackoverflowContext())

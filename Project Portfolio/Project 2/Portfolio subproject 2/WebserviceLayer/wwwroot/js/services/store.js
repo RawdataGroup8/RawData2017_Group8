@@ -24,7 +24,12 @@ define(['redux'], function (redux) {
     // The reducer used in this application
     // The main idea is not to modify the state, but create a new copy
     // every time it is changed
+    var states = [];
     var reducer = function (state, action) {
+        if (action.type) {
+            states.push(state);
+            console.log(action.type);
+        }
         switch (action.type) {
             case CHANGE_TITLE:
                 return Object.assign({}, state, { title: action.title });

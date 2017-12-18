@@ -20,6 +20,7 @@ namespace DataAccesLayer
         public DbSet<User> User { get; set; }
         public DbSet<WordIndex> WordIndex { get; set; }
         public DbSet<RankedQuestions> RankedQuestions { get; set; }
+        public DbSet<RankedWords> RankedWords { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -123,6 +124,10 @@ namespace DataAccesLayer
             modelBuilder.Entity<RankedQuestions>().Property(x => x.PostId).HasColumnName("id");
             modelBuilder.Entity<RankedQuestions>().Property(x => x.Rank).HasColumnName("rank");
             modelBuilder.Entity<RankedQuestions>().Property(x => x.Title).HasColumnName("title");
+
+            //Ranked Words search
+            modelBuilder.Entity<RankedWords>().Property(x => x.Word).HasColumnName("word");
+            modelBuilder.Entity<RankedWords>().Property(x => x.Rank).HasColumnName("rank");
         }
 
 
