@@ -35,8 +35,7 @@
 
         // this will be called for each user, and it will be defined in the dataservice.js
         var showUser = (data) => {
-            dataservice.getU
-            ser(data.url, user => {
+            dataservice.getUser(data.url, user => {
                 store.dispatch(store.actions.selectUser(user));
                 store.dispatch(store.actions.changeView("show_user"));
             });

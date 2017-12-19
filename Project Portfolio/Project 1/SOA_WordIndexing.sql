@@ -4,6 +4,7 @@
 -- ------------------------------------------------------
 -- Server version	5.7.10
 use stack_overflow_normalized;
+use raw8;
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;

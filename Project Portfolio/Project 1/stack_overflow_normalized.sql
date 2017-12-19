@@ -1,12 +1,12 @@
-#DROP DATABASE if exists raw8;
-#CREATE DATABASE raw8;
-#USE raw8;
-#ALTER DATABASE raw8 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+DROP DATABASE if exists raw8;
+CREATE DATABASE raw8;
+USE raw8;
+ALTER DATABASE raw8 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-DROP DATABASE if exists stack_overflow_normalized;
-CREATE DATABASE stack_overflow_normalized;
-USE stack_overflow_normalized;
-ALTER DATABASE stack_overflow_normalized CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+#DROP DATABASE if exists stack_overflow_normalized;
+#CREATE DATABASE stack_overflow_normalized;
+#USE stack_overflow_normalized;
+#ALTER DATABASE stack_overflow_normalized CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 -- ---------------- DATABASE CREATION AND DATA INSERTION -------------------
 
 -- user (user_id(PK), user_name, user_creation_date, user_location, user_age) 

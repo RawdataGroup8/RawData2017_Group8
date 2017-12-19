@@ -26,20 +26,24 @@ namespace DataAccesLayer
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseMySql("server=localhost;database=stack_overflow_normalized;uid=root; pwd=toor;");
+            optionsBuilder.UseMySql("server=wt-220.ruc.dk;database=raw8;uid=raw8; pwd=raw8;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Post>().ToTable("post");
+
             // Answers
             modelBuilder.Entity<Answers>().ToTable("answer");
             modelBuilder.Entity<Answers>().HasKey(x => x.PostId);
             modelBuilder.Entity<Answers>().Property(x => x.Parentid).HasColumnName("parent_id");
             modelBuilder.Entity<Answers>().Property(x => x.PostId).HasColumnName("post_id");
-          
+
             // Comment
+            modelBuilder.Entity<Comment>().ToTable("comment");
+
             modelBuilder.Entity<Comment>().Property(x => x.CommentId).HasColumnName("comment_id");
             modelBuilder.Entity<Comment>().Property(x => x.CommentText).HasColumnName("comment_text");
             modelBuilder.Entity<Comment>().Property(x => x.CommentScore).HasColumnName("comment_score"); 
@@ -85,9 +89,11 @@ namespace DataAccesLayer
             //Question
             modelBuilder.Entity<Question>().Property(x => x.PostId1).HasColumnName("post_id");
             modelBuilder.Entity<Question>().Property(x => x.AcceptedAnswerId).HasColumnName("accepted_answer_id");
-            modelBuilder.Entity<Question>().Property(x => x.ClosedDate).HasColumnName("closed_date");           
+            modelBuilder.Entity<Question>().Property(x => x.ClosedDate).HasColumnName("closed_date");
 
             //User
+            modelBuilder.Entity<User>().ToTable("user");
+
             modelBuilder.Entity<User>().Property(x => x.Userid).HasColumnName("user_id");
             modelBuilder.Entity<User>().Property(x => x.UserName).HasColumnName("user_name");
             modelBuilder.Entity<User>().Property(x => x.UserLocation).HasColumnName("user_location");
