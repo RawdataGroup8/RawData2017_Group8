@@ -98,7 +98,16 @@ define(['redux'], function (redux) {
                 componentName: 'new_quest'
             }
         },
-       
+
+        // page list view for user
+
+        pageListView1: function () {
+            return {
+                type: CHANGE_VIEW,
+                componentName: 'all_users'
+            }
+        },
+
         selectPost: function (post) {
             return {
                 type: SELECT_POST,

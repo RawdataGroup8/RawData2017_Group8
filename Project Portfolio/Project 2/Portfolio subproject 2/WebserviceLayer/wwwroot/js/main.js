@@ -33,7 +33,7 @@ require(['knockout'], function (ko) {
     });
     ko.components.register("show_user", {
         viewModel: { require: "components/userposts/userposts" },
-        template: { require: "text!components/question/userposts_view.html" }
+        template: { require: "text!components/userposts/userposts_view.html" }
     });
 
     ko.components.register("wordcloud", {
@@ -61,11 +61,11 @@ var states = [];
 require(['knockout', 'store'], function (ko, store) {
 
     // show the state everytime it is updated
-    //store.subscribe(() => {
-    //    console.log(store.getState());
-    //});
+    store.subscribe(() => {
+        console.log(store.getState());
+    });
 
-    var vm = (function() {
+    var vm = (function () {
         var title = ko.observable();
         var currentView = ko.observable();
 
@@ -77,7 +77,7 @@ require(['knockout', 'store'], function (ko, store) {
         store.dispatch(store.actions.pageListTitle());
         store.dispatch(store.actions.pageListView());
 
-        var wordcloudView = function() {
+        var wordcloudView = function () {
             store.dispatch(store.actions.changeTitle('Wordcloud'));
             store.dispatch(store.actions.changeView('wordcloud'));
         }
@@ -86,10 +86,12 @@ require(['knockout', 'store'], function (ko, store) {
             store.dispatch(store.actions.changeView('add_quest'));
         }
         // I added this post is related with getting post of each user, I tried to use the show_quest but i couldnot make it!
-        var post = function () {
-            store.dispatch(store.actions.changeTitle('Post'));
-            store.dispatch(store.actions.changeView('post'));
-        }
+
+        /*var user = function () {
+            store.dispatch(store.actions.changeTitle('User'));
+            store.dispatch(store.actions.changeView('show_user'));
+        }*/
+
         var allUsers = function () {
             store.dispatch(store.actions.changeTitle('Users'));
             store.dispatch(store.actions.changeView('all_users'));
@@ -104,8 +106,8 @@ require(['knockout', 'store'], function (ko, store) {
         }
 
         var back = function () {
-            console.log(store.getState().history[store.getState().history.length-1]);
-            store.dispatch(store.actions.useHistory(store.getState().history[store.getState().history.length-1]));
+            console.log(store.getState().history[store.getState().history.length - 1]);
+            store.dispatch(store.actions.useHistory(store.getState().history[store.getState().history.length - 1]));
         }
 
         return {
@@ -116,7 +118,8 @@ require(['knockout', 'store'], function (ko, store) {
             new_quest,
             allUsers,
             search,
-            post,
+            //user
+            //post,
             back
         }
     })();

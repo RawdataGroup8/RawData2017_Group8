@@ -1,25 +1,64 @@
 ﻿<div>
     <button data-bind="click: home">Back</button>
 </div>
+
 <div data-bind="with: currentUser">
-    <h2 data-bind="text: title"></h2>
-    <h3>
-        Creation Date: <span data-bind="text: creationDate"></span>
-    </h3>
-    <h3>
-        <!--Score: <span data-bind="visible: showWordCloud, text: score"></span>-->
-    </h3>
-    <div data-bind="html: body"></div>
+    <p> Details about the user</p>
 
-    <hr />
+    <p>User Name: <span data-bind="text: username"></span> </p>
+    <p>User Id: <span data-bind="text: userid"></span> </p>
+    <p>User Age: <span data-bind="text: userage"></span> </p>
+    <p>User Location: <span data-bind="text: useradress"></span> </p>
 
-    <div data-bind="foreach: answers">
-        <div data-bind="component: {name: 'answer', params: { body}}"></div>
-        <!--<answer params="body: body, title: $parent.title, currentView: $parent.currentView"></answer>-->
-        <!--<div data-bind="html: body"></div>
-        <hr/>
-        <div>
-            <button data-bind="click: $parents[1].home">Back</button>
-        </div>-->
-    </div>
+
+
+    <ul data-bind="foreach: linkpp">
+
+        <!--<li class="list-group-item"> Null</li>
+        <ko data-bind="if: title">
+        <li><span data-bind="text: title"></span></li>
+        </ko>
+        <li class="list-group-item" data-bind="text: url"> </li>-->
+
+
+        <li class="list-group-item">
+
+
+            <p data-bind="if: title">
+                Title of the Posts:
+                <span data-bind="text: title"></span>
+            </p>
+
+            <p>
+                TypeId:
+                <span data-bind="text: typeId"></span>
+            </p>
+
+            <p>
+                The Body of the Post:
+                <span data-bind="text: body"></span>
+            </p>
+
+            <!--<p>
+                Posted by the user:
+                <a href="#" data-bind="click: $parent.showPost">
+                    <span data-bind="text: url"></span>
+
+                </a>
+            </p>-->
+
+        </li>
+    </ul>
 </div>
+
+
+
+
+<!--<div data-bind="foreach: answer">
+    <div data-bind="component: {name: 'answer', params: { body}}"></div>
+    <!--<answer params="body: body, title: $parent.title, currentView: $parent.currentView"></answer>
+    <!--<div data-bind="html: body"></div>
+    <hr/>
+    <div>
+        <button data-bind="click: $parents[1].home">Back</button>
+    </div>-->

@@ -1,18 +1,21 @@
-﻿define(['knockout', 'store'], (ko, store) => {
+﻿
+define(['knockout', 'store'], (ko, store) => {
     return function (params) {
         var currentUser = ko.observable(store.getState().selectedUser);
-        //var showWordCloud = ko.observable(false);
+        console.log(currentUser);
+
+
         var home = () => {
             store.dispatch(store.actions.pageListTitle());
-            store.dispatch(store.actions.pageListView());
+            store.dispatch(store.actions.pageListView1());
         };
 
-        store.dispatch(store.actions.changeTitle("user"));
+        //store.dispatch(store.actions.changeTitle("Users info"));
 
         return {
             currentUser,
-            home,
-            //showWordCloud
+            home
+
         };
     }
 });

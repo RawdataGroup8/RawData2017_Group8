@@ -17,23 +17,31 @@ namespace WebLayer.Controllers
         [HttpGet(Name = nameof(GetUsers))]
         public IActionResult GetUsers(int page = 0, int pageSize = 10)
         {
-            //CheckPageSize(ref pageSize);
+
 
             //var total = _ds.GetUsers().Count;
             var total = _ds.GetUserCount();
             var pages = Math.Ceiling(total / (double)pageSize);
-            var totalPages= (int)Math.Ceiling(total / (double)pageSize);
+            var totalPages = (int)Math.Ceiling(total / (double)pageSize);
             //var totalPages = GetTotalPages(pageSize, total);
 
             var data = _ds.GetUsers(page, pageSize)
                 .Select(x => new
                 {
-                    Url = Url.Link(nameof(GetUser), new { postId=x.Userid }),
+                    Url = Url.Link(nameof(GetUser), new { postId = x.Userid }),
                     Name = x.UserName,
-                    Age =x.Userage,
+                    Age = x.Userage,
                     Adress = x.UserLocation,
-                    
+
+
                 });
+
+
+
+            // getting the links to the users post
+
+
+
 
             var result = new
             {
@@ -41,7 +49,7 @@ namespace WebLayer.Controllers
                 Number_Of_Pages = totalPages,
                 PageSize = pageSize,
                 Page = page,
-              
+
                 prev = page > 0 ? Url.Link(nameof(GetUsers), new { page = page - 1, pageSize }) : null,
                 next = page < pages - 1 ? Url.Link(nameof(GetUsers), new { page = page + 1, pageSize }) : null,
                 //Url = Url.Link(nameof(GetUsers), new { page, pageSize })
@@ -57,9 +65,19 @@ namespace WebLayer.Controllers
         {
 
             var Data = _ds.GetUser(postId);
-            var post= _ds.GetUser(postId).Posts;
+            var post = _ds.GetUser(postId).Posts;
             var Linku = Url.Link(nameof(GetUser), new { postId });
             var Linkp = Url.Link(nameof(GetUserPosts), new { postId });
+            var Linkpp = _ds.GetUser(postId).Posts
+              .Select(x => new
+              {
+                  Url = Url.Link(nameof(PostsController.GetPost), new { x.PostId }),
+
+                  title = x.Title,
+                  body = x.Body,
+                  typeId = x.TypeId
+
+              });
 
             var data = new
             {
@@ -68,8 +86,9 @@ namespace WebLayer.Controllers
                 Data.Userage,
                 Data.UserLocation,
                 Linku,
+                Linkpp,
                 Linkp
-         
+
             };
             return Data != null ? (IActionResult)Ok(data) : NotFound();
         }
@@ -114,11 +133,9 @@ namespace WebLayer.Controllers
             }
         }
 
-       
+
     }
 
 }
 
 
-
-   
