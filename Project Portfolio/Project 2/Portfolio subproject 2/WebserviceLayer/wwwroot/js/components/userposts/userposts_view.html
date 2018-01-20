@@ -24,21 +24,21 @@
         <li class="list-group-item">
 
             Title of the Posts:
-            <p class="pu", data-bind="if: title"> 
+            <p data-bind="if: title"> 
                 
                 <span data-bind="text: title"></span>
             </p>
 
             <br />
              TypeId:
-            <p class="pu">
+            <p>
                 <span data-bind="text: typeId"></span>
             </p>
             <br />
             The Body of the Post:
-            <p class="pu">
+            <p>
                 
-                <span data-bind="text: body"></span>
+                <span data-bind="html: body"></span>
             </p>
             <br />
             <!--<p>
